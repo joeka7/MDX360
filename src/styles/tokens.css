@@ -1,0 +1,101 @@
+/*
+ * Design tokens — "Clinical Precision Tech" design system.
+ * Values mirror the design reference (design tailwind config + DESIGN.md).
+ */
+:root {
+  /* ---- Color: brand ---- */
+  --color-primary: #006688;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0dc2ff;
+  --color-on-primary-container: #004c67;
+  --color-tertiary-container: #40c0fa;
+  --color-secondary-fixed: #dbe1ff;
+  --color-on-secondary-fixed: #131a33;
+  --color-error: #ba1a1a;
+
+  /* ---- Color: surfaces ---- */
+  --color-surface: #f9f9ff;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #f0f3ff;
+  --color-surface-container: #e7eeff;
+  --color-surface-high: #dee8ff;
+  --color-surface-highest: #d8e3fb;
+  --color-inverse-surface: #263143;
+  --color-inverse-on-surface: #ecf1ff;
+
+  /* ---- Color: content ---- */
+  --color-on-surface: #111c2d;
+  --color-on-surface-variant: #3d484f;
+  --color-outline: #6d7980;
+  --color-outline-variant: #bcc8d1;
+
+  /* ---- Typography ---- */
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --type-display: 800 4rem / 4.5rem var(--font-display);
+  --type-headline-xl: 700 3rem / 3.5rem var(--font-display);
+  --type-headline-lg: 700 2.25rem / 2.75rem var(--font-display);
+  --type-headline-md: 600 1.5rem / 2rem var(--font-display);
+  --type-headline-sm: 600 1.25rem / 1.75rem var(--font-display);
+  --type-body-lead: 400 1.125rem / 1.75rem var(--font-body);
+  --type-body-md: 400 0.9375rem / 1.5rem var(--font-body);
+  --type-body-sm: 400 0.8125rem / 1.25rem var(--font-body);
+  --type-tech: 500 0.875rem / 1.25rem var(--font-body);
+  --type-label: 600 0.6875rem / 0.875rem var(--font-body);
+
+  --tracking-tight: -0.025em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* ---- Spacing ---- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --gutter: 1rem;
+  --container-max: 80rem;
+  --header-height: 5rem;
+
+  /* ---- Radius ---- */
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-round: 9999px;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --glow-cyan: 0 0 20px rgb(13 194 255 / 0.35);
+  --glow-cyan-strong: 0 0 28px rgb(13 194 255 / 0.55);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+/* Mobile type scale from the design system. */
+@media (max-width: 767px) {
+  :root {
+    --type-display: 800 2.375rem / 2.875rem var(--font-display);
+    --type-headline-xl: 700 2rem / 2.5rem var(--font-display);
+    --type-headline-lg: 700 1.625rem / 2.125rem var(--font-display);
+  }
+}

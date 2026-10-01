@@ -1,0 +1,17 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font: var(--type-tech);
+  font-weight: 700;
+  color: var(--color-primary);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--color-primary-container);
+}
+
+.link:hover span {
+  text-decoration: underline;
+}

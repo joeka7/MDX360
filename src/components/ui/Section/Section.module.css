@@ -1,0 +1,53 @@
+.section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- Tones ---- */
+.lowest {
+  background: var(--color-surface-lowest);
+}
+
+.surface {
+  background: var(--color-surface);
+}
+
+.low {
+  background: var(--color-surface-low);
+}
+
+.tinted {
+  background: var(--color-surface-container);
+}
+
+.dark {
+  background: var(--color-inverse-surface);
+  color: var(--color-inverse-on-surface);
+}
+
+/* ---- Spacing ---- */
+.spacingNone {
+  padding-block: 0;
+}
+
+.spacingSm {
+  padding-block: var(--space-xl);
+}
+
+.spacingMd {
+  padding-block: var(--space-2xl);
+}
+
+.spacingLg {
+  padding-block: 5rem;
+}
