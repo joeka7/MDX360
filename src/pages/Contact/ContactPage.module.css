@@ -1,0 +1,359 @@
+/* ---- Header ---- */
+.header {
+  padding: var(--space-xl) 0 var(--space-2xl);
+  background-image: radial-gradient(ellipse 80% 60% at 50% -20%, rgb(13 194 255 / 0.12), rgb(255 255 255 / 0));
+}
+
+.breadcrumbs {
+  margin-bottom: var(--space-lg);
+}
+
+.breadcrumbs [aria-current='page'] {
+  color: var(--color-primary);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  max-width: 48rem;
+}
+
+.title {
+  font: var(--type-headline-xl);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+}
+
+.accent {
+  color: var(--color-primary);
+}
+
+.lead {
+  font: var(--type-body-lead);
+  line-height: 1.625;
+  color: var(--color-on-surface-variant);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-xl) 0 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-low);
+}
+
+@media (min-width: 768px) {
+  .metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.metricText {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.metricValue {
+  margin: 0;
+  font: var(--type-headline-sm);
+  font-weight: 700;
+}
+
+.metricLabel {
+  font: var(--type-tech);
+  color: var(--color-outline);
+}
+
+/* ---- Main grid ---- */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 5fr 7fr;
+  }
+}
+
+.infoColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.card {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-lowest);
+  box-shadow: var(--shadow-sm);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  background: var(--color-surface-low);
+}
+
+.cardHeading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-primary);
+}
+
+.cardHeading h2 {
+  font: var(--type-tech);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-on-surface);
+}
+
+.regionPill {
+  padding: 0.125rem 0.625rem;
+  color: var(--color-on-surface);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+}
+
+.detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.detailLabel {
+  font: var(--type-tech);
+  color: var(--color-outline);
+}
+
+.detailValue {
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.detailLink {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.detailLink:hover {
+  text-decoration: underline;
+}
+
+.detailNote {
+  margin-top: 0.125rem;
+  font: var(--type-body-sm);
+  color: var(--color-outline);
+}
+
+/* Commitments */
+.commitments {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-inverse-surface);
+  color: var(--color-inverse-on-surface);
+  box-shadow: var(--shadow-xl);
+}
+
+.commitmentsGlow {
+  position: absolute;
+  right: -2rem;
+  bottom: -2rem;
+  width: 10rem;
+  height: 10rem;
+  border-radius: var(--radius-round);
+  background: rgb(13 194 255 / 0.1);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.commitmentsTitle {
+  margin: var(--space-sm) 0 var(--space-md);
+  font: var(--type-headline-sm);
+  font-weight: 700;
+  color: var(--color-surface-lowest);
+}
+
+.commitmentList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.commitmentList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.commitmentList li > :first-child {
+  margin-top: 0.125rem;
+}
+
+.commitmentTitle {
+  font: var(--type-tech);
+  font-weight: 700;
+  color: var(--color-surface-lowest);
+}
+
+.commitmentText {
+  font: var(--type-body-sm);
+  color: var(--color-outline-variant);
+}
+
+/* Map */
+.mapCard {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-lowest);
+  box-shadow: var(--shadow-sm);
+}
+
+.mapHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.mapTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font: var(--type-tech);
+  font-weight: 600;
+}
+
+.mapTitle > :first-child {
+  color: var(--color-primary);
+}
+
+.mapLocation {
+  font: var(--type-label);
+  color: var(--color-outline);
+}
+
+.map {
+  position: relative;
+  height: 14rem;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-low);
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+}
+
+.mapFrame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.mapBadge {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  color: var(--color-on-surface);
+}
+
+/* Form card */
+.formCard {
+  overflow: hidden;
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-lowest);
+  box-shadow: var(--shadow-xl);
+}
+
+@media (min-width: 1024px) {
+  .formCard {
+    padding: var(--space-xl);
+  }
+}
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-sm);
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  background: var(--color-surface-low);
+}
+
+@media (min-width: 640px) {
+  .formHeader {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .formHeader {
+    margin: calc(-1 * var(--space-xl)) calc(-1 * var(--space-xl)) var(--space-sm);
+    padding: var(--space-xl) var(--space-xl) var(--space-md);
+  }
+}
+
+.formTitle {
+  font: var(--type-headline-md);
+  font-weight: 700;
+}
+
+/* ---- Showcase ---- */
+.showcaseHeading {
+  margin-bottom: var(--space-lg);
+}
+
+/* ---- Trust ---- */
+.trustGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgb(0 102 136 / 0.1), transparent, rgb(13 194 255 / 0.1));
+  pointer-events: none;
+}
+
+.trustGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .trustGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.trustCard {
+  justify-content: flex-start;
+}
+
+.tenderStrip {
+  margin-top: var(--space-xl);
+}

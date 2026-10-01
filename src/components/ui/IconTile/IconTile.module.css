@@ -1,0 +1,74 @@
+.tile {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+/* ---- Sizes ---- */
+.xs {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-lg);
+}
+
+.sm {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+}
+
+.md {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.lg {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-md);
+}
+
+.round {
+  border-radius: var(--radius-round);
+}
+
+/* ---- Tones ---- */
+.high {
+  background: var(--color-surface-high);
+}
+
+.low {
+  background: var(--color-surface-low);
+}
+
+.white {
+  background: var(--color-surface-lowest);
+  box-shadow: var(--shadow-sm);
+}
+
+.tint {
+  background: rgb(0 102 136 / 0.1);
+}
+
+.cyanSoft {
+  background: rgb(13 194 255 / 0.2);
+  color: var(--color-primary-container);
+}
+
+.cyan {
+  background: var(--color-primary-container);
+  color: var(--color-on-secondary-fixed);
+}
+
+.primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.glassDark {
+  background: rgb(231 238 255 / 0.15);
+  color: var(--color-primary-container);
+}

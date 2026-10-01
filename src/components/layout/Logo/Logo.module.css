@@ -1,0 +1,49 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.mark {
+  width: auto;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.wordmark {
+  font: var(--type-headline-sm);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-on-surface);
+}
+
+.accent {
+  color: var(--color-primary-container);
+}
+
+/* Light tone: wordmark is hidden on very small screens to save space. */
+.light .wordmark {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .light .wordmark {
+    display: inline-block;
+  }
+}
+
+/* Dark tone: mark sits on a white plate. */
+.dark .markFrame {
+  display: inline-block;
+  padding: 0.375rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-lowest);
+}
+
+.dark .mark {
+  height: 1.75rem;
+}
+
+.dark .wordmark {
+  color: var(--color-surface-lowest);
+}

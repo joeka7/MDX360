@@ -1,0 +1,25 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--header-height));
+  padding-top: var(--header-height);
+  background: var(--color-surface);
+  scroll-margin-top: 0;
+}
+
+.skipLink {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-container);
+  color: var(--color-on-secondary-fixed);
+  font: var(--type-tech);
+  font-weight: 700;
+}
+
+.skipLink:focus {
+  top: var(--space-md);
+}

@@ -1,0 +1,117 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  border-radius: var(--radius-lg);
+  font: var(--type-tech);
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.button:disabled {
+  cursor: progress;
+  opacity: 0.85;
+}
+
+.trailing {
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.button:hover .trailing {
+  transform: translateX(0.25rem);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ---- Sizes ---- */
+.sm {
+  padding: 0.625rem var(--space-lg);
+}
+
+.md {
+  padding: 0.875rem 2rem;
+}
+
+.lg {
+  padding: 1.25rem 2rem;
+  gap: 0.75rem;
+  font: var(--type-headline-sm);
+  font-weight: 700;
+}
+
+/* ---- Variants ---- */
+
+/* Electric cyan — primary calls to action. */
+.primary {
+  background: var(--color-primary-container);
+  color: var(--color-on-secondary-fixed);
+  font-weight: 700;
+  box-shadow: var(--glow-cyan);
+}
+
+.primary:hover {
+  background: var(--color-tertiary-container);
+  box-shadow: var(--glow-cyan-strong);
+}
+
+/* Deep teal — secondary emphasis on light surfaces. */
+.secondary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.secondary:hover {
+  background: var(--color-on-primary-container);
+}
+
+/* Subtle surface button. */
+.soft {
+  background: var(--color-surface-low);
+  color: var(--color-on-surface);
+}
+
+.soft:hover {
+  background: var(--color-surface-container);
+}
+
+/* Tonal surface button. */
+.tonal {
+  background: var(--color-surface-high);
+  color: var(--color-on-surface);
+}
+
+.tonal:hover {
+  background: var(--color-surface-highest);
+}
+
+/* White button for dark sections; turns cyan on hover. */
+.light {
+  background: var(--color-surface-lowest);
+  color: var(--color-on-surface);
+  font-weight: 700;
+}
+
+.light:hover {
+  background: var(--color-primary-container);
+  color: var(--color-on-secondary-fixed);
+}
+
+/* Translucent button for dark sections. */
+.ghostDark {
+  background: rgb(231 238 255 / 0.1);
+  color: var(--color-surface-lowest);
+}
+
+.ghostDark:hover {
+  background: rgb(231 238 255 / 0.2);
+}
+

@@ -1,0 +1,23 @@
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.size13 { font-size: 13px; }
+.size14 { font-size: 14px; }
+.size15 { font-size: 15px; }
+.size16 { font-size: 16px; }
+.size18 { font-size: 18px; }
+.size20 { font-size: 20px; }
+.size22 { font-size: 22px; }
+.size24 { font-size: 24px; }
+.size26 { font-size: 26px; }
+.size28 { font-size: 28px; }
+.size36 { font-size: 36px; }

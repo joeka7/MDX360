@@ -1,0 +1,30 @@
+.page {
+  flex-grow: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  max-width: 40rem;
+  padding-block: var(--space-2xl);
+}
+
+.title {
+  font: var(--type-headline-xl);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+}
+
+.lead {
+  font: var(--type-body-lead);
+  color: var(--color-on-surface-variant);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding-top: var(--space-sm);
+}
