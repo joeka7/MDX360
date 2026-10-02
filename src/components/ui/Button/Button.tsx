@@ -5,7 +5,7 @@ import { cx } from '@/utils/cx';
 import { Icon, type IconSize } from '../Icon/Icon';
 import styles from './Button.module.css';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'soft' | 'tonal' | 'light' | 'ghostDark';
+export type ButtonVariant = 'primary' | 'secondary' | 'soft' | 'tonal' | 'light' | 'ghostDark' | 'accentOutline';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface BaseProps {

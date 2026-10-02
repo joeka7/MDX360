@@ -115,3 +115,25 @@
   background: rgb(231 238 255 / 0.2);
 }
 
+/* Cyan-outlined glass button for dark or translucent surfaces; fills cyan on hover. */
+.accentOutline {
+  background: rgb(13 194 255 / 0.1);
+  color: var(--color-surface-lowest);
+  box-shadow: inset 0 0 0 1px rgb(13 194 255 / 0.45);
+}
+
+.accentOutline .trailing {
+  color: var(--color-primary-container);
+}
+
+.accentOutline:hover {
+  background: var(--color-primary-container);
+  color: var(--color-on-secondary-fixed);
+  box-shadow:
+    inset 0 0 0 1px var(--color-primary-container),
+    var(--glow-cyan);
+}
+
+.accentOutline:hover .trailing {
+  color: inherit;
+}
