@@ -4,12 +4,15 @@
   --hero-strip: max(37.5vw, min(75vw, 26rem));
   --hero-ink: rgb(12 19 28);
 
+  /* Run up under the fixed glass header so the photograph shows through it. */
+  margin-top: calc(-1 * var(--header-height));
+  padding-top: calc(var(--header-height) + var(--space-xl));
   padding-bottom: calc(var(--hero-strip) * 0.85);
 }
 
 @media (min-width: 1024px) {
   .hero {
-    padding-top: var(--space-2xl);
+    padding-top: calc(var(--header-height) + var(--space-2xl));
   }
 }
 
