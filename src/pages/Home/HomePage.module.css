@@ -1,46 +1,60 @@
 /* ---- Hero ---- */
+.hero {
+  /* Height of the device lineup strip on narrow screens; never narrower than the viewport. */
+  --hero-strip: max(37.5vw, min(75vw, 26rem));
+  --hero-ink: rgb(12 19 28);
+
+  padding-bottom: calc(var(--hero-strip) * 0.85);
+}
+
 @media (min-width: 1024px) {
   .hero {
-    padding-block: var(--space-2xl);
+    padding-top: var(--space-2xl);
   }
 }
 
-.glowTop,
-.glowBottom,
-.darkGlow {
+@media (min-width: 1200px) {
+  .hero {
+    padding-bottom: var(--space-2xl);
+  }
+}
+
+/*
+ * Photographic hero background. Wide screens: the image covers the whole hero with the
+ * devices on the right and a left-side scrim behind the copy. Narrower screens can't fit
+ * the lineup beside the copy, so the image anchors to the bottom-right and fades into the
+ * matching dark tone above it, keeping the devices clear of the text.
+ */
+.heroBackdrop {
   position: absolute;
-  border-radius: var(--radius-round);
+  inset: 0;
+  background-color: var(--hero-ink);
+  background-image:
+    linear-gradient(
+      to bottom,
+      var(--hero-ink) calc(100% - var(--hero-strip)),
+      rgb(12 19 28 / 0) calc(100% - var(--hero-strip) * 0.75)
+    ),
+    url('@/assets/images/hero.webp');
+  background-position:
+    0 0,
+    right bottom;
+  background-size:
+    100% 100%,
+    auto var(--hero-strip);
+  background-repeat: no-repeat;
   pointer-events: none;
 }
 
-.glowTop {
-  top: -8rem;
-  right: 25%;
-  width: 500px;
-  height: 500px;
-  background: rgb(13 194 255 / 0.1);
-  filter: blur(120px);
-}
-
-.glowBottom {
-  bottom: 2.5rem;
-  left: -10%;
-  width: 420px;
-  height: 420px;
-  background: rgb(231 238 255 / 0.6);
-  filter: blur(100px);
-}
-
-.heroGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  gap: var(--space-xl);
-}
-
-@media (min-width: 1024px) {
-  .heroGrid {
-    grid-template-columns: 7fr 5fr;
+@media (min-width: 1200px) {
+  .heroBackdrop {
+    background-image:
+      linear-gradient(90deg, rgb(9 14 24 / 0.82) 0%, rgb(9 14 24 / 0.5) 38%, rgb(9 14 24 / 0) 58%),
+      url('@/assets/images/hero.webp');
+    background-position:
+      0 0,
+      40% center;
+    background-size: cover;
   }
 }
 
@@ -51,17 +65,25 @@
   gap: var(--space-lg);
 }
 
+@media (min-width: 1024px) {
+  .heroText {
+    max-width: 43rem;
+  }
+}
+
 .statusBadge {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-sm);
   padding: 0.375rem var(--space-md);
+  border: 1px solid rgb(231 238 255 / 0.14);
   border-radius: var(--radius-lg);
-  background: rgb(222 232 255 / 0.8);
+  background: rgb(231 238 255 / 0.08);
+  backdrop-filter: blur(12px);
   font: var(--type-label);
   text-transform: uppercase;
-  color: var(--color-on-surface-variant);
+  color: rgb(236 241 255 / 0.8);
 }
 
 .statusDot {
@@ -84,11 +106,11 @@
 .statusPrimary {
   font-weight: 700;
   letter-spacing: var(--tracking-widest);
-  color: var(--color-primary);
+  color: var(--color-primary-container);
 }
 
 .statusDivider {
-  color: var(--color-outline-variant);
+  color: rgb(231 238 255 / 0.3);
 }
 
 .heroTitle {
@@ -96,7 +118,7 @@
   font-weight: 800;
   line-height: 1;
   letter-spacing: var(--tracking-tight);
-  color: var(--color-on-surface);
+  color: var(--color-surface-lowest);
 }
 
 @media (min-width: 1024px) {
@@ -107,7 +129,7 @@
 }
 
 .gradientText {
-  background: linear-gradient(to right, var(--color-primary), var(--color-primary-container));
+  background: linear-gradient(to right, var(--color-primary-container), var(--color-tertiary-container));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -117,7 +139,7 @@
   max-width: 42rem;
   font: var(--type-body-lead);
   line-height: 1.625;
-  color: var(--color-on-surface-variant);
+  color: rgb(236 241 255 / 0.82);
 }
 
 .heroActions {
@@ -145,8 +167,10 @@
   justify-content: flex-end;
   gap: 0.125rem;
   padding: var(--space-md);
+  border: 1px solid rgb(231 238 255 / 0.12);
   border-radius: var(--radius-md);
-  background: rgb(240 243 255 / 0.7);
+  background: rgb(231 238 255 / 0.07);
+  backdrop-filter: blur(12px);
 }
 
 .metricValue,
@@ -155,11 +179,11 @@
   font: var(--type-headline-lg);
   font-weight: 800;
   letter-spacing: var(--tracking-tight);
-  color: var(--color-on-surface);
+  color: var(--color-surface-lowest);
 }
 
 .metricValueAccent {
-  color: var(--color-primary);
+  color: var(--color-primary-container);
 }
 
 @media (max-width: 639px) {
@@ -179,157 +203,7 @@
   font: var(--type-label);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-on-surface-variant);
-}
-
-/* Flagship stage */
-.stageWrap {
-  position: relative;
-  width: 100%;
-  max-width: 28rem;
-  margin-inline: auto;
-}
-
-@media (min-width: 1024px) {
-  .stageWrap {
-    max-width: none;
-  }
-}
-
-.stagePod {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-2xl);
-  background: linear-gradient(
-    to top right,
-    var(--color-surface-high),
-    var(--color-surface-low),
-    var(--color-surface-lowest)
-  );
-  box-shadow: var(--shadow-xl);
-  transform: rotate(1deg) scale(0.95);
-}
-
-.stage {
-  position: relative;
-  overflow: hidden;
-  padding: var(--space-md);
-  border-radius: var(--radius-2xl);
-  background: var(--color-surface-lowest);
-  box-shadow: var(--shadow-2xl);
-}
-
-.stageHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: var(--space-sm);
-}
-
-.stageRef {
-  font: var(--type-label);
-  color: var(--color-on-surface-variant);
-}
-
-.stageMedia {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1;
-  overflow: hidden;
-  padding: var(--space-sm);
-  border-radius: var(--radius-xl);
-  background: linear-gradient(to bottom, var(--color-surface-lowest), var(--color-surface-container));
-}
-
-.stageImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 25px rgb(0 102 136 / 0.2));
-  transition: transform 700ms var(--ease-out);
-}
-
-.stageImage:hover {
-  transform: scale(1.05);
-}
-
-.telemetry {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  margin-top: var(--space-md);
-  padding: var(--space-md);
-  border-radius: var(--radius-xl);
-  background: var(--color-surface-low);
-  transition: background-color var(--duration-base) var(--ease-out);
-}
-
-.telemetry:hover {
-  background: var(--color-surface-container);
-}
-
-.telemetryTitle {
-  font: var(--type-headline-sm);
-  font-weight: 700;
-}
-
-.telemetryText {
-  font: var(--type-tech);
-  color: var(--color-on-surface-variant);
-}
-
-.telemetryIcon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: var(--radius-lg);
-  background: var(--color-primary-container);
-  color: var(--color-on-secondary-fixed);
-}
-
-.lifestyleToken {
-  position: absolute;
-  bottom: -1.5rem;
-  left: -1.5rem;
-  display: none;
-  align-items: center;
-  gap: var(--space-sm);
-  max-width: 20rem;
-  padding: var(--space-sm);
-  border-radius: var(--radius-xl);
-  background: var(--color-surface-lowest);
-  box-shadow: var(--shadow-2xl);
-}
-
-@media (min-width: 640px) {
-  .lifestyleToken {
-    display: flex;
-  }
-}
-
-.tokenImage {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: var(--radius-md);
-  object-fit: cover;
-  object-position: top;
-}
-
-.tokenTitle {
-  padding-right: var(--space-sm);
-  font: var(--type-tech);
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.tokenText {
-  font: var(--type-label);
-  color: var(--color-on-surface-variant);
+  color: rgb(236 241 255 / 0.72);
 }
 
 /* ---- Pillars ---- */
@@ -363,12 +237,15 @@
 
 /* ---- Capabilities ---- */
 .darkGlow {
+  position: absolute;
   right: -5rem;
   bottom: -5rem;
   width: 24rem;
   height: 24rem;
   background: rgb(13 194 255 / 0.1);
+  border-radius: var(--radius-round);
   filter: blur(100px);
+  pointer-events: none;
 }
 
 .capabilitiesHeading {
