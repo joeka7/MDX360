@@ -57,7 +57,8 @@
   --space-xl: 2.5rem;
   --space-2xl: 4rem;
   --gutter: 1rem;
-  --container-max: 80rem;
+  /* Shared content width (1500px). A max, never a fixed width: below it the container is fluid. */
+  --container-max: 93.75rem;
   --header-height: 5rem;
 
   /* ---- Radius ---- */
@@ -85,9 +86,22 @@
   --duration-slow: 500ms;
 }
 
+/* Side gutters step up with the viewport so content never meets the screen edge. */
+@media (min-width: 640px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
 @media (min-width: 1024px) {
   :root {
     --gutter: 2rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --gutter: 3rem;
   }
 }
 
