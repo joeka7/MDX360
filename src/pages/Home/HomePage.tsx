@@ -1,15 +1,12 @@
-import { Link } from 'react-router-dom';
-import modelsDuo from '@/assets/images/people/models-duo.webp';
 import { CtaStrip, EnquiryForm, FeatureCard, FeatureNote } from '@/components/common';
 import { ProductGrid } from '@/components/products';
 import { Button, Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
-import { getProductBySlug, getProductsBySlugs } from '@/data/products';
+import { getProductsBySlugs } from '@/data/products';
 import { company, routes } from '@/data/site';
 import { capabilities, enquiryBenefits, featuredProductSlugs, heroMetrics, pillars } from './content';
 import styles from './HomePage.module.css';
 
 const featuredProducts = getProductsBySlugs(featuredProductSlugs);
-const flagship = getProductBySlug('shape-master');
 
 export function HomePage() {
   return (
@@ -18,93 +15,46 @@ export function HomePage() {
 
       {/* Hero */}
       <Section
-        tone="lowest"
+        tone="dark"
         spacing="sm"
         className={styles.hero}
-        background={
-          <>
-            <span className={styles.glowTop} aria-hidden="true" />
-            <span className={styles.glowBottom} aria-hidden="true" />
-          </>
-        }
+        background={<span className={styles.heroBackdrop} aria-hidden="true" />}
       >
-        <div className={styles.heroGrid}>
-          <div className={styles.heroText}>
-            <span className={styles.statusBadge}>
-              <span className={styles.statusDot} aria-hidden="true" />
-              <span className={styles.statusPrimary}>Advanced Medical Technologies</span>
-              <span className={styles.statusDivider} aria-hidden="true">
-                |
-              </span>
-              <span>Global ISO 13485</span>
+        <div className={styles.heroText}>
+          <span className={styles.statusBadge}>
+            <span className={styles.statusDot} aria-hidden="true" />
+            <span className={styles.statusPrimary}>Advanced Medical Technologies</span>
+            <span className={styles.statusDivider} aria-hidden="true">
+              |
             </span>
+            <span>Global ISO 13485</span>
+          </span>
 
-            <h1 className={styles.heroTitle}>
-              Shaping the Future of <span className={styles.gradientText}>Medical &amp; Aesthetic</span> Technology
-            </h1>
-            <p className={styles.heroLead}>
-              We engineer, develop, and manufacture enterprise-grade clinical energy systems and non-invasive medical
-              platforms, delivering micron-level diagnostic precision and transformative treatment outcomes.
-            </p>
+          <h1 className={styles.heroTitle}>
+            Shaping the Future of <span className={styles.gradientText}>Medical &amp; Aesthetic</span> Technology
+          </h1>
+          <p className={styles.heroLead}>
+            We engineer, develop, and manufacture enterprise-grade clinical energy systems and non-invasive medical
+            platforms, delivering micron-level diagnostic precision and transformative treatment outcomes.
+          </p>
 
-            <div className={styles.heroActions}>
-              <Button href="#featured-devices" trailingIcon="arrow_forward">
-                Explore Devices
-              </Button>
-              <Button href="#enquiry-portal" variant="soft" icon="verified_user" className={styles.softAction}>
-                Enquire Now
-              </Button>
-            </div>
-
-            <dl className={styles.metrics}>
-              {heroMetrics.map((metric) => (
-                <div key={metric.label} className={styles.metric}>
-                  <dt className={styles.metricLabel}>{metric.label}</dt>
-                  <dd className={metric.accent ? styles.metricValueAccent : styles.metricValue}>{metric.value}</dd>
-                </div>
-              ))}
-            </dl>
+          <div className={styles.heroActions}>
+            <Button href="#featured-devices" trailingIcon="arrow_forward">
+              Explore Devices
+            </Button>
+            <Button href="#enquiry-portal" variant="soft" icon="verified_user" className={styles.softAction}>
+              Enquire Now
+            </Button>
           </div>
 
-          {flagship && (
-            <div className={styles.stageWrap}>
-              <div className={styles.stagePod} aria-hidden="true" />
-              <div className={styles.stage}>
-                <div className={styles.stageHeader}>
-                  <Pill tone="muted" dot="static">
-                    Flagship Platform
-                  </Pill>
-                  <span className={styles.stageRef}>MDX-SM-2025</span>
-                </div>
-                <div className={styles.stageMedia}>
-                  <img
-                    src={flagship.image.src}
-                    alt={flagship.image.alt}
-                    width={1000}
-                    height={1000}
-                    fetchPriority="high"
-                    className={styles.stageImage}
-                  />
-                </div>
-                <Link to={routes.product(flagship.slug)} className={styles.telemetry}>
-                  <div>
-                    <h2 className={styles.telemetryTitle}>{flagship.name}™</h2>
-                    <p className={styles.telemetryText}>Multi-Applicator Deep Tissue Cavitation &amp; RF</p>
-                  </div>
-                  <span className={styles.telemetryIcon} aria-hidden="true">
-                    <Icon name="bolt" size={20} />
-                  </span>
-                </Link>
+          <dl className={styles.metrics}>
+            {heroMetrics.map((metric) => (
+              <div key={metric.label} className={styles.metric}>
+                <dt className={styles.metricLabel}>{metric.label}</dt>
+                <dd className={metric.accent ? styles.metricValueAccent : styles.metricValue}>{metric.value}</dd>
               </div>
-              <div className={styles.lifestyleToken}>
-                <img src={modelsDuo} alt="" width={674} height={1000} className={styles.tokenImage} />
-                <div>
-                  <p className={styles.tokenTitle}>Surgical Precision</p>
-                  <p className={styles.tokenText}>Zero Down-Time Protocols</p>
-                </div>
-              </div>
-            </div>
-          )}
+            ))}
+          </dl>
         </div>
       </Section>
 
