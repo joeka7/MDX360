@@ -1,4 +1,4 @@
-import type { CountryCode, NavLink } from '@/types/site';
+import type { CountryCode, NavLink, SocialLink } from '@/types/site';
 
 /**
  * Company-wide contact and brand details.
@@ -32,6 +32,8 @@ export const routes = {
   privacy: '/privacy-policy',
   terms: '/terms-of-service',
   product: (slug: string) => `/products/${slug}`,
+  /** Products page pre-filtered to a category (read by ProductsPage's `category` param). */
+  productCategory: (categoryId: string) => `/products?category=${categoryId}`,
 } as const;
 
 export const mainNav: NavLink[] = [
@@ -48,29 +50,24 @@ export const footerNav: NavLink[] = [
   { label: 'Contact Us', to: routes.contact },
 ];
 
+/** Not linked from the footer yet: these routes have no pages in the router. */
 export const legalNav: NavLink[] = [
   { label: 'Privacy Policy', to: routes.privacy },
   { label: 'Terms of Service', to: routes.terms },
 ];
 
-/** Products listed in the footer "Product Lines" column. */
-export const footerProductSlugs = [
-  'shape-master',
-  '7d-hifo',
-  'ice-gold-rf',
-  'quantum-lift',
-  'hydro-plasma',
-  'nova-glow',
-  'slim-wave-pro',
-  'shock-wave-x',
-];
+/** Products listed in the footer "Devices" column. */
+export const footerProductSlugs = ['shape-master', '7d-hifo', 'ice-gold-rf', 'quantum-lift', 'hydro-plasma'];
 
-/** Social links — URLs to be supplied by the client. */
-export const socialLinks = [
-  { icon: 'share', label: 'Share', href: '#' },
-  { icon: 'public', label: 'Website', href: '#' },
-  { icon: 'forum', label: 'Community', href: '#' },
-  { icon: 'play_circle', label: 'Video channel', href: '#' },
+/**
+ * Social profiles shown in the footer. Only entries with a URL are rendered: add the client's
+ * profile URLs here to enable them, never placeholder links.
+ */
+export const socialLinks: SocialLink[] = [
+  { platform: 'linkedin', label: 'LinkedIn', href: '' },
+  { platform: 'instagram', label: 'Instagram', href: '' },
+  { platform: 'facebook', label: 'Facebook', href: '' },
+  { platform: 'x', label: 'X', href: '' },
 ];
 
 export const countryCodes: CountryCode[] = [
