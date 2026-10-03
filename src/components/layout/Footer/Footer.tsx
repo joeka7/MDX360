@@ -1,115 +1,137 @@
-import type { ReactNode } from 'react';
+import type { IconType } from 'react-icons';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-import { Icon, Pill } from '@/components/ui';
-import { getProductsBySlugs } from '@/data/products';
-import { company, footerNav, footerProductSlugs, legalNav, routes, socialLinks } from '@/data/site';
+import { Container, Icon } from '@/components/ui';
+import { getProductsBySlugs, productCategories } from '@/data/products';
+import { company, footerNav, footerProductSlugs, routes, socialLinks } from '@/data/site';
+import type { NavLink, SocialPlatform } from '@/types/site';
 import { Logo } from '../Logo/Logo';
 import styles from './Footer.module.css';
 
-const footerProducts = getProductsBySlugs(footerProductSlugs);
+interface FooterLinkGroup {
+  title: string;
+  links: NavLink[];
+}
 
+const linkGroups: FooterLinkGroup[] = [
+  {
+    title: 'Treatment Areas',
+    links: productCategories.map((category) => ({
+      label: category.label,
+      to: routes.productCategory(category.id),
+    })),
+  },
+  {
+    title: 'Devices',
+    links: [
+      ...getProductsBySlugs(footerProductSlugs).map((product) => ({
+        label: product.name,
+        to: routes.product(product.slug),
+      })),
+      { label: 'View All Devices', to: routes.products },
+    ],
+  },
+  { title: 'Company', links: footerNav },
+];
+
+const socialIcons: Record<SocialPlatform, IconType> = {
+  linkedin: FaLinkedinIn,
+  instagram: FaInstagram,
+  facebook: FaFacebookF,
+  x: FaXTwitter,
+};
+
+/** Profiles without a configured URL are left out rather than linked to a placeholder. */
+const activeSocialLinks = socialLinks.filter((social) => social.href);
+
+/** Global site footer: brand block and link columns, then copyright and certifications. */
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <div className={styles.grid}>
+      <Container>
+        <div className={styles.top}>
           <div className={styles.brand}>
-            <Logo tone="dark" />
+            <Logo tone="inverse" />
             <p className={styles.tagline}>{company.tagline}</p>
-            <div className={styles.certs}>
-              {company.certifications.map((cert) => (
-                <Pill key={cert} tone="outlineDark" dot="static">
-                  {cert}
-                </Pill>
+
+            <ul className={styles.promises}>
+              {company.promises.map((promise) => (
+                <li key={promise.label} className={styles.promise}>
+                  <Icon name={promise.icon} size={18} className={styles.promiseIcon} />
+                  {promise.label}
+                </li>
               ))}
-            </div>
+            </ul>
+
+            {activeSocialLinks.length > 0 && (
+              <ul className={styles.social} aria-label={`${company.name} on social media`}>
+                {activeSocialLinks.map((social) => {
+                  const SocialIcon = socialIcons[social.platform];
+                  return (
+                    <li key={social.platform}>
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.socialLink}
+                        aria-label={`${company.name} on ${social.label}`}
+                      >
+                        <SocialIcon aria-hidden="true" focusable="false" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
 
-          <FooterColumn title="Navigation">
-            <ul className={styles.links}>
-              {footerNav.map((link) => (
-                <li key={link.to}>
-                  <Link to={link.to} className={styles.link}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </FooterColumn>
-
-          <FooterColumn title="Product Lines">
-            <ul className={styles.links}>
-              {footerProducts.map((product) => (
-                <li key={product.slug}>
-                  <Link to={routes.product(product.slug)} className={styles.link}>
-                    {product.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </FooterColumn>
-
-          <FooterColumn title="Corporate Hub">
-            <address className={styles.contact}>
-              <div className={styles.contactRow}>
-                <Icon name="location_on" size={18} className={styles.contactIcon} />
-                <span>{company.address}</span>
+          <nav className={styles.columns} aria-label="Footer">
+            {linkGroups.map((group) => (
+              <div key={group.title} className={styles.group}>
+                <h2 className={styles.groupTitle}>{group.title}</h2>
+                <ul className={styles.links}>
+                  {group.links.map((link) => (
+                    <li key={link.to}>
+                      <Link to={link.to} className={styles.link}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className={styles.contactRow}>
-                <Icon name="call" size={18} className={styles.contactIcon} />
-                <a href={company.phoneHref} className={styles.link}>
-                  {company.phone}
-                </a>
-              </div>
-              <div className={styles.contactRow}>
-                <Icon name="mail" size={18} className={styles.contactIcon} />
+            ))}
+
+            <div className={styles.group}>
+              <h2 className={styles.groupTitle}>Get in Touch</h2>
+              <address className={styles.links}>
                 <a href={`mailto:${company.email}`} className={styles.link}>
                   {company.email}
                 </a>
-              </div>
-              <div className={styles.promises}>
-                {company.promises.map((promise) => (
-                  <div key={promise.label} className={styles.promise}>
-                    <Icon name={promise.icon} size={18} className={styles.contactIcon} />
-                    <span>{promise.label}</span>
-                  </div>
-                ))}
-              </div>
-            </address>
-          </FooterColumn>
+                <a href={company.phoneHref} className={styles.link}>
+                  {company.phone}
+                </a>
+                <span>{company.address}</span>
+                <span className={styles.hours}>{company.supportHours}</span>
+              </address>
+            </div>
+          </nav>
         </div>
 
         <div className={styles.bottom}>
           <p>
             © {year} {company.legalName}. All rights reserved.
           </p>
-          <nav className={styles.legal} aria-label="Legal">
-            {legalNav.map((link) => (
-              <Link key={link.to} to={link.to} className={styles.link}>
-                {link.label}
-              </Link>
+          <ul className={styles.certs} aria-label="Certifications">
+            {company.certifications.map((cert) => (
+              <li key={cert} className={styles.cert}>
+                {cert}
+              </li>
             ))}
-          </nav>
-          <div className={styles.social}>
-            {socialLinks.map((social) => (
-              <a key={social.icon} href={social.href} className={styles.socialLink} aria-label={social.label}>
-                <Icon name={social.icon} size={16} />
-              </a>
-            ))}
-          </div>
+          </ul>
         </div>
-      </div>
+      </Container>
     </footer>
-  );
-}
-
-function FooterColumn({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div>
-      <h3 className={styles.columnTitle}>{title}</h3>
-      {children}
-    </div>
   );
 }
