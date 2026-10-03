@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button, Icon } from '@/components/ui';
+import { ButtonWithIcon, Icon } from '@/components/ui';
 import { company, mainNav, routes } from '@/data/site';
 import { cx } from '@/utils/cx';
 import { Logo } from '../Logo/Logo';
@@ -105,15 +105,9 @@ export function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <Button
-            to={headerCta.to}
-            size="sm"
-            variant="accentOutline"
-            trailingIcon="arrow_forward"
-            className={styles.cta}
-          >
+          <ButtonWithIcon to={headerCta.to} size="sm" className={styles.cta}>
             {headerCta.label}
-          </Button>
+          </ButtonWithIcon>
           <button
             ref={toggleRef}
             type="button"
@@ -178,9 +172,9 @@ export function Header() {
         </nav>
 
         <div className={styles.mobileFooter}>
-          <Button to={headerCta.to} fullWidth trailingIcon="arrow_forward" onClick={closeMenu}>
+          <ButtonWithIcon to={headerCta.to} size="md" fullWidth onClick={closeMenu}>
             {headerCta.label}
-          </Button>
+          </ButtonWithIcon>
           <p className={styles.mobileContact}>
             <span className={styles.mobileContactLabel}>Corporate Contact</span>
             <a href={`mailto:${company.email}`}>{company.email}</a>

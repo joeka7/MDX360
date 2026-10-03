@@ -1,0 +1,97 @@
+/*
+ * Pill CTA with a travelling icon. The label's side padding swaps on hover while the circle
+ * moves across, so the total width never changes and nothing around it shifts.
+ */
+.button {
+  --bwi-height: 2.5rem;
+  --bwi-circle: 2rem;
+  --bwi-inset: 0.25rem;
+  --bwi-pad: 1.25rem;
+  /* Clears the circle plus a small gap. */
+  --bwi-pad-icon: calc(var(--bwi-circle) + var(--bwi-inset) + 0.75rem);
+  --bwi-duration: 500ms;
+  --bwi-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--bwi-height);
+  padding-inline: var(--bwi-pad) var(--bwi-pad-icon);
+  overflow: hidden;
+  border-radius: var(--radius-round);
+  background: var(--color-primary-container);
+  color: var(--color-on-secondary-fixed);
+  font: var(--type-tech);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: padding var(--bwi-duration) var(--bwi-ease);
+}
+
+.md {
+  --bwi-height: 3rem;
+  --bwi-circle: 2.5rem;
+  --bwi-pad: 1.5rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+}
+
+.iconWrap {
+  position: absolute;
+  top: var(--bwi-inset);
+  right: var(--bwi-inset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--bwi-circle);
+  height: var(--bwi-circle);
+  border-radius: var(--radius-round);
+  background: var(--color-on-secondary-fixed);
+  color: var(--color-surface-lowest);
+  pointer-events: none;
+  transition: right var(--bwi-duration) var(--bwi-ease);
+}
+
+.icon {
+  transition: transform var(--bwi-duration) var(--bwi-ease);
+}
+
+/* Active state: keyboard focus always, hover only where a real pointer can hover. */
+.button:focus-visible {
+  padding-inline: var(--bwi-pad-icon) var(--bwi-pad);
+}
+
+.button:focus-visible .iconWrap {
+  right: calc(100% - var(--bwi-circle) - var(--bwi-inset));
+}
+
+.button:focus-visible .icon {
+  transform: rotate(45deg);
+}
+
+@media (hover: hover) {
+  .button:hover:not(:disabled) {
+    padding-inline: var(--bwi-pad-icon) var(--bwi-pad);
+  }
+
+  .button:hover:not(:disabled) .iconWrap {
+    right: calc(100% - var(--bwi-circle) - var(--bwi-inset));
+  }
+
+  .button:hover:not(:disabled) .icon {
+    transform: rotate(45deg);
+  }
+}
