@@ -53,7 +53,7 @@ export function Footer() {
       <Container>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <Logo tone="inverse" />
+            <Logo tone="inverse" className={styles.logo} />
             <p className={styles.tagline}>{company.tagline}</p>
 
             <ul className={styles.promises}>
