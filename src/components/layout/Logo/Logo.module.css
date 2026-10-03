@@ -50,7 +50,7 @@
 
 /* Inverse tone: the mark carries the full name, rendered white on dark surfaces. */
 .inverse .mark {
-  height: 2.25rem;
+  height: var(--logo-height, 2.25rem);
   filter: brightness(0) invert(1);
   opacity: 0.94;
 }

@@ -57,6 +57,10 @@
   gap: var(--space-lg);
 }
 
+.logo {
+  --logo-height: 4.25rem;
+}
+
 .tagline {
   max-width: 26rem;
   font: var(--type-body-sm);
@@ -201,13 +205,4 @@
   font: var(--type-label);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-}
-
-.cert::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: var(--radius-round);
-  background: var(--color-primary-container);
-  box-shadow: 0 0 6px rgb(13 194 255 / 0.6);
 }
