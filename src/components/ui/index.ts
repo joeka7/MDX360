@@ -1,5 +1,6 @@
 export { Breadcrumbs, type BreadcrumbItem } from './Breadcrumbs/Breadcrumbs';
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from './Button/Button';
+export { ButtonWithIcon, type ButtonWithIconProps, type ButtonWithIconSize } from './ButtonWithIcon/ButtonWithIcon';
 export { Eyebrow } from './Eyebrow/Eyebrow';
 export { Checkbox, Field, Input, Select, Textarea } from './Form/Form';
 export { Icon, type IconSize } from './Icon/Icon';
@@ -7,4 +8,5 @@ export { IconTile, type IconTileTone } from './IconTile/IconTile';
 export { Pill, type PillTone } from './Pill/Pill';
 export { Container, Section, type SectionTone } from './Section/Section';
 export { SectionHeading } from './SectionHeading/SectionHeading';
+export { SmokyButton, type SmokeColors, type SmokyButtonProps } from './SmokyButton/SmokyButton';
 export { TextLink } from './TextLink/TextLink';
