@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode } from 'react';
+import { Link, NavLink, useMatch } from 'react-router-dom';
 import { ButtonWithIcon, Icon } from '@/components/ui';
-import { company, mainNav, routes } from '@/data/site';
+import { company, homeNav, mainNav, routes } from '@/data/site';
 import { cx } from '@/utils/cx';
 import { Logo } from '../Logo/Logo';
 import styles from './Header.module.css';
@@ -29,10 +29,45 @@ function useScrolled() {
 
 const indexLabel = (index: number) => String(index + 1).padStart(2, '0');
 
-/** Global site header: floating glass bar on desktop, full-screen menu on mobile. */
+interface MenuLinkProps {
+  to: string;
+  className: string;
+  activeClassName: string;
+  onClick?: () => void;
+  children: ReactNode;
+}
+
+/** Nav link marked as current on its route. In-page anchors (`/#…`) are never marked current. */
+function MenuLink({ to, className, activeClassName, onClick, children }: MenuLinkProps) {
+  if (to.includes('#')) {
+    return (
+      <Link to={to} className={className} onClick={onClick}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <NavLink
+      to={to}
+      end={to === routes.home}
+      className={({ isActive }) => cx(className, isActive && activeClassName)}
+      onClick={onClick}
+    >
+      {children}
+    </NavLink>
+  );
+}
+
+/**
+ * Global site header: floating glass bar on desktop, full-screen menu on mobile.
+ * On the home page it renders as a plain white bar with an outlined Enquire button.
+ */
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const scrolled = useScrolled();
+  const isHome = useMatch(routes.home) !== null;
+  const navLinks = isHome ? homeNav : mainNav;
   const overlayRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -87,27 +122,28 @@ export function Header() {
   };
 
   return (
-    <header className={cx(styles.header, scrolled && styles.scrolled)}>
+    <header className={cx(styles.header, isHome && styles.light, scrolled && styles.scrolled)}>
       <div className={styles.bar}>
-        <Logo tone="inverse" className={styles.logo} />
+        <Logo tone={isHome ? 'ink' : 'inverse'} className={styles.logo} />
 
         <nav className={styles.nav} aria-label="Main">
-          {mainNav.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === routes.home}
-              className={({ isActive }) => cx(styles.navLink, isActive && styles.navLinkActive)}
-            >
+          {navLinks.map((link) => (
+            <MenuLink key={link.to} to={link.to} className={styles.navLink} activeClassName={styles.navLinkActive}>
               {link.label}
-            </NavLink>
+            </MenuLink>
           ))}
         </nav>
 
         <div className={styles.actions}>
-          <ButtonWithIcon to={headerCta.to} size="sm" className={styles.cta}>
-            {headerCta.label}
-          </ButtonWithIcon>
+          {isHome ? (
+            <Link to={headerCta.to} className={cx(styles.cta, styles.outlineCta)}>
+              Enquire
+            </Link>
+          ) : (
+            <ButtonWithIcon to={headerCta.to} size="sm" className={styles.cta}>
+              {headerCta.label}
+            </ButtonWithIcon>
+          )}
           <button
             ref={toggleRef}
             type="button"
@@ -152,12 +188,12 @@ export function Header() {
 
         <nav className={styles.mobileNav} aria-label="Mobile">
           <ol className={styles.mobileList}>
-            {mainNav.map((link, index) => (
+            {navLinks.map((link, index) => (
               <li key={link.to} className={styles.mobileItem}>
-                <NavLink
+                <MenuLink
                   to={link.to}
-                  end={link.to === routes.home}
-                  className={({ isActive }) => cx(styles.mobileLink, isActive && styles.mobileLinkActive)}
+                  className={styles.mobileLink}
+                  activeClassName={styles.mobileLinkActive}
                   onClick={closeMenu}
                 >
                   <span className={styles.mobileIndex} aria-hidden="true">
@@ -165,7 +201,7 @@ export function Header() {
                   </span>
                   <span className={styles.mobileLabel}>{link.label}</span>
                   <Icon name="arrow_forward" size={20} className={styles.mobileArrow} />
-                </NavLink>
+                </MenuLink>
               </li>
             ))}
           </ol>

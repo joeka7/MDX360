@@ -5,7 +5,8 @@ import { getProductsBySlugs } from '@/data/products';
 import { company, routes } from '@/data/site';
 import { useInView } from '@/hooks/useInView';
 import { cx } from '@/utils/cx';
-import { capabilities, enquiryBenefits, featuredProductSlugs, heroMetrics, pillars } from './content';
+import { capabilities, enquiryBenefits, featuredProductSlugs, pillars } from './content';
+import { HomeHero } from './HomeHero/HomeHero';
 import styles from './HomePage.module.css';
 
 const featuredProducts = getProductsBySlugs(featuredProductSlugs);
@@ -17,53 +18,10 @@ export function HomePage() {
     <>
       <title>MDX360 | Advanced Medical Aesthetics &amp; Clinical Energy Systems</title>
 
-      {/* Hero */}
-      <Section
-        tone="dark"
-        spacing="sm"
-        className={styles.hero}
-        background={<span className={styles.heroBackdrop} aria-hidden="true" />}
-      >
-        <div className={styles.heroText}>
-          <span className={styles.heroBadge}>
-            <span className={styles.heroBadgeDot} aria-hidden="true" />
-            <span className={styles.heroBadgeLabel}>Advanced Medical Technologies</span>
-            <span className={styles.heroBadgeDivider} aria-hidden="true">
-              |
-            </span>
-            <span>Global ISO 13485</span>
-          </span>
+      <HomeHero />
 
-          <h1 className={styles.heroTitle}>
-            Shaping the Future of <span className={styles.heroTitleAccent}>Medical &amp; Aesthetic</span> Technology
-          </h1>
-          <p className={styles.heroLead}>
-            We engineer, develop, and manufacture enterprise-grade clinical energy systems and non-invasive medical
-            platforms, delivering micron-level diagnostic precision and transformative treatment outcomes.
-          </p>
-
-          <div className={styles.heroActions}>
-            <Button href="#featured-devices" trailingIcon="arrow_forward">
-              Explore Devices
-            </Button>
-            <Button href="#enquiry-portal" variant="soft" icon="verified_user" className={styles.heroSecondaryAction}>
-              Enquire Now
-            </Button>
-          </div>
-
-          <dl className={styles.metrics}>
-            {heroMetrics.map((metric) => (
-              <div key={metric.label} className={styles.metric}>
-                <dt className={styles.metricLabel}>{metric.label}</dt>
-                <dd className={cx(styles.metricValue, metric.accent && styles.metricValueAccent)}>{metric.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </Section>
-
-      {/* Innovation pillars */}
-      <Section tone="low">
+      {/* Innovation pillars (the home header's "Technology" link targets this section) */}
+      <Section tone="low" id="technology">
         <SectionHeading
           size="xl"
           eyebrow="Clinical Architecture"

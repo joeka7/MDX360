@@ -8,9 +8,10 @@ import styles from './Logo.module.css';
 interface LogoProps {
   /**
    * `light` for light backgrounds, `dark` frames the mark on a white plate,
-   * `inverse` renders the mark alone in white for dark or glass surfaces.
+   * `inverse` renders the mark alone in white for dark or glass surfaces,
+   * `ink` renders the mark alone in its native black for white bars.
    */
-  tone?: 'light' | 'dark' | 'inverse';
+  tone?: 'light' | 'dark' | 'inverse' | 'ink';
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }

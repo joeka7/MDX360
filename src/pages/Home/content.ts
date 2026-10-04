@@ -1,10 +1,15 @@
 import type { IconName } from '@/types/product';
 
-export const heroMetrics = [
-  { value: '12+', label: 'Proprietary Systems', accent: true },
-  { value: '12-Mo', label: 'OEM Guarantee' },
-  { value: '100%', label: 'Turnkey Protocol' },
+/** Hero trust strip. */
+export const heroTrust = [
+  { label: 'Quality', value: 'ISO 13485 manufacturing' },
+  { label: 'Portfolio', value: '12+ proprietary systems' },
+  { label: 'Warranty', value: '12-month OEM guarantee' },
+  { label: 'Support', value: 'Turnkey clinic setup' },
 ];
+
+/** Model named in the hero's flagship callout. Placeholder until the flagship model is confirmed. */
+export const heroFlagshipName = '[Model name]';
 
 export const pillars: Array<{ icon: IconName; title: string; body: string; footer: string }> = [
   {

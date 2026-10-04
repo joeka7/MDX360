@@ -43,6 +43,14 @@ export const mainNav: NavLink[] = [
   { label: 'Contact Us', to: routes.contact },
 ];
 
+/** Home page header links. The logo links home, so there is no Home entry. */
+export const homeNav: NavLink[] = [
+  { label: 'Products', to: routes.products },
+  { label: 'Technology', to: `${routes.home}#technology` },
+  { label: 'About', to: routes.about },
+  { label: 'Contact', to: routes.contact },
+];
+
 export const footerNav: NavLink[] = [
   { label: 'Home', to: routes.home },
   { label: 'About Us', to: routes.about },
