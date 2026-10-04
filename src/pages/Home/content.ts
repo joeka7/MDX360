@@ -1,4 +1,8 @@
+import excimerImage from '@/assets/images/products/308nm_Excimer.webp';
+import flagshipImage from '@/assets/images/products/5 in 1 7D+Microneedle rf+Vmax+Vaginal+Liposonix.webp';
+import magnetoImage from '@/assets/images/products/A0271 Physio Magneto.webp';
 import type { IconName } from '@/types/product';
+import type { HeroDevice } from './HomeHero/HeroDevices';
 
 /** Hero trust strip. */
 export const heroTrust = [
@@ -8,8 +12,30 @@ export const heroTrust = [
   { label: 'Support', value: 'Turnkey clinic setup' },
 ];
 
-/** Model named in the hero's flagship callout. Placeholder until the flagship model is confirmed. */
-export const heroFlagshipName = '[Model name]';
+/**
+ * Hero device composition. The first entry is the flagship and starts in front.
+ * `crop` is the measured device silhouette inside each square cut-out (percent of the canvas).
+ */
+export const heroDevices: HeroDevice[] = [
+  {
+    name: '5-in-1 7D Platform',
+    image: flagshipImage,
+    alt: '5-in-1 7D platform with microneedle RF, Vmax, vaginal and Liposonix handpieces',
+    crop: { x: 26.3, y: 7.6, width: 47.5, height: 88.4 },
+  },
+  {
+    name: '308nm Excimer',
+    image: excimerImage,
+    alt: '308nm excimer phototherapy system with a single handpiece',
+    crop: { x: 33.7, y: 14.5, width: 37.8, height: 78.3 },
+  },
+  {
+    name: 'A0271 Physio Magneto',
+    image: magnetoImage,
+    alt: 'A0271 Physio Magneto therapy system with an articulated treatment head',
+    crop: { x: 27.9, y: 7.2, width: 44.4, height: 87.7 },
+  },
+];
 
 export const pillars: Array<{ icon: IconName; title: string; body: string; footer: string }> = [
   {

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '@/components/ui';
 import { company, routes } from '@/data/site';
-import { heroFlagshipName, heroTrust } from '../content';
+import { heroDevices, heroTrust } from '../content';
 import { HeroDevices } from './HeroDevices';
 import styles from './HomeHero.module.css';
 
-/** Home page hero: copy and CTAs beside the device lineup, with a trust strip below. */
+/** Home page hero: copy and CTAs beside the device composition, with a trust strip below. */
 export function HomeHero() {
   return (
     <section className={styles.hero} aria-labelledby="home-hero-title">
@@ -34,7 +34,7 @@ export function HomeHero() {
             </div>
           </div>
 
-          <HeroDevices flagshipName={heroFlagshipName} />
+          <HeroDevices devices={heroDevices} />
         </div>
 
         <dl className={styles.trust}>
