@@ -20,8 +20,8 @@ export function HomePage() {
 
       <HomeHero />
 
-      {/* Innovation pillars (the home header's "Technology" link targets this section) */}
-      <Section tone="low" id="technology">
+      {/* Innovation pillars */}
+      <Section tone="low">
         <SectionHeading
           size="xl"
           eyebrow="Clinical Architecture"

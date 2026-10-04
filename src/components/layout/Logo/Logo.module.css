@@ -58,12 +58,3 @@
 .inverse .wordmark {
   display: none;
 }
-
-/* Ink tone: the mark alone, unfiltered, on white surfaces. */
-.ink .mark {
-  height: var(--logo-height, 2.25rem);
-}
-
-.ink .wordmark {
-  display: none;
-}
