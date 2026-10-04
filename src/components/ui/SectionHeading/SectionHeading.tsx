@@ -32,7 +32,7 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   const heading = (
-    <div className={cx(styles.heading, styles[align], styles[size])}>
+    <div className={cx(styles.copy, styles[align], styles[size])}>
       {eyebrow && (
         <Eyebrow tone={tone} dot={eyebrowDot}>
           {eyebrow}
@@ -43,10 +43,10 @@ export function SectionHeading({
     </div>
   );
 
-  if (!aside) return <div className={cx(styles.wrapper, className)}>{heading}</div>;
+  if (!aside) return <div className={cx(styles.sectionHeading, className)}>{heading}</div>;
 
   return (
-    <div className={cx(styles.wrapper, styles.withAside, className)}>
+    <div className={cx(styles.sectionHeading, styles.withAside, className)}>
       {heading}
       <div className={styles.aside}>{aside}</div>
     </div>

@@ -35,8 +35,8 @@ export function CtaBanner({ badge, title, description, highlights, actions }: Ct
           {highlights && (
             <ul className={styles.highlights}>
               {highlights.map((item) => (
-                <li key={item.label}>
-                  <Icon name={item.icon} size={18} />
+                <li key={item.label} className={styles.highlight}>
+                  <Icon name={item.icon} size={18} className={styles.highlightIcon} />
                   <span>{item.label}</span>
                 </li>
               ))}

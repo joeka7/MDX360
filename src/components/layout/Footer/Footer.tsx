@@ -89,7 +89,7 @@ export function Footer() {
 
           <nav className={styles.columns} aria-label="Footer">
             {linkGroups.map((group) => (
-              <div key={group.title} className={styles.group}>
+              <div key={group.title}>
                 <h2 className={styles.groupTitle}>{group.title}</h2>
                 <ul className={styles.links}>
                   {group.links.map((link) => (
@@ -103,7 +103,7 @@ export function Footer() {
               </div>
             ))}
 
-            <div className={styles.group}>
+            <div>
               <h2 className={styles.groupTitle}>Get in Touch</h2>
               <address className={styles.links}>
                 <a href={`mailto:${company.email}`} className={styles.link}>

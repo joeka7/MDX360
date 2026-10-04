@@ -68,13 +68,13 @@
   color: var(--color-outline-variant);
 }
 
-.highlights li {
+.highlight {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
 
-.highlights li > :first-child {
+.highlightIcon {
   color: var(--color-primary-container);
 }
 

@@ -29,7 +29,7 @@
   gap: var(--space-md);
 }
 
-.text {
+.copy {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);

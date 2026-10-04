@@ -21,7 +21,7 @@
   color: var(--color-on-surface);
 }
 
-.active {
+.optionActive {
   background: var(--color-surface-lowest);
   color: var(--color-on-surface);
   font-weight: 600;

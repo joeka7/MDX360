@@ -1,8 +1,8 @@
-.page {
+.hero {
   flex-grow: 1;
 }
 
-.content {
+.heroText {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -11,18 +11,18 @@
   padding-block: var(--space-2xl);
 }
 
-.title {
+.heroTitle {
   font: var(--type-headline-xl);
   font-weight: 800;
   letter-spacing: var(--tracking-tight);
 }
 
-.lead {
+.heroLead {
   font: var(--type-body-lead);
   color: var(--color-on-surface-variant);
 }
 
-.actions {
+.heroActions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);

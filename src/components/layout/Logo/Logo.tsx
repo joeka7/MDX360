@@ -28,7 +28,7 @@ export function Logo({ tone = 'light', className, onClick }: LogoProps) {
         <img src={logo} alt="" className={styles.mark} width={332} height={93} />
       </span>
       <span className={styles.wordmark} aria-hidden="true">
-        MDX<span className={styles.accent}>360</span>
+        MDX<span className={styles.wordmarkAccent}>360</span>
       </span>
     </Link>
   );

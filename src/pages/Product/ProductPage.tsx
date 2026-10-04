@@ -59,7 +59,7 @@ function ProductTemplate({ product }: { product: Product }) {
             </Pill>
             {detail?.deviceClass && (
               <span className={styles.deviceClass}>
-                <Icon name="verified" size={14} />
+                <Icon name="verified" size={14} className={styles.deviceClassIcon} />
                 {detail.deviceClass}
               </span>
             )}
@@ -73,24 +73,24 @@ function ProductTemplate({ product }: { product: Product }) {
           <ProductGallery items={gallery} badges={detail?.heroBadges} note={detail?.consoleNote} />
 
           <div className={styles.heroText}>
-            <Pill tone="muted" dot="static" className={styles.heroEyebrow}>
+            <Pill tone="muted" dot="static" className={styles.heroBadge}>
               {detail?.eyebrow ?? product.categoryLabel}
             </Pill>
-            <div className={styles.titleGroup}>
-              <h1 className={styles.title}>
+            <div className={styles.heroTitleGroup}>
+              <h1 className={styles.heroTitle}>
                 {product.name}
-                <span className={styles.titleDot}>.</span>
+                <span className={styles.heroTitleDot}>.</span>
               </h1>
-              <p className={styles.tagline}>{detail?.tagline ?? product.technology}</p>
+              <p className={styles.heroTagline}>{detail?.tagline ?? product.technology}</p>
             </div>
-            <p className={styles.overview}>{detail?.overview ?? product.description}</p>
+            <p className={styles.heroLead}>{detail?.overview ?? product.description}</p>
 
             {detail?.keySpecs && (
               <dl className={styles.keySpecs}>
                 {detail.keySpecs.map((spec) => (
                   <div key={spec.label} className={styles.keySpec}>
                     <dt className={styles.keySpecLabel}>{spec.label}</dt>
-                    <dd className={cx(styles.keySpecValue, spec.accent && styles.accent)}>{spec.value}</dd>
+                    <dd className={cx(styles.keySpecValue, spec.accent && styles.keySpecValueAccent)}>{spec.value}</dd>
                     <dd className={styles.keySpecNote}>{spec.note}</dd>
                   </div>
                 ))}
@@ -102,19 +102,19 @@ function ProductTemplate({ product }: { product: Product }) {
                 Enquire About This Product
               </Button>
               {specifications && (
-                <Button href="#tech-specs" variant="tonal" icon="description" size="sm" className={styles.tonalAction}>
+                <Button href="#tech-specs" variant="tonal" icon="description" size="sm" className={styles.heroSecondaryAction}>
                   Clinical Protocol Sheet
                 </Button>
               )}
             </div>
 
-            <ul className={styles.trust}>
-              <li>
-                <Icon name="verified_user" size={16} />
+            <ul className={styles.assurances}>
+              <li className={styles.assurance}>
+                <Icon name="verified_user" size={16} className={styles.assuranceIcon} />
                 12-Month Factory Guarantee
               </li>
-              <li>
-                <Icon name="flight_takeoff" size={16} />
+              <li className={styles.assurance}>
+                <Icon name="flight_takeoff" size={16} className={styles.assuranceIcon} />
                 Global Direct Dispatch
               </li>
             </ul>
@@ -126,7 +126,7 @@ function ProductTemplate({ product }: { product: Product }) {
       {mechanisms && (
         <Section tone="low">
           <SectionHeading eyebrow={mechanisms.eyebrow} title={mechanisms.title} intro={mechanisms.intro} />
-          <div className={styles.threeCol}>
+          <div className={styles.mechanismGrid}>
             {mechanisms.items.map((item) => (
               <FeatureCard
                 key={item.title}
@@ -153,7 +153,7 @@ function ProductTemplate({ product }: { product: Product }) {
             eyebrow={indications.eyebrow}
             title={indications.title}
             intro={indications.intro}
-            aside={indications.badge && <span className={styles.badgeNote}>{indications.badge}</span>}
+            aside={indications.badge && <span className={styles.indicationsBadge}>{indications.badge}</span>}
           />
           <div className={cx(styles.indicationGrid, indications.items.length === 3 && styles.indicationGrid3)}>
             {indications.items.map((item) => (
@@ -189,8 +189,8 @@ function ProductTemplate({ product }: { product: Product }) {
                   <h3 className={styles.kitTitle}>Standard Delivery Kit</h3>
                   <ul className={styles.kitList}>
                     {specifications.deliveryKit.map((item) => (
-                      <li key={item}>
-                        <Icon name="check_circle" size={18} />
+                      <li key={item} className={styles.kitItem}>
+                        <Icon name="check_circle" size={18} className={styles.kitItemIcon} />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -251,15 +251,15 @@ function ProductTemplate({ product }: { product: Product }) {
             </ul>
           </div>
 
-          <div className={styles.enquiryCard}>
+          <div className={styles.enquiryFormCard}>
             <EnquiryForm
               variant="product"
               product={product}
               submitLabel={`Submit ${product.name} Clinical Enquiry`}
               header={
-                <div className={styles.formHeader}>
+                <div className={styles.enquiryFormHeader}>
                   <Eyebrow>Enquiry Focus</Eyebrow>
-                  <h3 className={styles.formTitle}>Request Specifications &amp; Live Demo</h3>
+                  <h3 className={styles.enquiryFormTitle}>Request Specifications &amp; Live Demo</h3>
                 </div>
               }
             />

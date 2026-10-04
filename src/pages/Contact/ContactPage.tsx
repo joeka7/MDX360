@@ -35,21 +35,21 @@ export function ContactPage() {
       <title>Contact MDX360 | Clinical Enquiries &amp; Global Headquarters</title>
 
       {/* Header */}
-      <Section tone="lowest" spacing="none" className={styles.header}>
+      <Section tone="lowest" spacing="none" className={styles.hero}>
         <Breadcrumbs
           separator="slash"
           homeIcon
           items={[{ label: 'Home', to: routes.home }, { label: 'Contact Us' }]}
           className={styles.breadcrumbs}
         />
-        <div className={styles.intro}>
+        <div className={styles.heroText}>
           <Pill tone="muted" dot="ping">
             Global Headquarters &amp; Clinical Inquiries
           </Pill>
-          <h1 className={styles.title}>
-            Get in Touch with Our <span className={styles.accent}>Medical Technology</span> Team
+          <h1 className={styles.heroTitle}>
+            Get in Touch with Our <span className={styles.heroTitleAccent}>Medical Technology</span> Team
           </h1>
-          <p className={styles.lead}>
+          <p className={styles.heroLead}>
             Whether you are evaluating clinical energy systems for hospital deployment, requesting certified clinical
             trials data, or booking an on-site surgical demonstration, our biomedical specialists provide direct
             consultative support.
@@ -70,15 +70,15 @@ export function ContactPage() {
 
       {/* Contact details & enquiry form */}
       <Section tone="surface">
-        <div className={styles.mainGrid}>
+        <div className={styles.contactGrid}>
           <div className={styles.infoColumn}>
-            <div className={styles.card}>
-              <div className={styles.cardHeader}>
-                <span className={styles.cardHeading}>
+            <div className={styles.hqCard}>
+              <div className={styles.hqCardHeader}>
+                <span className={styles.hqCardHeading}>
                   <Icon name="corporate_fare" size={22} />
-                  <h2>Regional Headquarters</h2>
+                  <h2 className={styles.hqCardTitle}>Regional Headquarters</h2>
                 </span>
-                <Pill tone="cyan" className={styles.regionPill}>
+                <Pill tone="cyan" className={styles.regionBadge}>
                   MENA Command
                 </Pill>
               </div>
@@ -106,13 +106,13 @@ export function ContactPage() {
               </ul>
             </div>
 
-            <div className={styles.commitments}>
+            <div className={styles.commitmentsCard}>
               <span className={styles.commitmentsGlow} aria-hidden="true" />
               <Eyebrow tone="dark">Standard Enterprise Inclusions</Eyebrow>
               <h2 className={styles.commitmentsTitle}>Our Clinical Commitments</h2>
-              <ul className={styles.commitmentList}>
+              <ul className={styles.commitments}>
                 {clinicalCommitments.map((item) => (
-                  <li key={item.title}>
+                  <li key={item.title} className={styles.commitment}>
                     <IconTile icon={item.icon} size="xs" tone="glassDark" round />
                     <div>
                       <p className={styles.commitmentTitle}>{item.title}</p>
@@ -126,7 +126,7 @@ export function ContactPage() {
             <div className={styles.mapCard}>
               <div className={styles.mapHeader}>
                 <span className={styles.mapTitle}>
-                  <Icon name="explore" size={18} />
+                  <Icon name="explore" size={18} className={styles.mapTitleIcon} />
                   Regional Engineering Campus
                 </span>
                 <span className={styles.mapLocation}>Abu Dhabi, UAE</span>
@@ -146,17 +146,17 @@ export function ContactPage() {
             </div>
           </div>
 
-          <div ref={formRef} className={styles.formCard}>
+          <div ref={formRef} className={styles.enquiryFormCard}>
             <EnquiryForm
               variant="general"
               device={device}
               onDeviceChange={setDevice}
               quickSelectSlugs={quickSelectSlugs}
               header={
-                <div className={styles.formHeader}>
+                <div className={styles.enquiryFormHeader}>
                   <div>
                     <Eyebrow>Direct Practitioner Portal</Eyebrow>
-                    <h2 className={styles.formTitle}>Send a Direct Clinical Enquiry</h2>
+                    <h2 className={styles.enquiryFormTitle}>Send a Direct Clinical Enquiry</h2>
                   </div>
                   <Pill tone="solid" icon="bolt">
                     Priority Routing

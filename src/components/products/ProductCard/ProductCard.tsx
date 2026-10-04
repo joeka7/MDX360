@@ -41,7 +41,7 @@ export function ProductCard({ product, variant = 'catalog', onEnquire, headingLe
           <div>
             <div className={styles.featureTop}>
               <span className={styles.category}>{product.categoryLabel}</span>
-              <span className={styles.dot} aria-hidden="true" />
+              <span className={styles.categoryDot} aria-hidden="true" />
             </div>
             <Link to={href} className={styles.media} tabIndex={-1} aria-hidden="true">
               {image}
@@ -51,7 +51,7 @@ export function ProductCard({ product, variant = 'catalog', onEnquire, headingLe
           </div>
           <div className={styles.footer}>
             <span className={styles.highlight}>{product.highlight}</span>
-            <Link to={href} className={styles.discover}>
+            <Link to={href} className={styles.discoverLink}>
               Discover <span className="visually-hidden">{product.name}</span>
               <Icon name="arrow_right_alt" size={18} />
             </Link>
@@ -74,11 +74,11 @@ export function ProductCard({ product, variant = 'catalog', onEnquire, headingLe
                 {product.name}
               </Link>
             </Heading>
-            <p className={cx(styles.description, styles.clamp)}>{product.summary}</p>
+            <p className={cx(styles.description, styles.descriptionClamped)}>{product.summary}</p>
           </div>
           <div className={styles.footer}>
-            <span className={styles.metaCaps}>{product.highlight}</span>
-            <button type="button" className={styles.enquire} onClick={() => onEnquire?.(product)}>
+            <span className={styles.highlight}>{product.highlight}</span>
+            <button type="button" className={styles.enquireButton} onClick={() => onEnquire?.(product)}>
               Enquire <span className="visually-hidden">about {product.name}</span>
             </button>
           </div>
@@ -135,7 +135,7 @@ export function ProductCard({ product, variant = 'catalog', onEnquire, headingLe
                 <span>
                   Discover Device <span className="visually-hidden">: {product.name}</span>
                 </span>
-                <Icon name="arrow_forward" size={18} className={styles.ctaArrow} />
+                <Icon name="arrow_forward" size={18} className={styles.catalogCtaArrow} />
               </Link>
             </div>
           </div>

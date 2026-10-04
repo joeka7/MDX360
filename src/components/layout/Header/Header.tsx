@@ -89,7 +89,7 @@ export function Header() {
   return (
     <header className={cx(styles.header, scrolled && styles.scrolled)}>
       <div className={styles.bar}>
-        <Logo tone="inverse" className={styles.brand} />
+        <Logo tone="inverse" className={styles.logo} />
 
         <nav className={styles.nav} aria-label="Main">
           {mainNav.map((link) => (
@@ -137,7 +137,7 @@ export function Header() {
         onKeyDown={handleOverlayKeyDown}
       >
         <div className={styles.overlayBar}>
-          <Logo tone="inverse" className={styles.brand} onClick={closeMenu} />
+          <Logo tone="inverse" className={styles.logo} onClick={closeMenu} />
           <button
             ref={closeRef}
             type="button"

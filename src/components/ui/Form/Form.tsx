@@ -40,9 +40,9 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & { icon?: IconName };
 export function Input({ icon, className, ...props }: InputProps) {
   if (!icon) return <input className={cx(styles.control, className)} {...props} />;
   return (
-    <div className={styles.withIcon}>
+    <div className={styles.controlGroup}>
       <Icon name={icon} size={18} className={styles.leadingIcon} />
-      <input className={cx(styles.control, styles.hasIcon, className)} {...props} />
+      <input className={cx(styles.control, styles.controlWithIcon, className)} {...props} />
     </div>
   );
 }
@@ -51,9 +51,9 @@ type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & { icon?: IconName }
 
 export function Select({ icon, className, children, ...props }: SelectProps) {
   return (
-    <div className={styles.withIcon}>
+    <div className={styles.controlGroup}>
       {icon && <Icon name={icon} size={18} className={styles.leadingIcon} />}
-      <select className={cx(styles.control, styles.select, icon && styles.hasIcon, className)} {...props}>
+      <select className={cx(styles.control, styles.select, icon && styles.controlWithIcon, className)} {...props}>
         {children}
       </select>
       <Icon name="expand_more" size={18} className={styles.trailingIcon} />

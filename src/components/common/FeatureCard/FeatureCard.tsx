@@ -26,9 +26,10 @@ interface FeatureCardProps {
   className?: string;
 }
 
-const paddingClass = { md: styles.padMd, lg: styles.padLg, xl: styles.padXl };
+const paddingClass = { md: styles.paddingMd, lg: styles.paddingLg, xl: styles.paddingXl };
 const hoverClass = { shadow: styles.hoverShadow, lift: styles.hoverLift, tint: styles.hoverTint };
 const bodyClass = { sm: styles.bodySm, md: styles.bodyMd };
+const titleClass = { display: styles.titleDisplay, caps: styles.titleCaps };
 
 const defaultIconTone: Record<NonNullable<FeatureCardProps['tone']>, IconTileTone> = {
   white: 'high',
@@ -71,7 +72,7 @@ export function FeatureCard({
         </div>
         <div className={styles.heading}>
           {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
-          <Heading className={cx(styles.title, styles[titleStyle])}>{title}</Heading>
+          <Heading className={cx(styles.title, titleClass[titleStyle])}>{title}</Heading>
         </div>
         <div className={cx(styles.body, bodyClass[bodySize])}>{children}</div>
       </div>

@@ -81,7 +81,7 @@
   }
 }
 
-.statusBadge {
+.heroBadge {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
@@ -96,7 +96,7 @@
   color: rgb(236 241 255 / 0.8);
 }
 
-.statusDot {
+.heroBadgeDot {
   position: relative;
   width: 0.5rem;
   height: 0.5rem;
@@ -104,7 +104,7 @@
   background: var(--color-primary-container);
 }
 
-.statusDot::after {
+.heroBadgeDot::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -113,13 +113,13 @@
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-.statusPrimary {
+.heroBadgeLabel {
   font-weight: 700;
   letter-spacing: var(--tracking-widest);
   color: var(--color-primary-container);
 }
 
-.statusDivider {
+.heroBadgeDivider {
   color: rgb(231 238 255 / 0.3);
 }
 
@@ -138,7 +138,7 @@
   }
 }
 
-.gradientText {
+.heroTitleAccent {
   background: linear-gradient(to right, var(--color-primary-container), var(--color-tertiary-container));
   -webkit-background-clip: text;
   background-clip: text;
@@ -158,7 +158,7 @@
   gap: var(--space-md);
 }
 
-.softAction :global(.material-symbols-outlined) {
+.heroSecondaryAction :global(.material-symbols-outlined) {
   color: var(--color-primary);
 }
 
@@ -183,8 +183,14 @@
   backdrop-filter: blur(12px);
 }
 
-.metricValue,
-.metricValueAccent {
+.metricLabel {
+  font: var(--type-label);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: rgb(236 241 255 / 0.72);
+}
+
+.metricValue {
   margin: 0;
   font: var(--type-headline-lg);
   font-weight: 800;
@@ -201,19 +207,11 @@
     padding: 0.75rem;
   }
 
-  .metricValue,
-  .metricValueAccent {
+  .metricValue {
     font: var(--type-headline-md);
     font-weight: 800;
     white-space: nowrap;
   }
-}
-
-.metricLabel {
-  font: var(--type-label);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: rgb(236 241 255 / 0.72);
 }
 
 /* ---- Pillars ---- */
@@ -233,6 +231,78 @@
   border-radius: var(--radius-xl);
 }
 
+/* Entrance (`.reveal`, then `.revealInView` once scrolled into view): the grid rises in, then
+   each card follows on a short stagger.
+   `backwards` fill holds the start state through each delay and releases the
+   card afterwards, so its own hover transitions are untouched. */
+.reveal,
+.reveal > * {
+  opacity: 0;
+}
+
+.revealInView {
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  animation: revealRise 900ms var(--reveal-ease) backwards;
+}
+
+.revealInView,
+.revealInView > * {
+  opacity: 1;
+}
+
+.revealInView > * {
+  animation: revealRiseItem 750ms var(--reveal-ease) backwards;
+  animation-delay: calc(120ms + var(--reveal-index, 0) * 110ms);
+}
+
+.revealInView > :nth-child(2) {
+  --reveal-index: 1;
+}
+
+.revealInView > :nth-child(3) {
+  --reveal-index: 2;
+}
+
+.revealInView > :nth-child(4) {
+  --reveal-index: 3;
+}
+
+.revealInView > :nth-child(5) {
+  --reveal-index: 4;
+}
+
+.revealInView > :nth-child(6) {
+  --reveal-index: 5;
+}
+
+@keyframes revealRise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+@keyframes revealRiseItem {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media (max-width: 767px) {
+  .revealInView {
+    animation-name: revealRiseItem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal > * {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 /* ---- Device catalogue ---- */
 .gradeNote {
   font: var(--type-label);
@@ -246,7 +316,7 @@
 }
 
 /* ---- Capabilities ---- */
-.darkGlow {
+.capabilitiesGlow {
   position: absolute;
   right: -5rem;
   bottom: -5rem;
@@ -343,7 +413,7 @@
   padding-top: var(--space-md);
 }
 
-.benefits li {
+.benefit {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
@@ -351,11 +421,11 @@
   color: var(--color-on-surface);
 }
 
-.benefits li > :first-child {
+.benefitIcon {
   color: var(--color-primary);
 }
 
-.fastContacts {
+.enquiryContacts {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -365,12 +435,12 @@
 }
 
 @media (min-width: 640px) {
-  .fastContacts {
+  .enquiryContacts {
     flex-direction: row;
   }
 }
 
-.fastContacts a:hover {
+.enquiryContacts a:hover {
   color: var(--color-primary);
 }
 

@@ -25,7 +25,7 @@ export function ProductGallery({ items, badges, note }: ProductGalleryProps) {
           alt={active.alt}
           width={1000}
           height={1000}
-          className={cx(styles.mainImage, active.fit === 'cover' && styles.cover)}
+          className={cx(styles.mainImage, active.fit === 'cover' && styles.mainImageCover)}
         />
 
         {badges && (
@@ -43,7 +43,7 @@ export function ProductGallery({ items, badges, note }: ProductGalleryProps) {
 
         {note && (
           <span className={styles.note}>
-            <Icon name="zoom_in" size={16} />
+            <Icon name="zoom_in" size={16} className={styles.noteIcon} />
             {note}
           </span>
         )}
@@ -64,7 +64,7 @@ export function ProductGallery({ items, badges, note }: ProductGalleryProps) {
                 src={item.src}
                 alt=""
                 loading="lazy"
-                className={cx(styles.thumbImage, item.fit === 'cover' && styles.cover)}
+                className={cx(styles.thumbImage, item.fit === 'cover' && styles.thumbImageCover)}
               />
               <span className={cx(styles.thumbLabel, item.fit === 'cover' && styles.thumbLabelDark)}>
                 {item.label}

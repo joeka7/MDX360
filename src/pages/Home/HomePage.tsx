@@ -3,12 +3,16 @@ import { ProductGrid } from '@/components/products';
 import { Button, Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
 import { getProductsBySlugs } from '@/data/products';
 import { company, routes } from '@/data/site';
+import { useInView } from '@/hooks/useInView';
+import { cx } from '@/utils/cx';
 import { capabilities, enquiryBenefits, featuredProductSlugs, heroMetrics, pillars } from './content';
 import styles from './HomePage.module.css';
 
 const featuredProducts = getProductsBySlugs(featuredProductSlugs);
 
 export function HomePage() {
+  const [pillarGridRef, pillarGridInView] = useInView<HTMLDivElement>(0.2);
+
   return (
     <>
       <title>MDX360 | Advanced Medical Aesthetics &amp; Clinical Energy Systems</title>
@@ -21,17 +25,17 @@ export function HomePage() {
         background={<span className={styles.heroBackdrop} aria-hidden="true" />}
       >
         <div className={styles.heroText}>
-          <span className={styles.statusBadge}>
-            <span className={styles.statusDot} aria-hidden="true" />
-            <span className={styles.statusPrimary}>Advanced Medical Technologies</span>
-            <span className={styles.statusDivider} aria-hidden="true">
+          <span className={styles.heroBadge}>
+            <span className={styles.heroBadgeDot} aria-hidden="true" />
+            <span className={styles.heroBadgeLabel}>Advanced Medical Technologies</span>
+            <span className={styles.heroBadgeDivider} aria-hidden="true">
               |
             </span>
             <span>Global ISO 13485</span>
           </span>
 
           <h1 className={styles.heroTitle}>
-            Shaping the Future of <span className={styles.gradientText}>Medical &amp; Aesthetic</span> Technology
+            Shaping the Future of <span className={styles.heroTitleAccent}>Medical &amp; Aesthetic</span> Technology
           </h1>
           <p className={styles.heroLead}>
             We engineer, develop, and manufacture enterprise-grade clinical energy systems and non-invasive medical
@@ -42,7 +46,7 @@ export function HomePage() {
             <Button href="#featured-devices" trailingIcon="arrow_forward">
               Explore Devices
             </Button>
-            <Button href="#enquiry-portal" variant="soft" icon="verified_user" className={styles.softAction}>
+            <Button href="#enquiry-portal" variant="soft" icon="verified_user" className={styles.heroSecondaryAction}>
               Enquire Now
             </Button>
           </div>
@@ -51,7 +55,7 @@ export function HomePage() {
             {heroMetrics.map((metric) => (
               <div key={metric.label} className={styles.metric}>
                 <dt className={styles.metricLabel}>{metric.label}</dt>
-                <dd className={metric.accent ? styles.metricValueAccent : styles.metricValue}>{metric.value}</dd>
+                <dd className={cx(styles.metricValue, metric.accent && styles.metricValueAccent)}>{metric.value}</dd>
               </div>
             ))}
           </dl>
@@ -66,7 +70,10 @@ export function HomePage() {
           title="Revolutionizing Patient Care with Advanced Medical Devices"
           intro="At MDX360, we are dedicated to pushing the boundaries of healthcare technology. Our innovative devices are designed to enhance diagnostics, streamline treatments, and improve patient outcomes across aesthetic and regenerative medical practices."
         />
-        <div className={styles.pillarGrid}>
+        <div
+          ref={pillarGridRef}
+          className={cx(styles.pillarGrid, styles.reveal, pillarGridInView && styles.revealInView)}
+        >
           {pillars.map((pillar) => (
             <FeatureCard
               key={pillar.title}
@@ -110,7 +117,7 @@ export function HomePage() {
       </Section>
 
       {/* Enterprise capabilities */}
-      <Section tone="dark" background={<span className={styles.darkGlow} aria-hidden="true" />}>
+      <Section tone="dark" background={<span className={styles.capabilitiesGlow} aria-hidden="true" />}>
         <SectionHeading
           size="xl"
           tone="dark"
@@ -151,13 +158,13 @@ export function HomePage() {
             </p>
             <ul className={styles.benefits}>
               {enquiryBenefits.map((benefit) => (
-                <li key={benefit}>
-                  <Icon name="check_circle" size={20} />
+                <li key={benefit} className={styles.benefit}>
+                  <Icon name="check_circle" size={20} className={styles.benefitIcon} />
                   {benefit}
                 </li>
               ))}
             </ul>
-            <div className={styles.fastContacts}>
+            <div className={styles.enquiryContacts}>
               <div>
                 <Eyebrow>Regional Office</Eyebrow>
                 <p>{company.address}</p>

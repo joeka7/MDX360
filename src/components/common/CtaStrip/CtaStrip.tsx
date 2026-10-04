@@ -31,7 +31,7 @@ export function CtaStrip({
     <div className={cx(styles.strip, styles[tone], className)}>
       <div className={styles.message}>
         {icon && <IconTile icon={icon} size="lg" tone={iconTone} round={iconRound} />}
-        <div className={styles.text}>
+        <div className={styles.copy}>
           <p className={styles.title}>{title}</p>
           <p className={styles.description}>{description}</p>
         </div>

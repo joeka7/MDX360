@@ -26,7 +26,7 @@ export function Breadcrumbs({
   className,
 }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className={cx(styles.breadcrumbs, styles[variant], className)}>
+    <nav aria-label="Breadcrumb" className={cx(styles[variant], className)}>
       <ol className={styles.list}>
         {items.map((item, index) => {
           const isLast = index === items.length - 1;

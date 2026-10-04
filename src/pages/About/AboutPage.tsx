@@ -20,8 +20,8 @@ export function AboutPage() {
         className={styles.hero}
         background={
           <>
-            <span className={styles.glowTop} aria-hidden="true" />
-            <span className={styles.glowSide} aria-hidden="true" />
+            <span className={styles.heroGlowTop} aria-hidden="true" />
+            <span className={styles.heroGlowSide} aria-hidden="true" />
           </>
         }
       >
@@ -38,7 +38,7 @@ export function AboutPage() {
               About MDX360 Momentum Device
             </Pill>
             <h1 className={styles.heroTitle}>
-              Advancing Medical Technology with <span className={styles.accent}>Clinical Precision</span> and
+              Advancing Medical Technology with <span className={styles.heroTitleAccent}>Clinical Precision</span> and
               Unwavering Quality.
             </h1>
             <p className={styles.heroLead}>
@@ -50,7 +50,7 @@ export function AboutPage() {
               {heroMetrics.map((metric) => (
                 <div key={metric.label} className={styles.metric}>
                   <dt className={styles.metricLabel}>{metric.label}</dt>
-                  <dd className={cx(styles.metricValue, metric.accent && styles.accent)}>{metric.value}</dd>
+                  <dd className={cx(styles.metricValue, metric.accent && styles.metricValueAccent)}>{metric.value}</dd>
                 </div>
               ))}
             </dl>
@@ -66,15 +66,15 @@ export function AboutPage() {
                 fetchPriority="high"
                 className={styles.frameImage}
               />
-              <figcaption className={styles.specBanner}>
-                <span className={styles.specIcon} aria-hidden="true">
+              <figcaption className={styles.caption}>
+                <span className={styles.captionIcon} aria-hidden="true">
                   <Icon name="medical_services" size={22} />
                 </span>
-                <span className={styles.specText}>
-                  <span className={styles.specTitle}>Surgical &amp; Aesthetic Systems</span>
-                  <span className={styles.specSubtitle}>Non-Invasive High Frequency Tech</span>
+                <span className={styles.captionText}>
+                  <span className={styles.captionTitle}>Surgical &amp; Aesthetic Systems</span>
+                  <span className={styles.captionSubtitle}>Non-Invasive High Frequency Tech</span>
                 </span>
-                <span className={styles.specDot} aria-hidden="true" />
+                <span className={styles.captionDot} aria-hidden="true" />
               </figcaption>
             </figure>
             <div className={styles.floatingCard}>
@@ -91,11 +91,11 @@ export function AboutPage() {
       {/* Corporate integrity */}
       <Section tone="low" spacing="lg">
         <div className={styles.integrityHeader}>
-          <div className={styles.integrityTitle}>
+          <div className={styles.integrityHeading}>
             <Eyebrow tone="muted" dot>
               Corporate Integrity
             </Eyebrow>
-            <h2>Engineered from Concept to Production for Global Standards.</h2>
+            <h2 className={styles.integrityTitle}>Engineered from Concept to Production for Global Standards.</h2>
           </div>
           <div className={styles.integrityCopy}>
             <p className={styles.integrityLead}>
@@ -110,7 +110,7 @@ export function AboutPage() {
             </p>
           </div>
         </div>
-        <div className={styles.threeCol}>
+        <div className={styles.engineeringGrid}>
           {engineeringPanels.map((panel) => (
             <FeatureCard
               key={panel.title}
@@ -131,7 +131,7 @@ export function AboutPage() {
           eyebrow="Strategic Horizon"
           title="Our Foundation & Future"
           intro="The core guiding principles shaping every device that leaves our research facilities."
-          className={styles.centeredHeading}
+          className={styles.statementsHeading}
         />
         <div className={styles.statements}>
           <StatementCard {...statements.mission} tone="light" />
@@ -151,7 +151,7 @@ export function AboutPage() {
           }
           className={styles.pillarsHeading}
         />
-        <div className={styles.fourCol}>
+        <div className={styles.pillarGrid}>
           {operationalPillars.map((pillar, index) => (
             <FeatureCard
               key={pillar.title}

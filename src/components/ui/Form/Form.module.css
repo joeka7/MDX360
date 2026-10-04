@@ -44,12 +44,12 @@
   box-shadow: 0 0 0 2px var(--color-primary-container);
 }
 
-.withIcon {
+.controlGroup {
   position: relative;
   width: 100%;
 }
 
-.hasIcon {
+.controlWithIcon {
   padding-left: 2.5rem;
 }
 

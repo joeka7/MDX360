@@ -45,7 +45,7 @@
   transform: scale(1.05);
 }
 
-.mainImage.cover {
+.mainImageCover {
   border-radius: var(--radius-sm);
   object-fit: cover;
   filter: none;
@@ -92,7 +92,7 @@
   color: var(--color-outline-variant);
 }
 
-.note > :first-child {
+.noteIcon {
   color: var(--color-primary);
 }
 
@@ -133,7 +133,7 @@
   transition: transform var(--duration-base) var(--ease-out);
 }
 
-.thumbImage.cover {
+.thumbImageCover {
   border-radius: var(--radius-xs);
   object-fit: cover;
 }

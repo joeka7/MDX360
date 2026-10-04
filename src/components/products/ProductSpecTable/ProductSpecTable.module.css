@@ -40,11 +40,11 @@
   }
 }
 
-.numeric {
+.valueNumeric {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-variant-numeric: tabular-nums;
 }
 
-.accent {
+.valueAccent {
   color: var(--color-primary);
 }

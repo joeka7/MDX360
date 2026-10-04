@@ -49,7 +49,7 @@
   z-index: 1;
 }
 
-.iconWrap {
+.iconCircle {
   position: absolute;
   top: var(--bwi-inset);
   right: var(--bwi-inset);
@@ -74,7 +74,7 @@
   padding-inline: var(--bwi-pad-icon) var(--bwi-pad);
 }
 
-.button:focus-visible .iconWrap {
+.button:focus-visible .iconCircle {
   right: calc(100% - var(--bwi-circle) - var(--bwi-inset));
 }
 
@@ -87,7 +87,7 @@
     padding-inline: var(--bwi-pad-icon) var(--bwi-pad);
   }
 
-  .button:hover:not(:disabled) .iconWrap {
+  .button:hover:not(:disabled) .iconCircle {
     right: calc(100% - var(--bwi-circle) - var(--bwi-inset));
   }
 

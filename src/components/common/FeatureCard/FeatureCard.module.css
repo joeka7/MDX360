@@ -43,21 +43,21 @@
 }
 
 /* ---- Padding ---- */
-.padMd {
+.paddingMd {
   padding: var(--space-lg);
 }
 
-.padLg {
+.paddingLg {
   padding: 2rem;
 }
 
-.padXl {
+.paddingXl {
   padding: var(--space-xl);
 }
 
 @media (max-width: 767px) {
-  .padLg,
-  .padXl {
+  .paddingLg,
+  .paddingXl {
     padding: var(--space-lg);
   }
 }
@@ -98,12 +98,12 @@
   color: var(--color-on-surface);
 }
 
-.display {
+.titleDisplay {
   font: var(--type-headline-sm);
   font-weight: 700;
 }
 
-.caps {
+.titleCaps {
   font: var(--type-tech);
   font-weight: 700;
   letter-spacing: var(--tracking-wide);

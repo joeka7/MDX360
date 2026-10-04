@@ -24,7 +24,7 @@ export function ProductCategoryFilter({ categories, value, onChange, totalCount 
         <button
           key={option.id}
           type="button"
-          className={cx(styles.option, value === option.id && styles.active)}
+          className={cx(styles.option, value === option.id && styles.optionActive)}
           aria-pressed={value === option.id}
           onClick={() => onChange(option.id)}
         >

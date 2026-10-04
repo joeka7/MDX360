@@ -23,7 +23,7 @@ export function ProductGrid({
   className,
 }: ProductGridProps) {
   return (
-    <ul className={cx(styles.grid, columns === 4 ? styles.cols4 : styles.cols3, className)}>
+    <ul className={cx(styles.grid, columns === 4 ? styles.columns4 : styles.columns3, className)}>
       {products.map((product) => (
         <li key={product.slug}>
           <ProductCard product={product} variant={variant} onEnquire={onEnquire} headingLevel={headingLevel} />

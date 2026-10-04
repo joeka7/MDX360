@@ -51,7 +51,7 @@
   transition:
     background-color var(--duration-slow) var(--ease-out),
     box-shadow var(--duration-slow) var(--ease-out);
-  animation: header-enter 600ms var(--ease-out) both;
+  animation: headerEnter 600ms var(--ease-out) both;
 }
 
 .scrolled .bar {
@@ -60,14 +60,14 @@
     inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
-@keyframes header-enter {
+@keyframes headerEnter {
   from {
     opacity: 0;
     transform: translateY(-0.5rem);
   }
 }
 
-.brand {
+.logo {
   flex-shrink: 0;
 }
 

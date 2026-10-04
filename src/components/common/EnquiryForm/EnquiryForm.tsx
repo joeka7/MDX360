@@ -253,7 +253,7 @@ export function EnquiryForm({
 
       {isGeneral && quickSelectSlugs.length > 0 && (
         <div className={styles.quickSelect}>
-          <span className={styles.quickLabel}>Popular Inquiries Quick Select</span>
+          <span className={styles.quickSelectLabel}>Popular Inquiries Quick Select</span>
           <div className={styles.chips}>
             {getProductsBySlugs(quickSelectSlugs).map((option) => (
               <button
@@ -304,13 +304,13 @@ export function EnquiryForm({
           disabled={submitting}
           icon={submitting ? 'progress_activity' : isProduct ? 'send' : undefined}
           trailingIcon={isGeneral && !submitting ? 'send' : undefined}
-          className={cx(submitting && styles.submitting, variant === 'compact' && styles.compactSubmit)}
+          className={cx(submitting && styles.submitPending, variant === 'compact' && styles.submitCompact)}
         >
           {submitting ? 'Sending Enquiry…' : submitLabel}
         </Button>
         {isGeneral && (
           <span className={styles.secureNote}>
-            <Icon name="lock" size={16} />
+            <Icon name="lock" size={16} className={styles.secureNoteIcon} />
             Encrypted 256-Bit Transmission
           </span>
         )}

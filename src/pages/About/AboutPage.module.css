@@ -9,14 +9,14 @@
   }
 }
 
-.glowTop,
-.glowSide {
+.heroGlowTop,
+.heroGlowSide {
   position: absolute;
   border-radius: var(--radius-round);
   pointer-events: none;
 }
 
-.glowTop {
+.heroGlowTop {
   top: -8rem;
   right: -8rem;
   width: 24rem;
@@ -25,7 +25,7 @@
   filter: blur(64px);
 }
 
-.glowSide {
+.heroGlowSide {
   top: 50%;
   left: 0;
   width: 20rem;
@@ -81,7 +81,7 @@
   letter-spacing: var(--tracking-tight);
 }
 
-.accent {
+.heroTitleAccent {
   color: var(--color-primary);
 }
 
@@ -116,7 +116,7 @@
   color: var(--color-on-surface);
 }
 
-.metricValue.accent {
+.metricValueAccent {
   color: var(--color-primary);
 }
 
@@ -150,7 +150,7 @@
   transform: scale(1.05);
 }
 
-.specBanner {
+.caption {
   position: absolute;
   right: var(--space-md);
   bottom: var(--space-md);
@@ -165,7 +165,7 @@
   box-shadow: var(--shadow-md);
 }
 
-.specIcon {
+.captionIcon {
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -177,23 +177,23 @@
   color: var(--color-primary);
 }
 
-.specText {
+.captionText {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
 }
 
-.specTitle {
+.captionTitle {
   font: var(--type-tech);
   font-weight: 700;
 }
 
-.specSubtitle {
+.captionSubtitle {
   font: var(--type-body-sm);
   color: var(--color-outline);
 }
 
-.specDot {
+.captionDot {
   width: 0.75rem;
   height: 0.75rem;
   flex-shrink: 0;
@@ -261,13 +261,13 @@
   }
 }
 
-.integrityTitle {
+.integrityHeading {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.integrityTitle h2 {
+.integrityTitle {
   font: var(--type-headline-lg);
   line-height: 1.375;
 }
@@ -290,20 +290,20 @@
   color: var(--color-outline);
 }
 
-.threeCol {
+.engineeringGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-lg);
 }
 
 @media (min-width: 768px) {
-  .threeCol {
+  .engineeringGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 /* ---- Mission & vision ---- */
-.centeredHeading {
+.statementsHeading {
   margin-bottom: var(--space-2xl);
 }
 
@@ -465,20 +465,20 @@
   color: var(--color-on-surface-variant);
 }
 
-.fourCol {
+.pillarGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-lg);
 }
 
 @media (min-width: 768px) {
-  .fourCol {
+  .pillarGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
-  .fourCol {
+  .pillarGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

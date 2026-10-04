@@ -9,7 +9,7 @@ export function ProductSpecTable({ rows }: { rows: SpecRow[] }) {
       {rows.map((row) => (
         <div key={row.label} className={styles.row}>
           <dt className={styles.label}>{row.label}</dt>
-          <dd className={cx(styles.value, row.numeric && styles.numeric, row.accent && styles.accent)}>
+          <dd className={cx(styles.value, row.numeric && styles.valueNumeric, row.accent && styles.valueAccent)}>
             {row.value}
           </dd>
         </div>

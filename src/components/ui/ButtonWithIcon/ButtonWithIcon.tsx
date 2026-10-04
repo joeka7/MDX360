@@ -31,7 +31,7 @@ export function ButtonWithIcon({ children, size = 'sm', fullWidth, className, ..
   const content = (
     <>
       <span className={styles.label}>{children}</span>
-      <span className={styles.iconWrap} aria-hidden="true">
+      <span className={styles.iconCircle} aria-hidden="true">
         <ArrowUpRight size={16} className={styles.icon} />
       </span>
     </>

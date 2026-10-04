@@ -27,21 +27,21 @@ export function ProductsPage() {
     <>
       <title>Products | MDX360 Medical &amp; Aesthetic Systems</title>
 
-      {/* Editorial header */}
+      {/* Hero */}
       <Section tone="lowest" spacing="sm">
-        <div className={styles.header}>
+        <div className={styles.hero}>
           <div className={styles.metaBar}>
             <Breadcrumbs items={[{ label: 'Home', to: routes.home }, { label: 'Products Portfolio' }]} />
-            <Pill tone="muted" dot="ping" className={styles.activeBadge}>
+            <Pill tone="muted" dot="ping" className={styles.platformCountBadge}>
               {products.length} Clinical Energy Platforms Active
             </Pill>
           </div>
 
-          <div className={styles.headerGrid}>
-            <div className={styles.headerText}>
-              <span className={styles.kicker}>Enterprise Medical Systems</span>
-              <h1 className={styles.title}>Medical &amp; Aesthetic Systems</h1>
-              <p className={styles.lead}>
+          <div className={styles.heroGrid}>
+            <div className={styles.heroText}>
+              <span className={styles.heroBadge}>Enterprise Medical Systems</span>
+              <h1 className={styles.heroTitle}>Medical &amp; Aesthetic Systems</h1>
+              <p className={styles.heroLead}>
                 Explore our complete portfolio of advanced non-invasive medical technologies, body sculpting platforms,
                 facial rejuvenation systems, and therapeutic bio-stimulation devices engineered for clinical efficacy
                 and exceptional patient outcomes.
@@ -51,7 +51,7 @@ export function ProductsPage() {
               {catalogueFacts.map((fact) => (
                 <div key={fact.label} className={styles.fact}>
                   <dt>{fact.label}</dt>
-                  <dd className={cx(styles.factValue, fact.accent && styles.factAccent)}>{fact.value}</dd>
+                  <dd className={cx(styles.factValue, fact.accent && styles.factValueAccent)}>{fact.value}</dd>
                 </div>
               ))}
             </dl>
@@ -72,7 +72,7 @@ export function ProductsPage() {
       </Section>
 
       {/* Support & partnership */}
-      <Section tone="dark" background={<span className={styles.glow} aria-hidden="true" />}>
+      <Section tone="dark" background={<span className={styles.supportGlow} aria-hidden="true" />}>
         <SectionHeading
           tone="dark"
           eyebrow="Enterprise Partnership Program"
