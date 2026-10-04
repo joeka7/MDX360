@@ -64,7 +64,6 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
       </div>
 
       <div className={styles.selector}>
-        <p className={styles.selectorLabel}>Featured from 12+ systems</p>
         <div className={styles.selectorList} role="group" aria-label="Featured systems">
           {devices.map((device, index) => (
             <button
