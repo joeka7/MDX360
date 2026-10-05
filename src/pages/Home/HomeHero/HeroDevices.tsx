@@ -1,4 +1,5 @@
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cx } from '@/utils/cx';
 import styles from './HomeHero.module.css';
 
@@ -17,6 +18,9 @@ interface HeroDevicesProps {
 }
 
 const IMAGE_SIZE = 2048;
+/** How long each device stays in front before the next one rotates in. */
+const AUTOPLAY_DELAY = 4000;
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 const backSlots = [styles.slotLeft, styles.slotRight];
 
 /** Sizes the frame to the silhouette and shifts the image so its transparent margin falls outside it. */
@@ -32,14 +36,35 @@ function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
 
 /**
  * Hero device composition: the selected device stands in front, the other two behind it on
- * either side. The index below the stage brings any of them to the front.
+ * either side. The front device rotates every few seconds, pausing while the composition is
+ * hovered or focused; the index below the stage brings any of them to the front.
  */
 export function HeroDevices({ devices }: HeroDevicesProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reducedMotion = useMediaQuery(REDUCED_MOTION_QUERY);
+
+  // Re-armed whenever the front device changes, so a manual pick gets the full delay too.
+  useEffect(() => {
+    if (paused || reducedMotion || devices.length < 2) return;
+    const timer = window.setTimeout(() => {
+      setActiveIndex((index) => (index + 1) % devices.length);
+    }, AUTOPLAY_DELAY);
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, paused, reducedMotion, devices.length]);
+
   const backIndexes = devices.map((_, index) => index).filter((index) => index !== activeIndex);
 
   return (
-    <div className={styles.devices}>
+    <div
+      className={styles.devices}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+      }}
+    >
       <div className={styles.stage}>
         {devices.map((device, index) => {
           const crop = cropStyles(device.crop);
