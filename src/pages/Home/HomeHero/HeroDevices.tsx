@@ -37,7 +37,8 @@ function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
 /**
  * Hero device composition: the selected device stands in front, the other two behind it on
  * either side. The front device rotates every few seconds, pausing while the composition is
- * hovered or focused; the index below the stage brings any of them to the front.
+ * hovered or focused; clicking a back device, or its item in the index below the stage, brings
+ * it to the front and restarts the rotation from there, even while the pointer is still over it.
  *
  * The rotation is clocked by the progress bar on the selected index item: when its fill
  * animation ends the next device rotates in, so pausing the animation pauses the rotation
@@ -51,6 +52,12 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
   const autoplay = !reducedMotion && devices.length > 1;
 
   const backIndexes = devices.map((_, index) => index).filter((index) => index !== activeIndex);
+
+  /** Brings a device to the front and runs its timer; hovering again after leaving pauses it. */
+  const select = (index: number) => {
+    setActiveIndex(index);
+    setPaused(false);
+  };
 
   return (
     <div
@@ -66,9 +73,16 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
       <div className={styles.stage}>
         {devices.map((device, index) => {
           const crop = cropStyles(device.crop);
-          const slot = index === activeIndex ? styles.slotFront : backSlots[backIndexes.indexOf(index)];
+          const isFront = index === activeIndex;
+          const slot = isFront ? styles.slotFront : backSlots[backIndexes.indexOf(index)];
           return (
-            <div key={device.name} className={cx(styles.device, slot)} style={crop.frame}>
+            // Pointer shortcut only; the index buttons below are the keyboard path.
+            <div
+              key={device.name}
+              className={cx(styles.device, slot, !isFront && styles.deviceSelectable)}
+              style={crop.frame}
+              onClick={isFront ? undefined : () => select(index)}
+            >
               <div className={styles.deviceCrop}>
                 <img
                   className={styles.deviceImage}
@@ -94,7 +108,7 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
               type="button"
               className={styles.selectorItem}
               aria-pressed={index === activeIndex}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => select(index)}
             >
               <span
                 className={styles.selectorProgress}

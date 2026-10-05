@@ -250,6 +250,10 @@
   z-index: 2;
 }
 
+.deviceSelectable {
+  cursor: pointer;
+}
+
 .deviceCrop {
   position: absolute;
   inset: 0;
