@@ -216,7 +216,9 @@
   transition:
     left 600ms var(--ease-out),
     bottom 600ms var(--ease-out),
-    height 600ms var(--ease-out);
+    height 600ms var(--ease-out),
+    opacity 600ms var(--ease-out),
+    visibility 600ms;
 }
 
 /* Contact shadow on the floor, painted beneath the device. */
@@ -230,31 +232,48 @@
 }
 
 .slotFront {
-  left: 58%;
+  left: 55%;
   bottom: 3%;
-  height: 88%;
+  height: 86%;
   z-index: 3;
 }
 
 .slotLeft {
   left: 27%;
   bottom: 12%;
-  height: 60%;
+  height: 58%;
   z-index: 2;
 }
 
 .slotLeftFar {
-  left: 8%;
+  left: 9%;
   bottom: 24%;
-  height: 44%;
+  height: 42%;
   z-index: 1;
 }
 
 .slotRight {
-  left: 86.5%;
-  bottom: 17%;
-  height: 55%;
+  left: 78%;
+  bottom: 12%;
+  height: 54%;
   z-index: 2;
+}
+
+/* Low and small, so it reads beneath the reach of an arm-mounted device standing beside it. */
+.slotRightFar {
+  left: 94%;
+  bottom: 20%;
+  height: 35%;
+  z-index: 1;
+}
+
+/* Small phones: only the front device and its two nearest neighbours; the far pair waits off stage. */
+@media (max-width: 479px) {
+  .slotLeftFar,
+  .slotRightFar {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .deviceSelectable {
@@ -282,13 +301,13 @@
 
 .selectorList {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem 0.75rem;
 }
 
 @media (min-width: 480px) {
   .selectorList {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 

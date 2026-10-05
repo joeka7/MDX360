@@ -23,10 +23,10 @@ const AUTOPLAY_DELAY = 4000;
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 /**
  * Back slots in rotation order: the next device waits nearest the front on the left, the one
- * after it further back, and the device that just left the front stands on the right. Each
- * rotation walks every device one slot along that loop.
+ * after it further back, then the far right, and the device that just left the front stands
+ * nearest it on the right. Each rotation walks every device one slot along that loop.
  */
-const backSlots = [styles.slotLeft, styles.slotLeftFar, styles.slotRight];
+const backSlots = [styles.slotLeft, styles.slotLeftFar, styles.slotRightFar, styles.slotRight];
 
 /** Sizes the frame to the silhouette and shifts the image so its transparent margin falls outside it. */
 function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
@@ -40,7 +40,7 @@ function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
 }
 
 /**
- * Hero device composition: the selected device stands in front, the other three behind it. The
+ * Hero device composition: the selected device stands in front, the other four behind it. The
  * front device rotates every few seconds, pausing while the composition is hovered or focused;
  * clicking a back device, or its item in the index below the stage, brings it to the front and
  * restarts the rotation from there, even while the pointer is still over it.

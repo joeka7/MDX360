@@ -2,6 +2,7 @@ import excimerImage from '@/assets/images/products/308nm_Excimer.webp';
 import flagshipImage from '@/assets/images/products/5 in 1 7D+Microneedle rf+Vmax+Vaginal+Liposonix.webp';
 import magnetoImage from '@/assets/images/products/A0271 Physio Magneto.webp';
 import hifuImage from '@/assets/images/products/MDX 9D Hifu Manual.webp';
+import laserHairImage from '@/assets/images/products/MDX laser hair growth.webp';
 import type { IconName } from '@/types/product';
 import type { HeroDevice } from './HomeHero/HeroDevices';
 
@@ -36,6 +37,12 @@ export const heroDevices: HeroDevice[] = [
     image: hifuImage,
     alt: 'MDX 9D HIFU system with a touchscreen console, handpiece and interchangeable cartridges',
     crop: { x: 28.9, y: 11.9, width: 43.6, height: 84.3 },
+  },
+  {
+    name: 'MDX Laser Hair Growth',
+    image: laserHairImage,
+    alt: 'MDX laser hair growth system with an articulated arm and a multi-diode treatment panel',
+    crop: { x: 17.8, y: 4.4, width: 68, height: 91.9 },
   },
 ];
 
