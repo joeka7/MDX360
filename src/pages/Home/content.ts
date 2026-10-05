@@ -2,7 +2,7 @@ import excimerImage from '@/assets/images/products/308nm_Excimer.webp';
 import flagshipImage from '@/assets/images/products/5 in 1 7D+Microneedle rf+Vmax+Vaginal+Liposonix.webp';
 import magnetoImage from '@/assets/images/products/A0271 Physio Magneto.webp';
 import hifuImage from '@/assets/images/products/MDX 9D Hifu Manual.webp';
-import laserHairImage from '@/assets/images/products/MDX laser hair growth.webp';
+import shockwaveImage from '@/assets/images/products/MDX360 -SW25 Professional Shockwave.webp';
 import type { IconName } from '@/types/product';
 import type { HeroDevice } from './HomeHero/HeroDevices';
 
@@ -39,10 +39,10 @@ export const heroDevices: HeroDevice[] = [
     crop: { x: 28.9, y: 11.9, width: 43.6, height: 84.3 },
   },
   {
-    name: 'MDX Laser Hair Growth',
-    image: laserHairImage,
-    alt: 'MDX laser hair growth system with an articulated arm and a multi-diode treatment panel',
-    crop: { x: 17.8, y: 4.4, width: 68, height: 91.9 },
+    name: 'MDX360 SW25 Shockwave',
+    image: shockwaveImage,
+    alt: 'MDX360 SW25 professional shockwave system with a touchscreen console and a holstered applicator',
+    crop: { x: 21.4, y: 7.1, width: 55.6, height: 90.1 },
   },
 ];
 

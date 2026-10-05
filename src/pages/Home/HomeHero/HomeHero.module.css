@@ -373,15 +373,6 @@
   }
 }
 
-.selectorIndex {
-  font: 400 0.6875rem / 1.4 var(--hero-mono);
-  letter-spacing: 0.14em;
-}
-
-.selectorName {
-  font: 600 0.8125rem / 1.35 var(--hero-sans);
-}
-
 /* ---- Trust strip ---- */
 .trust {
   display: grid;

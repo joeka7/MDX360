@@ -115,6 +115,7 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
               type="button"
               className={styles.selectorItem}
               aria-pressed={index === activeIndex}
+              aria-label={device.name}
               onClick={() => select(index)}
             >
               <span
@@ -124,8 +125,6 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
                   if (autoplay) setActiveIndex((current) => (current + 1) % devices.length);
                 }}
               />
-              <span className={styles.selectorIndex}>{String(index + 1).padStart(2, '0')}</span>
-              <span className={styles.selectorName}>{device.name}</span>
             </button>
           ))}
         </div>
