@@ -86,6 +86,10 @@
   --duration-fast: 150ms;
   --duration-base: 300ms;
   --duration-slow: 500ms;
+  /* Button hover: linear border/fill fade. */
+  --duration-hover: 200ms;
+  --hover-ring: var(--color-primary-container);
+  --hover-tint: rgb(13 194 255 / 0.19);
 }
 
 /* Side gutters step up with the viewport so content never meets the screen edge. */

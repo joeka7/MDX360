@@ -244,6 +244,8 @@
 }
 
 .catalogCta {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -254,13 +256,35 @@
   font-weight: 600;
   color: var(--color-on-surface);
   transition:
-    background-color var(--duration-base) var(--ease-out),
-    color var(--duration-base) var(--ease-out);
+    background-color var(--duration-hover) linear,
+    color var(--duration-hover) linear;
 }
 
-.catalogCta:hover {
-  background: var(--color-primary-container);
-  color: var(--color-on-secondary-fixed);
+/* Same hover ring and wash as the shared Button. */
+.catalogCta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background-color: transparent;
+  pointer-events: none;
+  transition:
+    border-color var(--duration-hover) linear,
+    background-color var(--duration-hover) linear;
+}
+
+.catalogCta:focus-visible::before {
+  border-color: var(--hover-ring);
+  background-color: var(--hover-tint);
+}
+
+@media (hover: hover) {
+  .catalogCta:hover::before {
+    border-color: var(--hover-ring);
+    background-color: var(--hover-tint);
+  }
 }
 
 .catalogCtaArrow {
