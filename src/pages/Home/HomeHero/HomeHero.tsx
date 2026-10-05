@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
 import { Icon } from '@/components/ui';
-import { company, routes } from '@/data/site';
+import { cx } from '@/utils/cx';
 import { heroDevices, heroTrust } from '../content';
 import { HeroDevices } from './HeroDevices';
 import styles from './HomeHero.module.css';
@@ -14,37 +13,36 @@ export function HomeHero() {
           <div className={styles.copy}>
             <p className={styles.eyebrow}>
               <span className={styles.eyebrowRule} aria-hidden="true" />
-              Medical and aesthetic systems
+              MDX360 · The Secret of Confidence
             </p>
             <h1 id="home-hero-title" className={styles.title}>
-              Clinical-grade aesthetic systems, engineered to perform.
+              Advanced Aesthetic Technology That Delivers Visible Results
             </h1>
             <p className={styles.lead}>
-              {company.name} designs and manufactures energy-based platforms for clinics that measure results in
-              precision, reliability and patient trust.
+              From skin tightening to body contouring, our non-invasive devices give your clinic the precision, safety,
+              and performance your clients expect.
             </p>
             <div className={styles.actions}>
-              <Link to={routes.products} className={styles.primaryAction}>
-                Explore the portfolio
+              <a href="#featured-devices" className={styles.primaryAction}>
+                Explore Our Devices
                 <Icon name="arrow_forward" size={18} className={styles.primaryActionIcon} />
-              </Link>
-              <Link to={routes.contact} className={styles.secondaryAction}>
-                Book a clinical demo
-              </Link>
+              </a>
+              <a href="https://mdx360.com/enquire-now/" className={styles.secondaryAction}>
+                Enquire Now
+              </a>
             </div>
           </div>
 
           <HeroDevices devices={heroDevices} />
         </div>
 
-        <dl className={styles.trust}>
+        <ul className={styles.trust}>
           {heroTrust.map((item) => (
-            <div key={item.label} className={styles.trustItem}>
-              <dt className={styles.trustLabel}>{item.label}</dt>
-              <dd className={styles.trustValue}>{item.value}</dd>
-            </div>
+            <li key={item} className={cx(styles.trustItem, styles.trustValue)}>
+              {item}
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );

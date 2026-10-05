@@ -5,12 +5,7 @@ import type { IconName } from '@/types/product';
 import type { HeroDevice } from './HomeHero/HeroDevices';
 
 /** Hero trust strip. */
-export const heroTrust = [
-  { label: 'Quality', value: 'ISO 13485 manufacturing' },
-  { label: 'Portfolio', value: '12+ proprietary systems' },
-  { label: 'Warranty', value: '12-month OEM guarantee' },
-  { label: 'Support', value: 'Turnkey clinic setup' },
-];
+export const heroTrust = ['Free Installation', 'Free Custom Service', '12-Month Guarantee'];
 
 /**
  * Hero device composition. The first entry is the flagship and starts in front.
