@@ -123,32 +123,6 @@
   gap: var(--space-md) 1.75rem;
 }
 
-.primaryAction {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  min-height: 52px;
-  padding: 16px 28px;
-  border-radius: var(--radius-round);
-  background: var(--hero-accent);
-  color: var(--hero-on-accent);
-  font: 600 0.9375rem / 1.2 var(--hero-sans);
-  transition: background-color var(--duration-base) var(--ease-out);
-}
-
-.primaryAction:hover {
-  background: #3dcfff;
-}
-
-.primaryActionIcon {
-  transition: transform var(--duration-base) var(--ease-out);
-}
-
-.primaryAction:hover .primaryActionIcon {
-  transform: translateX(3px);
-}
-
 .secondaryAction {
   display: inline-flex;
   align-items: center;
@@ -165,6 +139,7 @@
   text-decoration-thickness: 2px;
 }
 
+/* Primary CTA is the shared ArrowFillButton; the hero only stretches it on small phones. */
 @media (max-width: 479px) {
   .primaryAction {
     width: 100%;

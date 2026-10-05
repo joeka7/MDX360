@@ -1,3 +1,4 @@
+export { ArrowFillButton, type ArrowFillButtonProps } from './ArrowFillButton/ArrowFillButton';
 export { Breadcrumbs, type BreadcrumbItem } from './Breadcrumbs/Breadcrumbs';
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from './Button/Button';
 export { ButtonWithIcon, type ButtonWithIconProps, type ButtonWithIconSize } from './ButtonWithIcon/ButtonWithIcon';

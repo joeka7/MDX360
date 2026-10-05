@@ -1,0 +1,190 @@
+/*
+ * Pill link whose arrow circle floods the pill. The fill is a clip-path circle centred on the
+ * arrow circle, so it grows from the arrow outwards and the pill's width never changes.
+ * Colours are custom properties so the component props can override them per instance.
+ */
+.button {
+  --afb-bg: var(--color-primary-container);
+  --afb-text: #0e1a2b;
+  --afb-fill: #ffffff;
+  --afb-hover-text: #0e1a2b;
+  --afb-circle: #0e1a2b;
+  --afb-arrow: #ffffff;
+  --afb-hover-arrow: var(--color-primary-container);
+
+  --afb-height: 3.25rem;
+  --afb-inset: 0.25rem;
+  --afb-circle-size: calc(var(--afb-height) - 2 * var(--afb-inset));
+  --afb-pad: 1.75rem;
+  --afb-origin: calc(100% - var(--afb-inset) - var(--afb-circle-size) / 2) 50%;
+  --afb-duration: 600ms;
+  --afb-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  max-width: 100%;
+  height: var(--afb-height);
+  padding-inline: var(--afb-pad) var(--afb-inset);
+  overflow: hidden;
+  border-radius: var(--radius-round);
+  background: var(--afb-bg);
+  color: var(--afb-text);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+@media (max-width: 359px) {
+  .button {
+    --afb-height: 3rem;
+    --afb-pad: 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--afb-fill);
+  clip-path: circle(calc(var(--afb-circle-size) / 2) at var(--afb-origin));
+  transition: clip-path var(--afb-duration) var(--afb-ease);
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  transition: color var(--afb-duration) var(--afb-ease);
+}
+
+.circle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--afb-circle-size);
+  height: var(--afb-circle-size);
+  overflow: hidden;
+  border-radius: var(--radius-round);
+  background: var(--afb-circle);
+  color: var(--afb-arrow);
+  transition: color var(--afb-duration) var(--afb-ease);
+}
+
+/* Two stacked arrows: the resting one leaves to the right as its twin arrives from the left. */
+.arrow {
+  grid-area: 1 / 1;
+  transition: transform var(--afb-duration) var(--afb-ease);
+}
+
+.arrowNext {
+  transform: translateX(calc(-1 * var(--afb-circle-size)));
+}
+
+/* Active state: keyboard focus and touch press always, hover only where a real pointer hovers. */
+.button:focus-visible .fill,
+.button[data-pressed] .fill {
+  clip-path: circle(150% at var(--afb-origin));
+}
+
+.button:focus-visible .label,
+.button[data-pressed] .label {
+  color: var(--afb-hover-text);
+}
+
+.button:focus-visible .circle,
+.button[data-pressed] .circle {
+  color: var(--afb-hover-arrow);
+}
+
+.button:focus-visible .arrow,
+.button[data-pressed] .arrow {
+  transform: translateX(var(--afb-circle-size));
+}
+
+.button:focus-visible .arrowNext,
+.button[data-pressed] .arrowNext {
+  transform: none;
+}
+
+.button[data-pressed] {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .button:hover .fill {
+    clip-path: circle(150% at var(--afb-origin));
+  }
+
+  .button:hover .label {
+    color: var(--afb-hover-text);
+  }
+
+  .button:hover .circle {
+    color: var(--afb-hover-arrow);
+  }
+
+  .button:hover .arrow {
+    transform: translateX(var(--afb-circle-size));
+  }
+
+  .button:hover .arrowNext {
+    transform: none;
+  }
+}
+
+/* Reduced motion: the fill fades in place, the arrow only changes colour, nothing travels. */
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button[data-pressed] {
+    transform: none;
+  }
+
+  .fill {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity var(--duration-fast) linear;
+  }
+
+  .button:focus-visible .fill,
+  .button[data-pressed] .fill {
+    opacity: 1;
+  }
+
+  .label,
+  .circle {
+    transition-duration: var(--duration-fast);
+  }
+
+  .arrow,
+  .button:focus-visible .arrow,
+  .button[data-pressed] .arrow {
+    transform: none;
+    transition: none;
+  }
+
+  .arrowNext {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .button:hover .fill {
+    opacity: 1;
+  }
+
+  .button:hover .arrow {
+    transform: none;
+  }
+}

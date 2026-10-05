@@ -1,4 +1,4 @@
-import { Icon } from '@/components/ui';
+import { ArrowFillButton } from '@/components/ui';
 import { cx } from '@/utils/cx';
 import { heroDevices, heroTrust } from '../content';
 import { HeroDevices } from './HeroDevices';
@@ -23,10 +23,7 @@ export function HomeHero() {
               and performance your clients expect.
             </p>
             <div className={styles.actions}>
-              <a href="#featured-devices" className={styles.primaryAction}>
-                Explore Our Devices
-                <Icon name="arrow_forward" size={18} className={styles.primaryActionIcon} />
-              </a>
+              <ArrowFillButton btnText="Explore Our Devices" href="#featured-devices" className={styles.primaryAction} />
               <a href="https://mdx360.com/enquire-now/" className={styles.secondaryAction}>
                 Enquire Now
               </a>
