@@ -57,8 +57,10 @@
   --space-xl: 2.5rem;
   --space-2xl: 4rem;
   --gutter: 1rem;
-  /* Shared content width (1500px). A max, never a fixed width: below it the container is fluid. */
+  /* Shared content width (1500px), measured inside the gutters. A max, never a fixed width:
+     below it the container is fluid. */
   --container-max: 93.75rem;
+  --container-outer: calc(var(--container-max) + 2 * var(--gutter));
   --header-height: 5rem;
 
   /* ---- Radius ---- */
