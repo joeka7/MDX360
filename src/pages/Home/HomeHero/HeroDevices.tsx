@@ -21,7 +21,12 @@ const IMAGE_SIZE = 2048;
 /** How long each device stays in front before the next one rotates in. */
 const AUTOPLAY_DELAY = 4000;
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-const backSlots = [styles.slotLeft, styles.slotRight];
+/**
+ * Back slots in rotation order: the next device waits nearest the front on the left, the one
+ * after it further back, and the device that just left the front stands on the right. Each
+ * rotation walks every device one slot along that loop.
+ */
+const backSlots = [styles.slotLeft, styles.slotLeftFar, styles.slotRight];
 
 /** Sizes the frame to the silhouette and shifts the image so its transparent margin falls outside it. */
 function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
@@ -35,10 +40,10 @@ function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
 }
 
 /**
- * Hero device composition: the selected device stands in front, the other two behind it on
- * either side. The front device rotates every few seconds, pausing while the composition is
- * hovered or focused; clicking a back device, or its item in the index below the stage, brings
- * it to the front and restarts the rotation from there, even while the pointer is still over it.
+ * Hero device composition: the selected device stands in front, the other three behind it. The
+ * front device rotates every few seconds, pausing while the composition is hovered or focused;
+ * clicking a back device, or its item in the index below the stage, brings it to the front and
+ * restarts the rotation from there, even while the pointer is still over it.
  *
  * The rotation is clocked by the progress bar on the selected index item: when its fill
  * animation ends the next device rotates in, so pausing the animation pauses the rotation
@@ -51,7 +56,9 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
 
   const autoplay = !reducedMotion && devices.length > 1;
 
-  const backIndexes = devices.map((_, index) => index).filter((index) => index !== activeIndex);
+  const backIndexes = devices
+    .slice(1)
+    .map((_, offset) => (activeIndex + 1 + offset) % devices.length);
 
   /** Brings a device to the front and runs its timer; hovering again after leaving pauses it. */
   const select = (index: number) => {

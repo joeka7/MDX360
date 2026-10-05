@@ -208,7 +208,7 @@
 
 /*
  * Each device frame is sized to its silhouette, centred on `left` and standing on `bottom`.
- * Back slots stand higher on the stage so the pair reads as further away.
+ * Back slots stand higher on the stage and smaller the further away they read.
  */
 .device {
   position: absolute;
@@ -230,16 +230,23 @@
 }
 
 .slotFront {
-  left: 55%;
+  left: 58%;
   bottom: 3%;
-  height: 90%;
+  height: 88%;
   z-index: 3;
 }
 
 .slotLeft {
-  left: 16%;
-  bottom: 15%;
+  left: 27%;
+  bottom: 12%;
   height: 60%;
+  z-index: 2;
+}
+
+.slotLeftFar {
+  left: 8%;
+  bottom: 24%;
+  height: 44%;
   z-index: 1;
 }
 
@@ -275,8 +282,14 @@
 
 .selectorList {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+}
+
+@media (min-width: 480px) {
+  .selectorList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .selectorItem {
