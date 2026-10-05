@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cx } from '@/utils/cx';
 import styles from './HomeHero.module.css';
@@ -38,26 +38,24 @@ function cropStyles({ x, y, width, height }: HeroDevice['crop']) {
  * Hero device composition: the selected device stands in front, the other two behind it on
  * either side. The front device rotates every few seconds, pausing while the composition is
  * hovered or focused; the index below the stage brings any of them to the front.
+ *
+ * The rotation is clocked by the progress bar on the selected index item: when its fill
+ * animation ends the next device rotates in, so pausing the animation pauses the rotation
+ * and the bar never drifts from it. A new front device starts a fresh fill.
  */
 export function HeroDevices({ devices }: HeroDevicesProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reducedMotion = useMediaQuery(REDUCED_MOTION_QUERY);
 
-  // Re-armed whenever the front device changes, so a manual pick gets the full delay too.
-  useEffect(() => {
-    if (paused || reducedMotion || devices.length < 2) return;
-    const timer = window.setTimeout(() => {
-      setActiveIndex((index) => (index + 1) % devices.length);
-    }, AUTOPLAY_DELAY);
-    return () => window.clearTimeout(timer);
-  }, [activeIndex, paused, reducedMotion, devices.length]);
+  const autoplay = !reducedMotion && devices.length > 1;
 
   const backIndexes = devices.map((_, index) => index).filter((index) => index !== activeIndex);
 
   return (
     <div
-      className={styles.devices}
+      className={cx(styles.devices, autoplay && styles.autoplay, paused && styles.paused)}
+      style={{ '--autoplay-delay': `${AUTOPLAY_DELAY}ms` } as CSSProperties}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -98,6 +96,13 @@ export function HeroDevices({ devices }: HeroDevicesProps) {
               aria-pressed={index === activeIndex}
               onClick={() => setActiveIndex(index)}
             >
+              <span
+                className={styles.selectorProgress}
+                aria-hidden="true"
+                onAnimationEnd={() => {
+                  if (autoplay) setActiveIndex((current) => (current + 1) % devices.length);
+                }}
+              />
               <span className={styles.selectorIndex}>{String(index + 1).padStart(2, '0')}</span>
               <span className={styles.selectorName}>{device.name}</span>
             </button>
