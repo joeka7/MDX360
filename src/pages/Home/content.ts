@@ -4,6 +4,7 @@ import magnetoImage from '@/assets/images/products/A0271 Physio Magneto.webp';
 import hifuImage from '@/assets/images/products/MDX 9D Hifu Manual.webp';
 import shockwaveImage from '@/assets/images/products/MDX360 -SW25 Professional Shockwave.webp';
 import type { IconName } from '@/types/product';
+import type { Pillar } from './ClinicalArchitectureSection/ClinicalArchitectureSection';
 import type { HeroDevice } from './HomeHero/HeroDevices';
 
 /** Hero trust strip. */
@@ -46,24 +47,41 @@ export const heroDevices: HeroDevice[] = [
   },
 ];
 
-export const pillars: Array<{ icon: IconName; title: string; body: string; footer: string }> = [
+/**
+ * Clinical Architecture pillars: three informational concepts (not links). The first entry is the
+ * featured card.
+ *
+ * TODO(assets): add the generated images to src/assets/images/home/clinical-architecture/, import
+ * them here and set `image` on each pillar (until then each card shows a plain media panel).
+ * Images are cropped with object-fit: cover, so keep the subject centred:
+ * - aesthetic-hero.webp: featured card, roughly 16:9 (~2400×1350)
+ * - regenerative-detail.webp: 110px-tall strip, about 4:1 on desktop and 3:1 on mobile (~1600×400)
+ * - diagnostic-interface.webp: 110px-tall strip, about 4:1 on desktop and 3:1 on mobile (~1600×400)
+ */
+export const pillars: Pillar[] = [
   {
-    icon: 'center_focus_strong',
+    id: 'ca-aesthetic',
+    index: '01',
+    category: 'Aesthetic',
     title: 'Non-Invasive Aesthetic Precision',
     body: 'Targeting subcutaneous tissue matrices and stimulating endogenous collagen remodeling with zero epidermal disruption, delivering immediate contour clarity.',
-    footer: 'Sub-dermal Target Systems',
+    technology: 'Sub-dermal Target Systems',
   },
   {
-    icon: 'healing',
+    id: 'ca-regenerative',
+    index: '02',
+    category: 'Regenerative',
     title: 'Regenerative & Therapeutic Power',
     body: 'Harnessing micro-current bio-stimulation and shockwave dynamics to accelerate clinical tissue repair, soothe cellular inflammation, and restore vascular vitality.',
-    footer: 'Dynamic Cellular Activation',
+    technology: 'Dynamic Cellular Activation',
   },
   {
-    icon: 'insights',
+    id: 'ca-diagnostic',
+    index: '03',
+    category: 'Diagnostic',
     title: 'Unrivaled Diagnostic Confidence',
     body: 'Equipped with intuitive, high-resolution visual interfaces, algorithmic impedance sensors, and automated energy metering to guarantee practitioner certainty.',
-    footer: 'Intelligent Energy Modulation',
+    technology: 'Intelligent Energy Modulation',
   },
 ];
 

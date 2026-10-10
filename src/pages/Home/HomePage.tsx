@@ -1,19 +1,16 @@
-import { CtaStrip, EnquiryForm, FeatureCard, FeatureNote } from '@/components/common';
+import { CtaStrip, EnquiryForm, FeatureCard } from '@/components/common';
 import { ProductGrid } from '@/components/products';
 import { Button, Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
 import { getProductsBySlugs } from '@/data/products';
 import { company, routes } from '@/data/site';
-import { useInView } from '@/hooks/useInView';
-import { cx } from '@/utils/cx';
-import { capabilities, enquiryBenefits, featuredProductSlugs, pillars } from './content';
+import { ClinicalArchitectureSection } from './ClinicalArchitectureSection/ClinicalArchitectureSection';
+import { capabilities, enquiryBenefits, featuredProductSlugs } from './content';
 import { HomeHero } from './HomeHero/HomeHero';
 import styles from './HomePage.module.css';
 
 const featuredProducts = getProductsBySlugs(featuredProductSlugs);
 
 export function HomePage() {
-  const [pillarGridRef, pillarGridInView] = useInView<HTMLDivElement>(0.2);
-
   return (
     <>
       <title>MDX360 | Advanced Medical Aesthetics &amp; Clinical Energy Systems</title>
@@ -21,35 +18,7 @@ export function HomePage() {
       <HomeHero />
 
       {/* Innovation pillars */}
-      <Section tone="low">
-        <SectionHeading
-          size="xl"
-          eyebrow="Clinical Architecture"
-          title="Revolutionizing Patient Care with Advanced Medical Devices"
-          intro="At MDX360, we are dedicated to pushing the boundaries of healthcare technology. Our innovative devices are designed to enhance diagnostics, streamline treatments, and improve patient outcomes across aesthetic and regenerative medical practices."
-        />
-        <div
-          ref={pillarGridRef}
-          className={cx(styles.pillarGrid, styles.reveal, pillarGridInView && styles.revealInView)}
-        >
-          {pillars.map((pillar) => (
-            <FeatureCard
-              key={pillar.title}
-              icon={pillar.icon}
-              title={pillar.title}
-              padding="xl"
-              className={styles.pillarCard}
-              footer={
-                <FeatureNote icon="chevron_right" trailing>
-                  {pillar.footer}
-                </FeatureNote>
-              }
-            >
-              {pillar.body}
-            </FeatureCard>
-          ))}
-        </div>
-      </Section>
+      <ClinicalArchitectureSection />
 
       {/* Device catalogue */}
       <Section tone="lowest" id="featured-devices">
