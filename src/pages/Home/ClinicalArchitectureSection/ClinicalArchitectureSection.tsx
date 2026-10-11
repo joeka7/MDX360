@@ -12,8 +12,12 @@ export interface Pillar {
   body: string;
   /** Technology line shown at the foot of the card. */
   technology: string;
-  /** Optional media. Without it the card shows a plain media panel. */
-  image?: { src: string; alt: string };
+  /**
+   * Optional media. Without it the card shows a plain media panel. `focus` is the point (CSS
+   * object-position) kept in frame when the panel crops the image; `zoom` enlarges the image
+   * around that point, for artwork with a lot of empty space around the subject.
+   */
+  image?: { src: string; alt: string; focus?: string; zoom?: number };
 }
 
 function PillarCard({ pillar, featured, order }: { pillar: Pillar; featured?: boolean; order: number }) {
@@ -31,6 +35,11 @@ function PillarCard({ pillar, featured, order }: { pillar: Pillar; featured?: bo
             className={styles.mediaImg}
             src={pillar.image.src}
             alt={pillar.image.alt}
+            style={{
+              objectPosition: pillar.image.focus,
+              transformOrigin: pillar.image.focus,
+              transform: pillar.image.zoom ? `scale(${pillar.image.zoom})` : undefined,
+            }}
             loading="lazy"
             decoding="async"
           />

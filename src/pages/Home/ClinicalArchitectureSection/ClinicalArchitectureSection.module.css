@@ -150,7 +150,7 @@
 
 .card:not(.cardFeatured) .media {
   flex: 0 0 auto;
-  height: 110px;
+  aspect-ratio: 16 / 9;
   margin: 32px 32px 0;
   border-radius: var(--radius-sm);
 }

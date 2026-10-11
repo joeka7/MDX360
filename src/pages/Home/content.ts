@@ -1,3 +1,6 @@
+import aestheticPrecisionImage from '@/assets/images/Non-Invasive Aesthetic Precision.webp';
+import diagnosticImage from '@/assets/images/Unrivaled Diagnostic Confidence.webp';
+import regenerativeImage from '@/assets/images/Regenerative & Therapeutic Power.webp';
 import excimerImage from '@/assets/images/products/308nm_Excimer.webp';
 import flagshipImage from '@/assets/images/products/5 in 1 7D+Microneedle rf+Vmax+Vaginal+Liposonix.webp';
 import magnetoImage from '@/assets/images/products/A0271 Physio Magneto.webp';
@@ -49,14 +52,8 @@ export const heroDevices: HeroDevice[] = [
 
 /**
  * Clinical Architecture pillars: three informational concepts (not links). The first entry is the
- * featured card.
- *
- * TODO(assets): add the generated images to src/assets/images/home/clinical-architecture/, import
- * them here and set `image` on each pillar (until then each card shows a plain media panel).
- * Images are cropped with object-fit: cover, so keep the subject centred:
- * - aesthetic-hero.webp: featured card, roughly 16:9 (~2400×1350)
- * - regenerative-detail.webp: 110px-tall strip, about 4:1 on desktop and 3:1 on mobile (~1600×400)
- * - diagnostic-interface.webp: 110px-tall strip, about 4:1 on desktop and 3:1 on mobile (~1600×400)
+ * featured card. Images are cropped with object-fit: cover (the secondary panels are 16:9); use
+ * `focus` and `zoom` to keep the subject in frame.
  */
 export const pillars: Pillar[] = [
   {
@@ -66,6 +63,11 @@ export const pillars: Pillar[] = [
     title: 'Non-Invasive Aesthetic Precision',
     body: 'Targeting subcutaneous tissue matrices and stimulating endogenous collagen remodeling with zero epidermal disruption, delivering immediate contour clarity.',
     technology: 'Sub-dermal Target Systems',
+    image: {
+      src: aestheticPrecisionImage,
+      alt: 'A line-up of white aesthetic treatment devices with touchscreen consoles and handpieces',
+      focus: 'right center',
+    },
   },
   {
     id: 'ca-regenerative',
@@ -74,6 +76,12 @@ export const pillars: Pillar[] = [
     title: 'Regenerative & Therapeutic Power',
     body: 'Harnessing micro-current bio-stimulation and shockwave dynamics to accelerate clinical tissue repair, soothe cellular inflammation, and restore vascular vitality.',
     technology: 'Dynamic Cellular Activation',
+    image: {
+      src: regenerativeImage,
+      alt: 'Two white therapy devices on wheeled stands with touchscreen and cabled handpieces',
+      focus: '92% 68%',
+      zoom: 1.2,
+    },
   },
   {
     id: 'ca-diagnostic',
@@ -82,6 +90,12 @@ export const pillars: Pillar[] = [
     title: 'Unrivaled Diagnostic Confidence',
     body: 'Equipped with intuitive, high-resolution visual interfaces, algorithmic impedance sensors, and automated energy metering to guarantee practitioner certainty.',
     technology: 'Intelligent Energy Modulation',
+    image: {
+      src: diagnosticImage,
+      alt: 'Two diagnostic consoles on wheeled stands with data-display touchscreens and probe handpieces',
+      focus: '82% 73%',
+      zoom: 1.1,
+    },
   },
 ];
 
