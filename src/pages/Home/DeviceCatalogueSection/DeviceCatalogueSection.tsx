@@ -4,7 +4,7 @@ import { getProductBySlug } from '@/data/products';
 import { routes } from '@/data/site';
 import type { Product } from '@/types/product';
 import { cx } from '@/utils/cx';
-import { catalogueDevices, portfolioTeaser } from '../content';
+import { catalogueDevices, catalogueIntro, portfolioTeaser } from '../content';
 import styles from './DeviceCatalogueSection.module.css';
 
 /** A device shown in the home catalogue: a product slug plus its decorative background word. */
@@ -52,25 +52,6 @@ function ArrowIcon({ className }: { className?: string }) {
       focusable="false"
     >
       <path d="M1 6h15M11 1l5 5-5 5" />
-    </svg>
-  );
-}
-
-function ShieldIcon() {
-  return (
-    <svg
-      className={styles.badgeIcon}
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z" />
-      <path d="M9 12l2 2 4-4" />
     </svg>
   );
 }
@@ -134,21 +115,7 @@ export function DeviceCatalogueSection() {
             </h2>
           </div>
 
-          <div className={styles.aside}>
-            <p className={styles.badge}>
-              <ShieldIcon />
-              Class II Medical Grade
-            </p>
-            <nav aria-label="Jump to device">
-              <ul className={styles.jump}>
-                {items.map(({ product }) => (
-                  <li key={product.slug}>
-                    <a href={`#catalogue-${product.slug}`}>{product.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
+          <p className={styles.intro}>{catalogueIntro}</p>
         </header>
 
         <div className={cx(styles.grid, !useSlots && styles.gridFallback)}>

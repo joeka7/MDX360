@@ -111,6 +111,10 @@ export const catalogueDevices: CatalogueDevice[] = [
   { slug: 'revita-heal', ghostWord: 'HEAL' },
 ];
 
+/** Intro line in the device catalogue header, beside the title. */
+export const catalogueIntro =
+  'Six flagship platforms, each engineered for a distinct clinical outcome, from body contouring and HIFU lifting to radiofrequency and bio\u2011stimulation.';
+
 /** Closing banner of the device catalogue, pointing to the full products page. */
 export const portfolioTeaser = {
   names: ['Shock Wave X', 'Nova Glow', 'Slim Wave Pro'],
