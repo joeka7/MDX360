@@ -10,8 +10,6 @@ export interface Pillar {
   category: string;
   title: string;
   body: string;
-  /** Technology line shown at the foot of the card. */
-  technology: string;
   /**
    * Optional media. Without it the card shows a plain media panel. `focus` is the point (CSS
    * object-position) kept in frame when the panel crops the image; `zoom` enlarges the image
@@ -53,7 +51,6 @@ function PillarCard({ pillar, featured, order }: { pillar: Pillar; featured?: bo
           {pillar.title}
         </h3>
         <p className={styles.cardText}>{pillar.body}</p>
-        <p className={styles.technology}>{pillar.technology}</p>
       </div>
     </article>
   );

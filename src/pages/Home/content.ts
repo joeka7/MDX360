@@ -62,7 +62,6 @@ export const pillars: Pillar[] = [
     category: 'Aesthetic',
     title: 'Non-Invasive Aesthetic Precision',
     body: 'Targeting subcutaneous tissue matrices and stimulating endogenous collagen remodeling with zero epidermal disruption, delivering immediate contour clarity.',
-    technology: 'Sub-dermal Target Systems',
     image: {
       src: aestheticPrecisionImage,
       alt: 'A line-up of white aesthetic treatment devices with touchscreen consoles and handpieces',
@@ -75,7 +74,6 @@ export const pillars: Pillar[] = [
     category: 'Regenerative',
     title: 'Regenerative & Therapeutic Power',
     body: 'Harnessing micro-current bio-stimulation and shockwave dynamics to accelerate clinical tissue repair, soothe cellular inflammation, and restore vascular vitality.',
-    technology: 'Dynamic Cellular Activation',
     image: {
       src: regenerativeImage,
       alt: 'Two white therapy devices on wheeled stands with touchscreen and cabled handpieces',
@@ -89,7 +87,6 @@ export const pillars: Pillar[] = [
     category: 'Diagnostic',
     title: 'Unrivaled Diagnostic Confidence',
     body: 'Equipped with intuitive, high-resolution visual interfaces, algorithmic impedance sensors, and automated energy metering to guarantee practitioner certainty.',
-    technology: 'Intelligent Energy Modulation',
     image: {
       src: diagnosticImage,
       alt: 'Two diagnostic consoles on wheeled stands with data-display touchscreens and probe handpieces',

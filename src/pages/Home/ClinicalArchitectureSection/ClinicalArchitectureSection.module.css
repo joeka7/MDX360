@@ -208,17 +208,6 @@
   line-height: 1.7;
 }
 
-/* Static technology line at the foot of the card. */
-.technology {
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--ca-line);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--ca-text);
-}
-
 /* ---- Scroll reveal: content is only hidden once JS has opted in ---- */
 .section[data-motion='ready']:not([data-revealed='true']) .reveal {
   opacity: 0;
