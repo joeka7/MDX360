@@ -8,6 +8,7 @@ import hifuImage from '@/assets/images/products/MDX 9D Hifu Manual.webp';
 import shockwaveImage from '@/assets/images/products/MDX360 -SW25 Professional Shockwave.webp';
 import type { IconName } from '@/types/product';
 import type { Pillar } from './ClinicalArchitectureSection/ClinicalArchitectureSection';
+import type { CatalogueDevice } from './DeviceCatalogueSection/DeviceCatalogueSection';
 import type { HeroDevice } from './HomeHero/HeroDevices';
 
 /** Hero trust strip. */
@@ -96,15 +97,27 @@ export const pillars: Pillar[] = [
   },
 ];
 
-/** Products featured in the home page device catalogue. */
-export const featuredProductSlugs = [
-  'shape-master',
-  '7d-hifo',
-  'ice-gold-rf',
-  'quantum-lift',
-  'hydro-plasma',
-  'revita-heal',
+/**
+ * Products featured in the home page device catalogue. ORDER MATTERS: the desktop bento assumes six
+ * devices in this order (tall, wide, wide, wide, tall, wide). `ghostWord` is the large decorative
+ * word behind each device.
+ */
+export const catalogueDevices: CatalogueDevice[] = [
+  { slug: 'shape-master', ghostWord: 'SHAPE' },
+  { slug: '7d-hifo', ghostWord: '7D' },
+  { slug: 'ice-gold-rf', ghostWord: 'RF' },
+  { slug: 'quantum-lift', ghostWord: 'LIFT' },
+  { slug: 'hydro-plasma', ghostWord: 'HYDRO' },
+  { slug: 'revita-heal', ghostWord: 'HEAL' },
 ];
+
+/** Closing banner of the device catalogue, pointing to the full products page. */
+export const portfolioTeaser = {
+  names: ['Shock Wave X', 'Nova Glow', 'Slim Wave Pro'],
+  title: 'Looking for Shock Wave X, Nova Glow, or Slim Wave Pro?',
+  text: 'Review our full engineering portfolio of 12 non-invasive clinical energy devices.',
+  ctaLabel: 'View Complete Product Portfolio',
+};
 
 export const capabilities: Array<{ icon: IconName; title: string; body: string }> = [
   {

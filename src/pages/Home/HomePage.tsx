@@ -1,14 +1,11 @@
-import { CtaStrip, EnquiryForm, FeatureCard } from '@/components/common';
-import { ProductGrid } from '@/components/products';
-import { Button, Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
-import { getProductsBySlugs } from '@/data/products';
-import { company, routes } from '@/data/site';
+import { EnquiryForm, FeatureCard } from '@/components/common';
+import { Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
+import { company } from '@/data/site';
 import { ClinicalArchitectureSection } from './ClinicalArchitectureSection/ClinicalArchitectureSection';
-import { capabilities, enquiryBenefits, featuredProductSlugs } from './content';
+import { capabilities, enquiryBenefits } from './content';
+import { DeviceCatalogueSection } from './DeviceCatalogueSection/DeviceCatalogueSection';
 import { HomeHero } from './HomeHero/HomeHero';
 import styles from './HomePage.module.css';
-
-const featuredProducts = getProductsBySlugs(featuredProductSlugs);
 
 export function HomePage() {
   return (
@@ -21,27 +18,7 @@ export function HomePage() {
       <ClinicalArchitectureSection />
 
       {/* Device catalogue */}
-      <Section tone="lowest" id="featured-devices">
-        <SectionHeading
-          size="xl"
-          eyebrow="Device Catalogue"
-          eyebrowDot
-          title="Explore Our Innovative Devices for Cutting-Edge Medical Solutions"
-          aside={<span className={styles.gradeNote}>Class II Medical Grade</span>}
-        />
-        <ProductGrid products={featuredProducts} variant="feature" />
-        <CtaStrip
-          className={styles.portfolioStrip}
-          icon="view_in_ar"
-          title="Looking for Shock Wave X, Nova Glow, or Slim Wave Pro?"
-          description="Review our full engineering portfolio of 12 non-invasive clinical energy devices."
-          actions={
-            <Button to={routes.products} variant="secondary" size="sm">
-              View Complete Product Portfolio →
-            </Button>
-          }
-        />
-      </Section>
+      <DeviceCatalogueSection />
 
       {/* Enterprise capabilities */}
       <Section tone="dark" background={<span className={styles.capabilitiesGlow} aria-hidden="true" />}>

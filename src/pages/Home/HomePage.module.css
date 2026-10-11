@@ -1,15 +1,3 @@
-/* ---- Device catalogue ---- */
-.gradeNote {
-  font: var(--type-label);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--color-on-surface-variant);
-}
-
-.portfolioStrip {
-  margin-top: var(--space-2xl);
-}
-
 /* ---- Capabilities ---- */
 .capabilitiesGlow {
   position: absolute;
