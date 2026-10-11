@@ -1,9 +1,9 @@
-import { EnquiryForm, FeatureCard } from '@/components/common';
-import { Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
-import { company } from '@/data/site';
+import { FeatureCard } from '@/components/common';
+import { Section, SectionHeading } from '@/components/ui';
 import { ClinicalArchitectureSection } from './ClinicalArchitectureSection/ClinicalArchitectureSection';
-import { capabilities, enquiryBenefits } from './content';
+import { capabilities } from './content';
 import { DeviceCatalogueSection } from './DeviceCatalogueSection/DeviceCatalogueSection';
+import { EnquiryPortalSection } from './EnquiryPortalSection/EnquiryPortalSection';
 import { HomeHero } from './HomeHero/HomeHero';
 import styles from './HomePage.module.css';
 
@@ -51,41 +51,7 @@ export function HomePage() {
       </Section>
 
       {/* Enquiry portal */}
-      <Section tone="lowest" id="enquiry-portal">
-        <div className={styles.enquiryPanel}>
-          <div className={styles.enquiryBrief}>
-            <Pill tone="high">Direct Clinical Inquiries</Pill>
-            <h2 className={styles.enquiryTitle}>Take Your Practice to the Next Level</h2>
-            <p className={styles.enquiryLead}>
-              Equip your clinic, wellness retreat, or surgical hospital with industry-leading aesthetic and therapeutic
-              technologies. Request a private clinical consultation and full technical device specifications.
-            </p>
-            <ul className={styles.benefits}>
-              {enquiryBenefits.map((benefit) => (
-                <li key={benefit} className={styles.benefit}>
-                  <Icon name="check_circle" size={20} className={styles.benefitIcon} />
-                  {benefit}
-                </li>
-              ))}
-            </ul>
-            <div className={styles.enquiryContacts}>
-              <div>
-                <Eyebrow>Regional Office</Eyebrow>
-                <p>{company.address}</p>
-              </div>
-              <div>
-                <Eyebrow>Corporate Contact</Eyebrow>
-                <p>
-                  <a href={`mailto:${company.email}`}>{company.email}</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className={styles.enquiryFormCard}>
-            <EnquiryForm variant="compact" />
-          </div>
-        </div>
-      </Section>
+      <EnquiryPortalSection />
     </>
   );
 }

@@ -89,12 +89,6 @@
   animation: spin 1s linear infinite;
 }
 
-.submitCompact {
-  padding-block: 1rem;
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-}
-
 .secureNote {
   display: inline-flex;
   align-items: center;
@@ -139,35 +133,4 @@
   font-weight: 400;
   text-align: center;
   color: var(--color-outline);
-}
-
-/* ---- Compact success panel ---- */
-.successPanel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  padding-block: var(--space-xl);
-  text-align: center;
-}
-
-.successIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: var(--radius-round);
-  background: rgb(13 194 255 / 0.2);
-  color: var(--color-primary);
-}
-
-.successTitle {
-  font: var(--type-headline-md);
-  font-weight: 700;
-}
-
-.successText {
-  max-width: 28rem;
-  color: var(--color-on-surface-variant);
 }

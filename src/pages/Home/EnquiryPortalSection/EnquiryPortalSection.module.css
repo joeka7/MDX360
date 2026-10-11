@@ -1,0 +1,274 @@
+/*
+ * Home enquiry portal ("Editorial Split"). The tokens below are scoped to the section and are
+ * also read by the compact EnquiryForm rendered inside it. The cyan accent (#0DC2FF) is never
+ * used as text on white; text accents on white use --ep-accent-ink.
+ */
+.section {
+  --ep-accent: #0dc2ff;
+  --ep-accent-soft: #7fddff;
+  --ep-accent-ink: #0077a8;
+  --ep-navy: #0a1626;
+  --ep-text: #33435a;
+  --ep-text-muted: #5b6b7f;
+  --ep-on-navy-muted: #c3d0dd;
+  --ep-on-navy-label: #8ea0b4;
+  --ep-field: #f2f6fa;
+  --ep-field-hover: #ebf1f7;
+  --ep-field-focus: #eaf7fd;
+  --ep-field-line: #9fb0c2;
+  --ep-rule: #e1e8ef;
+  --ep-error: #b42318;
+  --ep-error-bg: #fef3f2;
+  --ep-page: #f5f8fb;
+  --ep-font-display: var(--font-display, system-ui, sans-serif);
+  --ep-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ep-ease-io: cubic-bezier(0.7, 0, 0.2, 1);
+
+  padding: 96px 0;
+  background: var(--ep-page);
+  color: var(--ep-navy);
+  font-family: inherit;
+  /* Matches the global anchor offset (fixed header + 1rem) unless overridden. */
+  scroll-margin-top: var(--enquiry-scroll-offset, calc(var(--header-height) + var(--space-md)));
+  overflow-x: clip;
+}
+
+.inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -48px rgb(10 22 38 / 0.35);
+}
+
+/* ---- Navy editorial panel ---- */
+.intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 56px;
+  background: var(--ep-navy);
+  color: #fff;
+}
+
+.intro::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 56px;
+  right: 56px;
+  height: 3px;
+  background: var(--ep-accent);
+  transform-origin: left;
+  transition: transform 1.2s var(--ep-ease-io) 0.5s;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ep-accent-soft);
+}
+
+.title {
+  margin: 20px 0 0;
+  font-family: var(--ep-font-display);
+  font-size: clamp(2.25rem, 1.3rem + 2.6vw, 3.375rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.lead {
+  margin: 22px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ep-on-navy-muted);
+}
+
+.benefits {
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: benefit;
+}
+
+.benefits li {
+  counter-increment: benefit;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.benefits li::before {
+  content: '0' counter(benefit);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ep-accent-soft);
+}
+
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: auto 0 0;
+  padding-top: 48px;
+}
+
+.contact dt {
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ep-on-navy-label);
+}
+
+.contact dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Taller hit area for touch without shifting the layout. */
+.contact a {
+  display: inline-block;
+  margin-block: -12px;
+  padding-block: 12px;
+  color: var(--ep-accent-soft);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgb(127 221 255 / 0.4);
+  overflow-wrap: anywhere;
+}
+
+.contact a:hover {
+  color: #fff;
+  text-decoration-color: currentColor;
+}
+
+.contact a:focus-visible {
+  outline: 2px solid var(--ep-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- Form panel ---- */
+.formPanel {
+  padding: 56px 64px;
+  background: #fff;
+}
+
+/* ---- Reveal (only after JS sets data-motion="ready") ---- */
+.section[data-motion='ready']:not([data-revealed='true']) .intro {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.section[data-motion='ready']:not([data-revealed='true']) .formPanel {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.section[data-motion='ready']:not([data-revealed='true']) .intro::after {
+  transform: scaleX(0);
+}
+
+.section[data-motion='ready'] .intro,
+.section[data-motion='ready'] .formPanel {
+  transition:
+    opacity 0.9s var(--ep-ease),
+    transform 0.9s var(--ep-ease);
+}
+
+.section[data-motion='ready'] .formPanel {
+  transition-delay: 0.1s;
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 1024px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .intro {
+    padding: 48px 40px;
+  }
+
+  .intro::after {
+    left: 40px;
+    right: 40px;
+  }
+
+  .contact {
+    margin-top: 0;
+  }
+
+  .formPanel {
+    padding: 44px 40px;
+  }
+}
+
+/* ---- Mobile: edge to edge ---- */
+@media (max-width: 640px) {
+  .section {
+    padding: 0;
+  }
+
+  .inner {
+    padding: 0;
+  }
+
+  .split {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .intro {
+    padding: 44px 20px;
+  }
+
+  .intro::after {
+    left: 20px;
+    right: 20px;
+  }
+
+  .formPanel {
+    padding: 36px 20px;
+  }
+
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .section .intro,
+  .section .formPanel {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .section .intro::after {
+    transform: none;
+    transition: none;
+  }
+}

@@ -6,6 +6,7 @@ import { submitEnquiry } from '@/services/enquiry';
 import type { Product } from '@/types/product';
 import { cx } from '@/utils/cx';
 import styles from './EnquiryForm.module.css';
+import compact from './EnquiryFormCompact.module.css';
 
 /**
  * - `general`: full contact-page form (country code, device picker, quick select, consent).
@@ -101,12 +102,12 @@ export function EnquiryForm({
 
   if (status === 'success' && variant === 'compact') {
     return (
-      <div className={cx(styles.successPanel, className)} role="status">
-        <span className={styles.successIcon}>
+      <div className={cx(compact.success, className)} role="status">
+        <span className={compact.successIcon}>
           <Icon name="check" size={36} />
         </span>
-        <h3 className={styles.successTitle}>Enquiry Registered</h3>
-        <p className={styles.successText}>
+        <h3 className={compact.successTitle}>Enquiry Registered</h3>
+        <p className={compact.successText}>
           Thank you. An MDX360 clinical director has received your inquiry and will furnish device dossiers and
           commercial specs within 24 hours.
         </p>
@@ -115,6 +116,170 @@ export function EnquiryForm({
   }
 
   const submitting = status === 'submitting';
+
+  // Compact (Home enquiry portal): same fields, order and handlers, grouped into numbered fieldsets.
+  if (variant === 'compact') {
+    return (
+      <form className={cx(compact.form, className)} onSubmit={handleSubmit} aria-busy={submitting || undefined}>
+        {header}
+
+        <fieldset className={compact.group}>
+          <legend className={compact.legend}>
+            <span className={compact.legendIndex} aria-hidden="true">
+              01
+            </span>{' '}
+            About you
+          </legend>
+          <div className={compact.grid}>
+            <CompactField label="Practitioner / Full Name" htmlFor={fieldId('name')} required>
+              <input
+                id={fieldId('name')}
+                className={compact.input}
+                placeholder="Dr. Sarah Al-Mansoor"
+                autoComplete="name"
+                required
+                value={values.name}
+                onChange={(e) => setField('name')(e.target.value)}
+              />
+            </CompactField>
+            <CompactField label="Clinic or Facility Name" htmlFor={fieldId('clinic')} required>
+              <input
+                id={fieldId('clinic')}
+                className={compact.input}
+                placeholder="Apex Derma Center"
+                autoComplete="organization"
+                required
+                value={values.clinic}
+                onChange={(e) => setField('clinic')(e.target.value)}
+              />
+            </CompactField>
+          </div>
+        </fieldset>
+
+        <fieldset className={compact.group}>
+          <legend className={compact.legend}>
+            <span className={compact.legendIndex} aria-hidden="true">
+              02
+            </span>{' '}
+            How we reach you
+          </legend>
+          <div className={compact.grid}>
+            <CompactField label="Contact Phone Number" htmlFor={fieldId('phone')} required>
+              <input
+                id={fieldId('phone')}
+                className={compact.input}
+                type="tel"
+                placeholder="+971 50 000 0000"
+                autoComplete="tel"
+                required
+                value={values.phone}
+                onChange={(e) => setField('phone')(e.target.value)}
+              />
+            </CompactField>
+            <CompactField label="Professional Email" htmlFor={fieldId('email')} required>
+              <input
+                id={fieldId('email')}
+                className={compact.input}
+                type="email"
+                placeholder="sarah@apexderma.ae"
+                autoComplete="email"
+                required
+                value={values.email}
+                onChange={(e) => setField('email')(e.target.value)}
+              />
+            </CompactField>
+          </div>
+        </fieldset>
+
+        <fieldset className={compact.group}>
+          <legend className={compact.legend}>
+            <span className={compact.legendIndex} aria-hidden="true">
+              03
+            </span>{' '}
+            Your enquiry
+          </legend>
+          <div className={compact.grid}>
+            <CompactField label="Primary Device of Interest" htmlFor={fieldId('device')} optional full>
+              <select
+                id={fieldId('device')}
+                className={compact.select}
+                value={device}
+                onChange={(e) => setDevice(e.target.value)}
+              >
+                {products.map((option) => (
+                  <option key={option.slug} value={option.slug}>
+                    {option.name} ({option.enquiryLabel})
+                  </option>
+                ))}
+                <option value={PORTFOLIO_VALUE}>Portfolio Consultation (Multiple Clinical Platforms)</option>
+              </select>
+              <svg
+                className={compact.selectIcon}
+                width="12"
+                height="8"
+                viewBox="0 0 12 8"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M1 1.5l5 5 5-5" />
+              </svg>
+            </CompactField>
+            <CompactField
+              label="Clinical Requirements & Special Inquiries"
+              htmlFor={fieldId('message')}
+              optional
+              full
+            >
+              <textarea
+                id={fieldId('message')}
+                className={compact.textarea}
+                rows={3}
+                placeholder="Detail your clinical caseload, facility location, and desired demonstration timeline..."
+                value={values.message}
+                onChange={(e) => setField('message')(e.target.value)}
+              />
+            </CompactField>
+          </div>
+        </fieldset>
+
+        {status === 'error' && (
+          <p className={compact.formError} role="alert">
+            We couldn&apos;t send your enquiry. Please try again or contact us directly by phone or email.
+          </p>
+        )}
+
+        <button type="submit" className={compact.submit} disabled={submitting}>
+          <span>{submitting ? 'Sending Enquiry…' : submitLabel}</span>
+          {submitting ? (
+            <span className={compact.spinner} aria-hidden="true" />
+          ) : (
+            <svg
+              className={compact.submitIcon}
+              width="20"
+              height="14"
+              viewBox="0 0 18 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M1 6h15M11 1l5 5-5 5" />
+            </svg>
+          )}
+        </button>
+        <p className={compact.requiredNote}>
+          <span className={compact.required} aria-hidden="true">
+            *
+          </span>{' '}
+          Required fields
+        </p>
+      </form>
+    );
+  }
 
   return (
     <form className={cx(styles.form, className)} onSubmit={handleSubmit}>
@@ -304,7 +469,7 @@ export function EnquiryForm({
           disabled={submitting}
           icon={submitting ? 'progress_activity' : isProduct ? 'send' : undefined}
           trailingIcon={isGeneral && !submitting ? 'send' : undefined}
-          className={cx(submitting && styles.submitPending, variant === 'compact' && styles.submitCompact)}
+          className={cx(submitting && styles.submitPending)}
         >
           {submitting ? 'Sending Enquiry…' : submitLabel}
         </Button>
@@ -346,5 +511,42 @@ export function EnquiryForm({
         </p>
       )}
     </form>
+  );
+}
+
+interface CompactFieldProps {
+  label: ReactNode;
+  htmlFor: string;
+  required?: boolean;
+  /** Display-only "Optional" tag; does not affect validation. */
+  optional?: boolean;
+  /** Span both grid columns. */
+  full?: boolean;
+  children: ReactNode;
+}
+
+/** Label + filled control wrapper for the compact variant. */
+function CompactField({ label, htmlFor, required, optional, full, children }: CompactFieldProps) {
+  return (
+    <div className={cx(compact.field, full && compact.full)}>
+      <label className={compact.label} htmlFor={htmlFor}>
+        <span>
+          {label}
+          {required && (
+            <span className={compact.required} aria-hidden="true">
+              {' '}
+              *
+            </span>
+          )}
+        </span>
+        {optional && (
+          <>
+            {' '}
+            <span className={compact.optional}>Optional</span>
+          </>
+        )}
+      </label>
+      <div className={compact.control}>{children}</div>
+    </div>
   );
 }
