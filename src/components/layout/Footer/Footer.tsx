@@ -70,7 +70,7 @@ function ArrowIcon() {
 
 /**
  * Global site footer: brand statement beside oversized contact links, the two promises,
- * link columns and certifications, closed by a cropped MDX360 wordmark.
+ * logo and link columns, and certifications, closed by a cropped MDX360 wordmark.
  */
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -108,7 +108,6 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.statement}>
           <div className={styles.brand}>
-            <Logo tone="inverse" className={styles.logo} />
             <p className={styles.tagline}>
               {taglineParts.map((part, index) =>
                 taglineEmphasis.includes(part) ? <strong key={index}>{part}</strong> : part,
@@ -168,6 +167,7 @@ export function Footer() {
         </ul>
 
         <nav className={styles.nav} aria-label="Footer">
+          <Logo tone="inverse" className={styles.logo} />
           {linkGroups.map((group) => (
             <div key={group.title} className={cx(group.wide && styles.groupWide)}>
               <h2 className={styles.groupTitle}>{group.title}</h2>
