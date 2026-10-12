@@ -163,6 +163,8 @@
 .stage {
   position: relative;
   isolation: isolate;
+  /* Sized by its width and ratio alone; a container so device slots can be placed in stage units. */
+  container-type: size;
   aspect-ratio: 21 / 20;
   cursor: grab;
   user-select: none;
@@ -191,16 +193,24 @@
 }
 
 /*
- * Each device frame is sized to its silhouette, centred on `left` and standing on `bottom`.
- * Back slots stand higher on the stage and smaller the further away they read.
+ * Each device frame is sized to its silhouette, centred on its slot's x and standing on its y,
+ * both as percentages of the stage; height is a percentage of the stage height. Back slots stand
+ * higher on the stage and smaller the further away they read.
+ *
+ * Every frame keeps the front slot's box (centred on 55%, standing on 3%, 86% tall) for layout,
+ * and a transform scales it from its base and moves it onto its slot. A rotation then only
+ * animates the transform, so the devices glide without moving any layout box (no layout shift).
  */
 .device {
   position: absolute;
-  transform: translateX(-50%);
+  left: 55%;
+  bottom: 3%;
+  height: 86%;
+  transform-origin: 50% 100%;
+  transform: translate(calc((var(--slot-x) - 55) * 1cqw - 50%), calc((3 - var(--slot-y)) * 1cqh))
+    scale(calc(var(--slot-height) / 86));
   transition:
-    left 600ms var(--ease-out),
-    bottom 600ms var(--ease-out),
-    height 600ms var(--ease-out),
+    transform 600ms var(--ease-out),
     opacity 600ms var(--ease-out),
     visibility 600ms;
 }
@@ -216,38 +226,38 @@
 }
 
 .slotFront {
-  left: 55%;
-  bottom: 3%;
-  height: 86%;
+  --slot-x: 55;
+  --slot-y: 3;
+  --slot-height: 86;
   z-index: 3;
 }
 
 .slotLeft {
-  left: 27%;
-  bottom: 12%;
-  height: 58%;
+  --slot-x: 27;
+  --slot-y: 12;
+  --slot-height: 58;
   z-index: 2;
 }
 
 .slotLeftFar {
-  left: 9%;
-  bottom: 24%;
-  height: 42%;
+  --slot-x: 9;
+  --slot-y: 24;
+  --slot-height: 42;
   z-index: 1;
 }
 
 .slotRight {
-  left: 78%;
-  bottom: 12%;
-  height: 54%;
+  --slot-x: 78;
+  --slot-y: 12;
+  --slot-height: 54;
   z-index: 2;
 }
 
 /* Low and small, so it reads beneath the reach of an arm-mounted device standing beside it. */
 .slotRightFar {
-  left: 94%;
-  bottom: 20%;
-  height: 35%;
+  --slot-x: 94;
+  --slot-y: 20;
+  --slot-height: 35;
   z-index: 1;
 }
 
@@ -344,7 +354,8 @@
   animation: selectorProgress var(--autoplay-delay) linear both;
 }
 
-.paused .selectorProgress {
+/* Same bar as above plus `.paused`, so it outranks the shorthand's implicit `running` play state. */
+.autoplay.paused .selectorItem[aria-pressed='true'] .selectorProgress {
   animation-play-state: paused;
 }
 
@@ -389,4 +400,133 @@
   margin: 0;
   font: 600 0.9375rem / 1.4 var(--font-body);
   color: var(--hero-ink);
+}
+
+/*
+ * ---- Entrance ----
+ * Played once on load (see HomeHero). The copy rises in reading order while the studio light
+ * comes up; then the flagship stands up into the light, the nearest pair joins it, then the far
+ * pair, and the index and trust strip close the sequence. The stage starts two steps in beside
+ * the copy on desktop, and after the CTAs once it stacks below them. Everything uses the shared
+ * reveal curve, travel and stagger, so the hero opens the way the sections below reveal.
+ * Parts are only hidden once JS has armed the entrance (`data-motion="ready"`), the hidden state
+ * while playing comes from the keyframes alone, and none of this applies under reduced motion.
+ */
+.hero {
+  --hero-stage-delay: calc(4 * var(--reveal-stagger));
+  --hero-close-delay: calc(var(--hero-stage-delay) + 4 * var(--reveal-stagger));
+  --hero-stage-duration: calc(var(--duration-reveal) + 200ms);
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    --hero-stage-delay: calc(2 * var(--reveal-stagger));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+   * Armed: each part waits hidden until its gate opens. The whole composition stays hidden until
+   * the copy's fonts are in, so the swap's reflow moves nothing on screen.
+   */
+  .hero[data-motion='ready']:not([data-revealed='true']) .devices,
+  .hero[data-motion='ready']:not([data-revealed='true']) .eyebrow,
+  .hero[data-motion='ready']:not([data-revealed='true']) .title,
+  .hero[data-motion='ready']:not([data-revealed='true']) .lead,
+  .hero[data-motion='ready']:not([data-revealed='true']) .actions,
+  .hero[data-motion='ready']:not([data-revealed='true']) .trust,
+  .hero[data-motion='ready']:not([data-devices='ready']) .deviceCrop,
+  .hero[data-motion='ready']:not([data-devices='ready']) .device::before,
+  .hero[data-motion='ready']:not([data-devices='ready']) .selector {
+    opacity: 0;
+  }
+
+  /* Copy, with the eyebrow's accent rule drawing out as the headline arrives. */
+  .hero[data-revealed='true'] .eyebrow,
+  .hero[data-revealed='true'] .title,
+  .hero[data-revealed='true'] .lead,
+  .hero[data-revealed='true'] .actions,
+  .hero[data-revealed='true'] .trust {
+    animation: heroRise var(--duration-reveal) var(--ease-reveal) backwards;
+  }
+
+  .hero[data-revealed='true'] .title {
+    animation-delay: var(--reveal-stagger);
+  }
+
+  .hero[data-revealed='true'] .lead {
+    animation-delay: calc(2 * var(--reveal-stagger));
+  }
+
+  .hero[data-revealed='true'] .actions {
+    animation-delay: calc(3 * var(--reveal-stagger));
+  }
+
+  .hero[data-revealed='true'] .trust {
+    animation-delay: var(--hero-close-delay);
+  }
+
+  .hero[data-revealed='true'] .eyebrowRule {
+    transform-origin: left;
+    animation: heroDraw 700ms var(--ease-reveal) var(--reveal-stagger) backwards;
+  }
+
+  .hero[data-revealed='true'] .stage::before {
+    animation: heroFade calc(var(--duration-reveal) + 300ms) var(--ease-reveal) backwards;
+  }
+
+  /*
+   * Devices stand up from their floor line with their contact shadows. The inner crop moves, not
+   * the device frame, so the frame's centring transform, slot transitions and the hidden far
+   * slots on small phones are untouched. Delays follow DOM order, which is the opening line-up
+   * (front, near left, far left, far right, near right), so a rotation never shifts them.
+   */
+  .hero[data-devices='ready'] .deviceCrop {
+    transform-origin: 50% 100%;
+    animation: heroStand var(--hero-stage-duration) var(--ease-reveal) var(--hero-stage-delay) backwards;
+  }
+
+  .hero[data-devices='ready'] .device::before {
+    animation: heroFade var(--hero-stage-duration) var(--ease-reveal) var(--hero-stage-delay) backwards;
+  }
+
+  .hero[data-devices='ready'] .device:is(:nth-child(2), :nth-child(5)) .deviceCrop,
+  .hero[data-devices='ready'] .device:is(:nth-child(2), :nth-child(5))::before {
+    animation-delay: calc(var(--hero-stage-delay) + 2 * var(--reveal-stagger));
+  }
+
+  .hero[data-devices='ready'] .device:is(:nth-child(3), :nth-child(4)) .deviceCrop,
+  .hero[data-devices='ready'] .device:is(:nth-child(3), :nth-child(4))::before {
+    animation-delay: calc(var(--hero-stage-delay) + 3 * var(--reveal-stagger));
+  }
+
+  .hero[data-devices='ready'] .selector {
+    animation: heroRise var(--duration-reveal) var(--ease-reveal) var(--hero-close-delay) backwards;
+  }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-shift));
+  }
+}
+
+@keyframes heroStand {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-shift)) scale(0.97);
+  }
+}
+
+@keyframes heroFade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes heroDraw {
+  from {
+    transform: scaleX(0);
+  }
 }
