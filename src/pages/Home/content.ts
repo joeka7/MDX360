@@ -123,6 +123,7 @@ export const portfolioTeaser = {
   ctaLabel: 'View Complete Product Portfolio',
 };
 
+/** Enterprise partnership services, in journey order (the timeline assumes four). */
 export const capabilities: Array<{ icon: IconName; title: string; body: string }> = [
   {
     icon: 'tune',

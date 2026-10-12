@@ -1,0 +1,492 @@
+/*
+ * Home "Enterprise Partnership" ("Partnership Journey"). All tokens are scoped to the section. The
+ * cyan brand accent (#0DC2FF) is never used as text on white; accent text uses --accent-ink.
+ */
+.section {
+  --accent: #0dc2ff;
+  --accent-soft: #7fddff;
+  --accent-ink: #0077a8;
+  --navy: #0a1626;
+  --text: #33435a;
+  --text-muted: #46566a;
+  --text-subtle: #5b6b7f;
+  --line: #dce5ee;
+  --node-line: #cad6e2;
+  --on-navy: #c3d0dd;
+  /* White, because both neighbouring home sections sit on #f5f8fb. */
+  --bg: #ffffff;
+  --font-heading: var(--font-display, inherit);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --pop: cubic-bezier(0.3, 1.5, 0.5, 1);
+
+  position: relative;
+  padding: 112px 0 120px;
+  background: var(--bg);
+  color: var(--navy);
+  font-family: inherit;
+  overflow-x: clip;
+}
+
+/* Same content width and gutters as the neighbouring home sections. */
+.inner {
+  width: 100%;
+  max-width: var(--container-outer, 1360px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, 40px);
+  box-sizing: border-box;
+}
+
+/* ===== Header ===== */
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 56px;
+  align-items: end;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrowDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgb(13 194 255 / 0.18);
+}
+
+.title {
+  margin: 20px 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2.25rem, 1.2rem + 3vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+
+.titleAccent {
+  color: var(--accent-ink);
+}
+
+.lead {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ===== Timeline (tab list) ===== */
+.track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 72px;
+}
+
+/* Runs from the first node's centre to the last's (half a column in from each edge). */
+.rail {
+  position: absolute;
+  top: 27px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  background: var(--line);
+}
+
+.railFill {
+  position: absolute;
+  inset: 0;
+  background: var(--navy);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+
+/* The fill and progress steps assume exactly four services; update them if the count changes. */
+.track[data-step='1'] .railFill {
+  transform: scaleX(0.3333);
+}
+
+.track[data-step='2'] .railFill {
+  transform: scaleX(0.6667);
+}
+
+.track[data-step='3'] .railFill {
+  transform: scaleX(1);
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 0 12px 8px;
+  border: 0;
+  background: none;
+  color: var(--text-subtle);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid var(--node-line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--text-subtle);
+  box-sizing: border-box;
+  transition:
+    background-color 0.4s,
+    border-color 0.4s,
+    color 0.4s,
+    transform 0.4s var(--pop),
+    box-shadow 0.2s;
+}
+
+/* Halo ring 7px outside the active node. */
+.node::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 0.4s,
+    transform 0.5s var(--ease);
+}
+
+.stepNumber {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.tabTitle {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+.tab:hover .node,
+.tab[data-state='done'] .node {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.tab[data-state='active'] .node {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--accent);
+  transform: scale(1.08);
+}
+
+.tab[data-state='active'] .node::after {
+  opacity: 1;
+  transform: none;
+}
+
+.tab[data-state='active'] .stepNumber {
+  color: var(--accent-ink);
+}
+
+.tab[data-state='active'] .tabTitle {
+  color: var(--navy);
+}
+
+.tab:focus-visible {
+  outline: none;
+}
+
+.tab:focus-visible .node {
+  box-shadow: 0 0 0 4px rgb(13 194 255 / 0.45);
+}
+
+/* ===== Detail panel ===== */
+.stage {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  margin-top: 40px;
+  border-radius: 8px;
+  background: var(--navy);
+  color: #fff;
+  overflow: hidden;
+}
+
+.stageProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0.25);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+
+.stage[data-step='1'] .stageProgress {
+  transform: scaleX(0.5);
+}
+
+.stage[data-step='2'] .stageProgress {
+  transform: scaleX(0.75);
+}
+
+.stage[data-step='3'] .stageProgress {
+  transform: scaleX(1);
+}
+
+/* Every panel shares one cell, so the stage is always as tall as the tallest panel. */
+.panel {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 48px;
+  align-items: center;
+  padding: 56px 64px;
+  visibility: hidden;
+  /* Exiting panels stay visible until their fade has finished. */
+  transition: visibility 0s linear 0.35s;
+}
+
+.panel[data-active='true'] {
+  visibility: visible;
+  transition: visibility 0s;
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -6px;
+  border-radius: 8px;
+}
+
+.panel > * {
+  opacity: 0;
+  transform: translateX(24px);
+  transition:
+    opacity 0.35s,
+    transform 0.45s var(--ease);
+}
+
+.panel[data-active='true'] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s 0.1s,
+    transform 0.8s 0.1s var(--ease);
+}
+
+.panel[data-active='true'] > :nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.numeral {
+  font-family: var(--font-heading);
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: rgb(127 221 255 / 0.35);
+}
+
+@supports (-webkit-text-stroke: 1px) {
+  .numeral {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(127 221 255 / 0.55);
+  }
+}
+
+.kicker {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+}
+
+.panelTitle {
+  margin: 0 0 14px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.375rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.panelText {
+  max-width: 58ch;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--on-navy);
+}
+
+/* ===== Reveal (only after JS sets data-motion="ready") ===== */
+.section[data-motion='ready'] .header,
+.section[data-motion='ready'] .tab,
+.section[data-motion='ready'] .stage {
+  transition-property: opacity, transform;
+  transition-duration: 0.9s;
+  transition-timing-function: var(--ease);
+}
+
+.section[data-motion='ready']:not([data-revealed='true']) .header,
+.section[data-motion='ready']:not([data-revealed='true']) .tab,
+.section[data-motion='ready']:not([data-revealed='true']) .stage {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.section[data-motion='ready']:not([data-revealed='true']) .railFill {
+  transform: scaleX(0);
+}
+
+/* Only the tab's own reveal is delayed; its node and title transitions stay instant. */
+.section[data-motion='ready'] .tab:nth-of-type(1) {
+  transition-delay: 0.2s;
+}
+
+.section[data-motion='ready'] .tab:nth-of-type(2) {
+  transition-delay: 0.3s;
+}
+
+.section[data-motion='ready'] .tab:nth-of-type(3) {
+  transition-delay: 0.4s;
+}
+
+.section[data-motion='ready'] .tab:nth-of-type(4) {
+  transition-delay: 0.5s;
+}
+
+.section[data-motion='ready'] .stage {
+  transition-delay: 0.55s;
+}
+
+/* ===== Tablet ===== */
+@media (max-width: 1024px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 44px 40px;
+  }
+
+  .numeral {
+    font-size: 72px;
+  }
+}
+
+/* ===== Mobile: 2x2 grid of bordered tap targets ===== */
+@media (max-width: 640px) {
+  .section {
+    padding: 72px 0;
+  }
+
+  .inner {
+    padding: 0 16px;
+  }
+
+  .track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .tab {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    min-height: 64px;
+    padding: 10px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    text-align: left;
+  }
+
+  .tab[data-state='active'] {
+    border-color: var(--navy);
+  }
+
+  .node {
+    flex: none;
+    width: 40px;
+    height: 40px;
+  }
+
+  .node::after {
+    display: none;
+  }
+
+  .tab[data-state='active'] .node {
+    transform: none;
+  }
+
+  .stepNumber {
+    display: none;
+  }
+
+  .tabTitle {
+    font-size: 14px;
+  }
+
+  .stage {
+    margin-top: 24px;
+  }
+
+  .panel {
+    padding: 32px 22px;
+  }
+
+  .panelText {
+    font-size: 16px;
+  }
+}
+
+/* ===== Reduced motion: instant state changes ===== */
+@media (prefers-reduced-motion: reduce) {
+  .railFill,
+  .node,
+  .node::after,
+  .tabTitle,
+  .stageProgress,
+  .panel,
+  .panel > *,
+  .panel[data-active='true'] > * {
+    transition: none;
+  }
+
+  .panel > *,
+  .tab[data-state='active'] .node {
+    transform: none;
+  }
+}
