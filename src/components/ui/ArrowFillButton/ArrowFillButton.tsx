@@ -1,13 +1,16 @@
-import { useState, type AnchorHTMLAttributes, type CSSProperties, type PointerEvent } from 'react';
+import {
+  useState,
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  type CSSProperties,
+  type PointerEvent,
+} from 'react';
 import { ArrowRight } from 'lucide-react';
 import { cx } from '@/utils/cx';
 import styles from './ArrowFillButton.module.css';
 
-type AnchorProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children'>;
-
-export interface ArrowFillButtonProps extends AnchorProps {
+interface ArrowFillButtonBaseProps {
   btnText: string;
-  href: string;
   /** Pill background at rest. */
   bgColor?: string;
   /** Label colour at rest. */
@@ -18,11 +21,24 @@ export interface ArrowFillButtonProps extends AnchorProps {
   hoverTextColor?: string;
   /** Arrow circle background. */
   circleColor?: string;
+  /** Arrow circle background once active. */
+  hoverCircleColor?: string;
   /** Arrow colour at rest. */
   arrowColor?: string;
   /** Arrow colour once active. */
   hoverArrowColor?: string;
 }
+
+type LinkProps = ArrowFillButtonBaseProps &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children'> & { href: string };
+
+type ActionProps = ArrowFillButtonBaseProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & { href?: undefined };
+
+/** With `href` it renders a link; without, a `<button>` (e.g. a form submit). */
+export type ArrowFillButtonProps = LinkProps | ActionProps;
+
+type PointerHandler = (event: PointerEvent<HTMLElement>) => void;
 
 /**
  * Pill link with an arrow in a circle on the right. On hover, keyboard focus or touch press a
@@ -31,34 +47,35 @@ export interface ArrowFillButtonProps extends AnchorProps {
  */
 export function ArrowFillButton({
   btnText,
-  href,
   bgColor,
   textColor,
   fillColor,
   hoverTextColor,
   circleColor,
+  hoverCircleColor,
   arrowColor,
   hoverArrowColor,
   className,
   style,
-  onPointerDown,
-  onPointerUp,
-  onPointerCancel,
-  onPointerLeave,
   ...rest
 }: ArrowFillButtonProps) {
   const [pressed, setPressed] = useState(false);
+  const { onPointerDown, onPointerUp, onPointerCancel, onPointerLeave } = rest as {
+    onPointerDown?: PointerHandler;
+    onPointerUp?: PointerHandler;
+    onPointerCancel?: PointerHandler;
+    onPointerLeave?: PointerHandler;
+  };
 
   // Touch screens never hover, so a finger on the button plays the fill as a pressed state.
-  const press = (event: PointerEvent<HTMLAnchorElement>) => {
+  const press = (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType !== 'mouse') setPressed(true);
     onPointerDown?.(event);
   };
-  const release =
-    (handler?: (event: PointerEvent<HTMLAnchorElement>) => void) => (event: PointerEvent<HTMLAnchorElement>) => {
-      setPressed(false);
-      handler?.(event);
-    };
+  const release = (handler?: PointerHandler) => (event: PointerEvent<HTMLElement>) => {
+    setPressed(false);
+    handler?.(event);
+  };
 
   const colors = {
     '--afb-bg': bgColor,
@@ -66,28 +83,44 @@ export function ArrowFillButton({
     '--afb-fill': fillColor,
     '--afb-hover-text': hoverTextColor,
     '--afb-circle': circleColor,
+    '--afb-hover-circle': hoverCircleColor,
     '--afb-arrow': arrowColor,
     '--afb-hover-arrow': hoverArrowColor,
   } as CSSProperties;
 
-  return (
-    <a
-      {...rest}
-      href={href}
-      className={cx(styles.button, className)}
-      style={{ ...colors, ...style }}
-      data-pressed={pressed || undefined}
-      onPointerDown={press}
-      onPointerUp={release(onPointerUp)}
-      onPointerCancel={release(onPointerCancel)}
-      onPointerLeave={release(onPointerLeave)}
-    >
+  const shared = {
+    className: cx(styles.button, className),
+    style: { ...colors, ...style },
+    'data-pressed': pressed || undefined,
+    onPointerDown: press,
+    onPointerUp: release(onPointerUp),
+    onPointerCancel: release(onPointerCancel),
+    onPointerLeave: release(onPointerLeave),
+  };
+
+  const content = (
+    <>
       <span className={styles.fill} aria-hidden="true" />
       <span className={styles.label}>{btnText}</span>
       <span className={styles.circle} aria-hidden="true">
         <ArrowRight size={18} strokeWidth={2.25} className={styles.arrow} />
         <ArrowRight size={18} strokeWidth={2.25} className={cx(styles.arrow, styles.arrowNext)} />
       </span>
-    </a>
+    </>
+  );
+
+  if (rest.href !== undefined) {
+    return (
+      <a {...(rest as LinkProps)} {...shared}>
+        {content}
+      </a>
+    );
+  }
+
+  const { type = 'button', ...buttonRest } = rest as ActionProps;
+  return (
+    <button {...buttonRest} type={type} {...shared}>
+      {content}
+    </button>
   );
 }

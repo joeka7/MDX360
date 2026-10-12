@@ -202,72 +202,6 @@
   line-height: 1.5;
 }
 
-/* ---- Submit ---- */
-.submit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  width: 100%;
-  min-height: 60px;
-  padding: 0 28px;
-  border: 0;
-  border-radius: 4px;
-  background: var(--ep-accent);
-  color: var(--ep-navy);
-  font: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-align: left;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
-}
-
-.submitIcon {
-  flex: none;
-  transition: transform 0.35s var(--ep-ease);
-}
-
-.submit:hover:not(:disabled) {
-  background: var(--ep-navy);
-  color: #fff;
-}
-
-.submit:hover:not(:disabled) .submitIcon {
-  transform: translateX(5px);
-}
-
-.submit:focus-visible {
-  outline: 3px solid var(--ep-navy);
-  outline-offset: 3px;
-}
-
-.submit:disabled {
-  background: #9edff5;
-  color: var(--ep-navy);
-  cursor: progress;
-}
-
-.spinner {
-  flex: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgb(10 22 38 / 0.25);
-  border-top-color: var(--ep-navy);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .requiredNote {
   margin: 14px 0 0;
   font-size: 13px;
@@ -337,19 +271,11 @@
 /* ---- Reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
   .control,
-  .control::after,
-  .submit,
-  .submitIcon {
+  .control::after {
     transition: none;
   }
 
   .success {
     animation: none;
-  }
-
-  /* The global reduced-motion reset stops all animation; keep the busy indicator, just slower. */
-  .spinner {
-    animation-duration: 2s !important;
-    animation-iteration-count: infinite !important;
   }
 }

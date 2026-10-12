@@ -1,5 +1,5 @@
 import { useId, useState, type FormEvent, type ReactNode } from 'react';
-import { Button, Checkbox, Field, Icon, Input, Select, Textarea } from '@/components/ui';
+import { ArrowFillButton, Button, Checkbox, Field, Icon, Input, Select, Textarea } from '@/components/ui';
 import { getProductsBySlugs, products } from '@/data/products';
 import { acquisitionTimelines, countryCodes } from '@/data/site';
 import { submitEnquiry } from '@/services/enquiry';
@@ -251,26 +251,17 @@ export function EnquiryForm({
           </p>
         )}
 
-        <button type="submit" className={compact.submit} disabled={submitting}>
-          <span>{submitting ? 'Sending Enquiry…' : submitLabel}</span>
-          {submitting ? (
-            <span className={compact.spinner} aria-hidden="true" />
-          ) : (
-            <svg
-              className={compact.submitIcon}
-              width="20"
-              height="14"
-              viewBox="0 0 18 12"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M1 6h15M11 1l5 5-5 5" />
-            </svg>
-          )}
-        </button>
+        <ArrowFillButton
+          type="submit"
+          btnText={submitting ? 'Sending Enquiry…' : submitLabel}
+          fillColor="#2d3038"
+          hoverTextColor="#ffffff"
+          circleColor="#2d3038"
+          hoverCircleColor="#ffffff"
+          arrowColor="#ffffff"
+          hoverArrowColor="#0dc2ff"
+          disabled={submitting}
+        />
         <p className={compact.requiredNote}>
           <span className={compact.required} aria-hidden="true">
             *
