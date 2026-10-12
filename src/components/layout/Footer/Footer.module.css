@@ -208,11 +208,21 @@
   border-top: 1px solid var(--rule);
 }
 
-/* Top-aligned with the group titles; sized to the mark so only the mark is clickable. */
+/* Top-aligned with the group titles; the mark stretches to fill its grid cell. */
 .logo {
-  --logo-height: 4rem;
+  --logo-height: auto;
   align-self: start;
-  justify-self: start;
+  justify-self: stretch;
+}
+
+.logo > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
 }
 
 .groupTitle {
