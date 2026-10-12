@@ -27,12 +27,13 @@
   color: var(--text-strong);
 }
 
+/* Same content width and gutters as the page sections. */
 .inner {
   position: relative;
   z-index: 1;
-  max-width: 82.5rem;
+  max-width: var(--container-outer);
   margin-inline: auto;
-  padding-inline: 2.5rem;
+  padding-inline: var(--gutter);
 }
 
 /* ---- Statement row: brand + contact ---- */
@@ -459,10 +460,6 @@
 @media (max-width: 640px) {
   .footer {
     padding-top: 4rem;
-  }
-
-  .inner {
-    padding-inline: 1.25rem;
   }
 
   .tagline,

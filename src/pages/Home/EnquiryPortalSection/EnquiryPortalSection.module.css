@@ -33,10 +33,12 @@
   overflow-x: clip;
 }
 
+/* Same content width and gutters as the neighbouring home sections. */
 .inner {
-  max-width: 1360px;
+  width: 100%;
+  max-width: var(--container-outer, 1360px);
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 var(--gutter, 40px);
   box-sizing: border-box;
 }
 
