@@ -10,7 +10,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
  * WAI-ARIA tabs (automatic activation) above a navy detail panel. All panels share one grid cell,
  * so switching never shifts the layout, and every description stays in the DOM. The section
  * reveals once on scroll; it only starts hidden after JS has opted in (`data-motion="ready"`),
- * and never under reduced motion or without IntersectionObserver.
+ * and never under reduced motion or without IntersectionObserver. Under the same opt-in the steps
+ * autoplay: the rail fills towards the next node while the section is in view, then advances to
+ * the next step, looping forever. It pauses only for keyboard focus; a click restarts it from there.
  */
 export function EnterprisePartnershipSection() {
   const [active, setActive] = useState(0);
@@ -48,10 +50,9 @@ export function EnterprisePartnershipSection() {
     root.dataset.motion = 'ready';
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          root.dataset.revealed = 'true';
-          observer.disconnect();
-        }
+        const inView = entries.some((entry) => entry.isIntersecting);
+        root.dataset.inview = String(inView);
+        if (inView) root.dataset.revealed = 'true';
       },
       { threshold: 0.2 },
     );
@@ -59,6 +60,7 @@ export function EnterprisePartnershipSection() {
     return () => {
       observer.disconnect();
       delete root.dataset.motion;
+      delete root.dataset.inview;
     };
   }, []);
 
@@ -89,7 +91,8 @@ export function EnterprisePartnershipSection() {
           onKeyDown={onTabKeyDown}
         >
           <span className={styles.rail} aria-hidden="true">
-            <span className={styles.railFill} />
+            {/* Keyed by step so its timer animation restarts on every change. */}
+            <span key={active} className={styles.railFill} onAnimationEnd={() => select(active + 1)} />
           </span>
 
           {capabilities.map((capability, i) => (
