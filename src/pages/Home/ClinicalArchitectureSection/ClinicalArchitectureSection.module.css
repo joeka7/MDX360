@@ -1,7 +1,7 @@
 /*
  * Home "Clinical Architecture": a plain white stage with a bento of informational pillar cards.
  * Colours map to the shared tokens. The cyan brand accent (#0DC2FF) is kept for non-text accents
- * only; accent text uses --color-primary so it stays legible on white.
+ * only; accent text uses the same ink (#0077a8) as the other home sections so it stays legible on white.
  */
 .section {
   --ca-surface: #ffffff;
@@ -9,16 +9,14 @@
   --ca-media: var(--color-surface-container, #e7eeff);
   --ca-line: var(--color-surface-highest, #d8e3fb);
   --ca-accent: var(--color-primary-container, #0dc2ff);
-  --ca-accent-text: var(--color-primary, #006688);
+  --ca-accent-text: #0077a8;
   --ca-text: var(--color-on-surface, #111c2d);
   --ca-text-muted: var(--color-on-surface-variant, #3d484f);
   --ca-text-subtle: var(--color-outline, #6d7980);
-  --ca-font-display: var(--font-display, system-ui, sans-serif);
-  --ca-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-  --ca-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ca-ease: var(--ease-reveal);
 
   overflow: hidden;
-  padding-block: clamp(80px, 10vw, 128px);
+  padding-block: var(--section-space);
   background-color: var(--ca-surface);
   color: var(--ca-text);
 }
@@ -51,12 +49,9 @@
 }
 
 .eyebrow,
-.railMeta,
-.label {
-  font-family: var(--ca-font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.4;
+.railMeta {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
 }
 
@@ -66,7 +61,6 @@
   align-items: center;
   gap: 10px;
   color: var(--ca-accent-text);
-  letter-spacing: 0.16em;
 }
 
 .eyebrow::before {
@@ -75,11 +69,12 @@
   height: 8px;
   border-radius: var(--radius-round);
   background: var(--ca-accent);
+  box-shadow: 0 0 0 4px rgb(13 194 255 / 0.18);
 }
 
 .railMeta {
+  font-weight: 600;
   color: var(--ca-text-subtle);
-  letter-spacing: 0.14em;
 }
 
 .intro {
@@ -90,11 +85,8 @@
 }
 
 .title {
-  font-family: var(--ca-font-display);
-  font-size: clamp(38px, 5vw, 70px);
-  font-weight: 800;
-  line-height: 1.03;
-  letter-spacing: -0.035em;
+  font: var(--type-section);
+  letter-spacing: var(--tracking-display);
   color: var(--ca-text);
   text-wrap: balance;
 }
@@ -104,9 +96,8 @@
 }
 
 .lede {
-  max-width: 400px;
-  font-size: 16px;
-  line-height: 1.7;
+  max-width: 560px;
+  font: var(--type-lead);
   color: var(--ca-text-muted);
 }
 
@@ -177,29 +168,26 @@
 }
 
 .label {
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
   color: var(--ca-accent-text);
-  letter-spacing: 0.14em;
 }
 
 .cardTitle {
-  font-family: var(--ca-font-display);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.25;
+  font: var(--type-title);
   letter-spacing: -0.015em;
   color: var(--ca-text);
 }
 
 .cardFeatured .cardTitle {
-  font-size: clamp(24px, 2.4vw, 30px);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font: var(--type-title-lg);
+  letter-spacing: var(--tracking-title);
 }
 
 .cardText {
   max-width: 560px;
-  font-size: 15px;
-  line-height: 1.65;
+  font: var(--type-text);
   color: var(--ca-text-muted);
 }
 
@@ -214,19 +202,19 @@
 }
 
 .section[data-revealed='true'] .reveal {
-  animation: caReveal 0.8s var(--ca-ease) backwards;
+  animation: caReveal var(--duration-reveal) var(--ca-ease) backwards;
 }
 
-.section[data-revealed='true'] .reveal[data-reveal='2'] { animation-delay: 80ms; }
-.section[data-revealed='true'] .reveal[data-reveal='3'] { animation-delay: 160ms; }
-.section[data-revealed='true'] .reveal[data-reveal='4'] { animation-delay: 240ms; }
-.section[data-revealed='true'] .reveal[data-reveal='5'] { animation-delay: 320ms; }
-.section[data-revealed='true'] .reveal[data-reveal='6'] { animation-delay: 400ms; }
+.section[data-revealed='true'] .reveal[data-reveal='2'] { animation-delay: var(--reveal-stagger); }
+.section[data-revealed='true'] .reveal[data-reveal='3'] { animation-delay: calc(2 * var(--reveal-stagger)); }
+.section[data-revealed='true'] .reveal[data-reveal='4'] { animation-delay: calc(3 * var(--reveal-stagger)); }
+.section[data-revealed='true'] .reveal[data-reveal='5'] { animation-delay: calc(4 * var(--reveal-stagger)); }
+.section[data-revealed='true'] .reveal[data-reveal='6'] { animation-delay: calc(5 * var(--reveal-stagger)); }
 
 @keyframes caReveal {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(var(--reveal-shift));
   }
   to {
     opacity: 1;

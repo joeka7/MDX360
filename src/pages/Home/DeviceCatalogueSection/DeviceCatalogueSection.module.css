@@ -13,12 +13,13 @@
   --surface-hover: #e2ebf4;
   --bg: #f5f8fb;
   --radius: 24px;
-  --font-heading: var(--font-display, inherit);
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease: var(--ease-reveal);
   --ease-io: cubic-bezier(0.7, 0, 0.2, 1);
 
   position: relative;
-  padding: 120px 0;
+  padding: var(--section-space) 0;
+  /* Follows the white Clinical Architecture band; the hairline keeps the light-on-light step crisp. */
+  border-top: 1px solid var(--color-section-seam);
   background: var(--bg);
   color: var(--navy);
   font-family: inherit;
@@ -49,9 +50,8 @@
   align-items: center;
   gap: 10px;
   margin: 0;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
 }
 
@@ -66,11 +66,8 @@
 .title {
   margin: 22px 0 0;
   max-width: 15ch;
-  font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 1.1rem + 3.4vw, 4rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
+  font: var(--type-section);
+  letter-spacing: var(--tracking-display);
 }
 
 .titleAccent {
@@ -81,8 +78,7 @@
   max-width: 46ch;
   margin: 0;
   color: var(--text-muted);
-  font-size: 15px;
-  line-height: 1.6;
+  font: var(--type-lead);
 }
 
 /* ===== Grid ===== */
@@ -147,7 +143,7 @@
 .ghost {
   position: absolute;
   z-index: -1;
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: 190px;
   font-weight: 800;
   line-height: 0.8;
@@ -180,9 +176,8 @@
   align-items: center;
   gap: 8px;
   margin: 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
 }
 
@@ -195,11 +190,9 @@
 
 .name {
   margin: 0;
-  font-family: var(--font-heading);
-  font-size: clamp(1.625rem, 1.2rem + 0.9vw, 2.125rem);
-  font-weight: 700;
+  font: var(--type-title-lg);
   line-height: 1.05;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--tracking-title);
 }
 
 .nameLink {
@@ -228,8 +221,7 @@
 .description {
   margin: 0;
   max-width: 40ch;
-  font-size: 15px;
-  line-height: 1.6;
+  font: var(--type-text);
   color: var(--text-muted);
 }
 
@@ -483,11 +475,10 @@
 
 .bannerTitle {
   margin: 18px 0 22px;
-  font-family: var(--font-heading);
-  font-size: clamp(1.625rem, 1.1rem + 1.4vw, 2.125rem);
+  font: var(--type-title-lg);
+  /* A question rather than a name, so it sits a weight lighter than the device titles. */
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--tracking-title);
 }
 
 .pills {
@@ -530,8 +521,7 @@
   border-radius: 999px;
   background: var(--accent);
   color: var(--navy);
-  font-size: 15px;
-  font-weight: 700;
+  font: var(--type-button);
   text-decoration: none;
   transition:
     transform 0.4s var(--ease),
@@ -656,10 +646,6 @@
 
 /* ===== Mobile ===== */
 @media (max-width: 640px) {
-  .section {
-    padding: 72px 0;
-  }
-
   .inner {
     padding: 0 16px;
   }

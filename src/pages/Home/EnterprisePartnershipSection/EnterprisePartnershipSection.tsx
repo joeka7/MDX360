@@ -1,5 +1,6 @@
 import { useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { Icon } from '@/components/ui';
+import { REVEAL_OBSERVER_OPTIONS } from '@/utils/reveal';
 import { capabilities } from '../content';
 import styles from './EnterprisePartnershipSection.module.css';
 
@@ -54,7 +55,7 @@ export function EnterprisePartnershipSection() {
         root.dataset.inview = String(inView);
         if (inView) root.dataset.revealed = 'true';
       },
-      { threshold: 0.2 },
+      REVEAL_OBSERVER_OPTIONS,
     );
     observer.observe(root);
     return () => {

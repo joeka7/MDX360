@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { cx } from '@/utils/cx';
+import { REVEAL_OBSERVER_OPTIONS } from '@/utils/reveal';
 import { pillars } from '../content';
 import styles from './ClinicalArchitectureSection.module.css';
 
@@ -64,7 +65,8 @@ function PillarCard({ pillar, featured, order }: { pillar: Pillar; featured?: bo
 export function ClinicalArchitectureSection() {
   const rootRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  // A layout effect, so content in view on load is hidden before the first paint, never flashed.
+  useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root) return;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -78,10 +80,13 @@ export function ClinicalArchitectureSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+      REVEAL_OBSERVER_OPTIONS,
     );
     observer.observe(root);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      delete root.dataset.motion;
+    };
   }, []);
 
   const [featured, ...rest] = pillars;

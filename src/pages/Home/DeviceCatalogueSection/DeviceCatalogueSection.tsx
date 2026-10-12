@@ -4,6 +4,7 @@ import { getProductBySlug } from '@/data/products';
 import { routes } from '@/data/site';
 import type { Product } from '@/types/product';
 import { cx } from '@/utils/cx';
+import { REVEAL_OBSERVER_OPTIONS } from '@/utils/reveal';
 import { catalogueDevices, catalogueIntro, portfolioTeaser } from '../content';
 import styles from './DeviceCatalogueSection.module.css';
 
@@ -86,7 +87,7 @@ export function DeviceCatalogueSection() {
           observer.unobserve(target);
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+      REVEAL_OBSERVER_OPTIONS,
     );
     root.querySelectorAll('[data-reveal]').forEach((target) => observer.observe(target));
     return () => {

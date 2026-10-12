@@ -21,10 +21,11 @@
   --ep-error-bg: #fef3f2;
   --ep-page: #f5f8fb;
   --ep-font-display: var(--font-display, system-ui, sans-serif);
-  --ep-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ep-ease: var(--ease-reveal);
   --ep-ease-io: cubic-bezier(0.7, 0, 0.2, 1);
 
-  padding: 96px 0;
+  padding: var(--section-space) 0;
+  border-top: 1px solid var(--color-section-seam);
   background: var(--ep-page);
   color: var(--ep-navy);
   font-family: inherit;
@@ -73,27 +74,37 @@
 }
 
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--ep-accent-soft);
 }
 
+/* The same cyan dot as the other home eyebrows. */
+.eyebrow::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ep-accent);
+  box-shadow: 0 0 0 4px rgb(13 194 255 / 0.18);
+}
+
+/* Set inside the narrower navy panel, so it takes the smaller section-title role. */
 .title {
   margin: 20px 0 0;
-  font-family: var(--ep-font-display);
-  font-size: clamp(2.25rem, 1.3rem + 2.6vw, 3.375rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
+  font: var(--type-section-sm);
+  letter-spacing: var(--tracking-display);
 }
 
 .lead {
   margin: 22px 0 0;
-  font-size: 16px;
-  line-height: 1.7;
+  font: var(--type-lead);
   color: var(--ep-on-navy-muted);
 }
 
@@ -118,9 +129,8 @@
 
 .benefits li::before {
   content: '0' counter(benefit);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   color: var(--ep-accent-soft);
 }
 
@@ -134,9 +144,8 @@
 
 .contact dt {
   margin-bottom: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--ep-on-navy-label);
 }
@@ -180,12 +189,12 @@
 /* ---- Reveal (only after JS sets data-motion="ready") ---- */
 .section[data-motion='ready']:not([data-revealed='true']) .intro {
   opacity: 0;
-  transform: translateX(-24px);
+  transform: translateX(calc(-1 * var(--reveal-shift)));
 }
 
 .section[data-motion='ready']:not([data-revealed='true']) .formPanel {
   opacity: 0;
-  transform: translateX(24px);
+  transform: translateX(var(--reveal-shift));
 }
 
 .section[data-motion='ready']:not([data-revealed='true']) .intro::after {
@@ -195,12 +204,12 @@
 .section[data-motion='ready'] .intro,
 .section[data-motion='ready'] .formPanel {
   transition:
-    opacity 0.9s var(--ep-ease),
-    transform 0.9s var(--ep-ease);
+    opacity var(--duration-reveal) var(--ep-ease),
+    transform var(--duration-reveal) var(--ep-ease);
 }
 
 .section[data-motion='ready'] .formPanel {
-  transition-delay: 0.1s;
+  transition-delay: var(--reveal-stagger);
 }
 
 /* ---- Tablet ---- */
@@ -229,8 +238,10 @@
 
 /* ---- Mobile: edge to edge ---- */
 @media (max-width: 640px) {
+  /* Edge to edge: the navy panel itself marks the boundary, so no hairline. */
   .section {
     padding: 0;
+    border-top: 0;
   }
 
   .inner {

@@ -15,13 +15,13 @@
   --on-navy: #c3d0dd;
   /* White, because both neighbouring home sections sit on #f5f8fb. */
   --bg: #ffffff;
-  --font-heading: var(--font-display, inherit);
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease: var(--ease-reveal);
   --pop: cubic-bezier(0.3, 1.5, 0.5, 1);
   --autoplay: 6s;
 
   position: relative;
-  padding: 112px 0 120px;
+  padding: var(--section-space) 0;
+  border-top: 1px solid var(--color-section-seam);
   background: var(--bg);
   color: var(--navy);
   font-family: inherit;
@@ -50,9 +50,8 @@
   align-items: center;
   gap: 10px;
   margin: 0;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
 }
 
@@ -66,11 +65,8 @@
 
 .title {
   margin: 20px 0 0;
-  font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 1.2rem + 3vw, 3.75rem);
-  font-weight: 800;
-  line-height: 1.03;
-  letter-spacing: -0.04em;
+  font: var(--type-section);
+  letter-spacing: var(--tracking-display);
 }
 
 .titleAccent {
@@ -79,8 +75,7 @@
 
 .lead {
   margin: 0;
-  font-size: 17px;
-  line-height: 1.7;
+  font: var(--type-lead);
   color: var(--text-muted);
 }
 
@@ -201,9 +196,8 @@
 }
 
 .stepNumber {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
 }
 
 .tabTitle {
@@ -330,7 +324,7 @@
 }
 
 .numeral {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: 96px;
   font-weight: 800;
   line-height: 0.8;
@@ -347,27 +341,22 @@
 
 .kicker {
   margin: 0 0 14px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--accent-soft);
 }
 
 .panelTitle {
   margin: 0 0 14px;
-  font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.375rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font: var(--type-title-lg);
+  letter-spacing: var(--tracking-title);
 }
 
 .panelText {
   max-width: 58ch;
   margin: 0;
-  font-size: 18px;
-  line-height: 1.7;
+  font: var(--type-lead);
   color: var(--on-navy);
 }
 
@@ -376,7 +365,7 @@
 .section[data-motion='ready'] .tab,
 .section[data-motion='ready'] .stage {
   transition-property: opacity, transform;
-  transition-duration: 0.9s;
+  transition-duration: var(--duration-reveal);
   transition-timing-function: var(--ease);
 }
 
@@ -384,28 +373,28 @@
 .section[data-motion='ready']:not([data-revealed='true']) .tab,
 .section[data-motion='ready']:not([data-revealed='true']) .stage {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(var(--reveal-shift));
 }
 
 /* Only the tab's own reveal is delayed; its node and title transitions stay instant. */
 .section[data-motion='ready'] .tab:nth-of-type(1) {
-  transition-delay: 0.2s;
+  transition-delay: calc(2 * var(--reveal-stagger));
 }
 
 .section[data-motion='ready'] .tab:nth-of-type(2) {
-  transition-delay: 0.3s;
+  transition-delay: calc(3 * var(--reveal-stagger));
 }
 
 .section[data-motion='ready'] .tab:nth-of-type(3) {
-  transition-delay: 0.4s;
+  transition-delay: calc(4 * var(--reveal-stagger));
 }
 
 .section[data-motion='ready'] .tab:nth-of-type(4) {
-  transition-delay: 0.5s;
+  transition-delay: calc(5 * var(--reveal-stagger));
 }
 
 .section[data-motion='ready'] .stage {
-  transition-delay: 0.55s;
+  transition-delay: calc(6 * var(--reveal-stagger));
 }
 
 /* ===== Tablet ===== */
@@ -428,10 +417,6 @@
 
 /* ===== Mobile: 2x2 grid of bordered tap targets ===== */
 @media (max-width: 640px) {
-  .section {
-    padding: 72px 0;
-  }
-
   .inner {
     padding: 0 16px;
   }
@@ -489,10 +474,6 @@
 
   .panel {
     padding: 32px 22px;
-  }
-
-  .panelText {
-    font-size: 16px;
   }
 }
 

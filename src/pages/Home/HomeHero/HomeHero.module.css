@@ -1,7 +1,8 @@
 /*
  * Home hero: a near-black navy ground lit like a product studio, light type, one cyan accent
  * used sparingly (primary button, eyebrow rule, active selector rule, a faint wash behind the
- * devices). Colours and fonts are scoped here so nothing else on the site changes.
+ * devices). Colours are scoped here so nothing else on the site changes; type uses the shared
+ * roles from tokens.css so the hero speaks the same typographic language as the sections below.
  */
 .hero {
   --hero-ground: #080d15;
@@ -11,8 +12,6 @@
   --hero-label: rgb(196 210 228 / 0.62);
   --hero-hairline: rgb(231 238 255 / 0.12);
   --hero-accent: var(--color-primary-container);
-  --hero-sans: 'Manrope', system-ui, sans-serif;
-  --hero-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   /* Run up under the fixed glass header, as the other dark heroes do. */
   margin-top: calc(-1 * var(--header-height));
@@ -23,7 +22,6 @@
     radial-gradient(70% 60% at 0% 100%, rgb(4 6 10 / 0.7), rgb(4 6 10 / 0) 70%),
     linear-gradient(180deg, #0b121d 0%, var(--hero-ground) 60%, #06090f 100%);
   color: var(--hero-ink);
-  font-family: var(--hero-sans);
   overflow-x: clip;
 }
 
@@ -86,8 +84,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font: 400 0.75rem / 1.4 var(--hero-mono);
-  letter-spacing: 0.14em;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--hero-body);
 }
@@ -100,19 +98,15 @@
 }
 
 .title {
-  font-family: var(--hero-sans);
-  font-size: clamp(2.5rem, 4.4vw, 4.1rem);
-  font-weight: 600;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
+  font: var(--type-hero);
+  letter-spacing: var(--tracking-display);
   color: var(--hero-ink);
   text-wrap: balance;
 }
 
 .lead {
   max-width: 30rem;
-  font-size: 1.125rem;
-  line-height: 1.65;
+  font: var(--type-lead-lg);
   color: var(--hero-body);
 }
 
@@ -127,7 +121,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font: 600 0.9375rem / 1.2 var(--hero-sans);
+  font: var(--type-button);
   color: var(--hero-ink);
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -391,15 +385,8 @@
   gap: 6px;
 }
 
-.trustLabel {
-  font: 400 0.6875rem / 1.4 var(--hero-mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--hero-label);
-}
-
 .trustValue {
   margin: 0;
-  font: 600 0.9375rem / 1.4 var(--hero-sans);
+  font: 600 0.9375rem / 1.4 var(--font-body);
   color: var(--hero-ink);
 }

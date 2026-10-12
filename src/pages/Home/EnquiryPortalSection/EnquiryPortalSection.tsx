@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { EnquiryForm } from '@/components/common';
 import { company } from '@/data/site';
+import { REVEAL_OBSERVER_OPTIONS } from '@/utils/reveal';
 import { enquiryBenefits } from '../content';
 import styles from './EnquiryPortalSection.module.css';
 
@@ -26,7 +27,7 @@ export function EnquiryPortalSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 },
+      REVEAL_OBSERVER_OPTIONS,
     );
     observer.observe(root);
     return () => {
