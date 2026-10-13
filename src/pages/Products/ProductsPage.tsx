@@ -1,13 +1,11 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { CtaStrip, FeatureCard } from '@/components/common';
 import { type CategoryFilterValue } from '@/components/products';
-import { Button, Section, SectionHeading } from '@/components/ui';
 import { productCategories, products } from '@/data/products';
 import { routes } from '@/data/site';
 import type { Product } from '@/types/product';
 import { cx } from '@/utils/cx';
-import { catalogueFacts, supportPillars } from './content';
+import { catalogueFacts } from './content';
 import styles from './ProductsPage.module.css';
 
 const CATEGORY_PARAM = 'category';
@@ -218,47 +216,6 @@ export function ProductsPage() {
           </ul>
         </div>
       </div>
-
-      {/* Support & partnership */}
-      <Section tone="dark" background={<span className={styles.supportGlow} aria-hidden="true" />}>
-        <SectionHeading
-          tone="dark"
-          eyebrow="Enterprise Partnership Program"
-          title="Engineering Precision Meets White-Glove Clinical Support"
-          intro="Every MDX360 installation includes end-to-end operational onboarding, ISO-compliant safety validation, and priority direct factory servicing across Middle East and worldwide clinics."
-        />
-        <div className={styles.supportGrid}>
-          {supportPillars.map((pillar) => (
-            <FeatureCard
-              key={pillar.title}
-              tone="dark"
-              icon={pillar.icon}
-              title={pillar.title}
-              bodySize="sm"
-              padding="md"
-              hover="tint"
-              className={styles.supportCard}
-            >
-              {pillar.body}
-            </FeatureCard>
-          ))}
-        </div>
-        <CtaStrip
-          tone="dark"
-          title="Need Technical Data Sheets or Clinical Dossiers?"
-          description="Our biomedical specialists are available for clinic layout evaluations and volume quotations."
-          actions={
-            <>
-              <Button to={routes.contact} size="sm" trailingIcon="arrow_forward">
-                Enquire for Clinic Pricing &amp; Supply
-              </Button>
-              <Button to={routes.contact} variant="ghostDark" size="sm" icon="download">
-                Download Full Catalogue
-              </Button>
-            </>
-          }
-        />
-      </Section>
     </>
   );
 }

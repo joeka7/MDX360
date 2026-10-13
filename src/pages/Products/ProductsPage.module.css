@@ -540,34 +540,3 @@
     transform: none;
   }
 }
-
-/* ---- Support ---- */
-.supportGlow {
-  position: absolute;
-  right: -6rem;
-  bottom: -6rem;
-  width: 24rem;
-  height: 24rem;
-  border-radius: var(--radius-round);
-  background: rgb(0 102 136 / 0.1);
-  filter: blur(64px);
-  pointer-events: none;
-}
-
-.supportGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-xl);
-}
-
-@media (min-width: 768px) {
-  .supportGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.supportCard {
-  justify-content: flex-start;
-  backdrop-filter: blur(4px);
-}

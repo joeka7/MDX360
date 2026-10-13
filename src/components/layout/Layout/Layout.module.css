@@ -3,7 +3,7 @@
   flex-direction: column;
   min-height: calc(100vh - var(--header-height));
   padding-top: var(--header-height);
-  background: var(--color-surface);
+  background: #ffffff;
   scroll-margin-top: 0;
 }
 
