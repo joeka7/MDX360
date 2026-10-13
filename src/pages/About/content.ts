@@ -1,9 +1,9 @@
 import type { IconName } from '@/types/product';
 
 export const heroMetrics = [
-  { value: '100%', label: 'Clinical Precision' },
   { value: 'ISO 13485', label: 'Certified Standard', accent: true },
   { value: '360°', label: 'Comprehensive Care' },
+  { value: '100%', label: 'Clinical Precision' },
 ];
 
 export const engineeringPanels: Array<{
