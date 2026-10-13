@@ -202,50 +202,6 @@
   box-shadow: 0 0 8px rgb(13 194 255 / 0.8);
 }
 
-.floatingCard {
-  position: absolute;
-  bottom: -2rem;
-  left: -2rem;
-  display: none;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: 20rem;
-  padding: 0.75rem;
-  border-radius: var(--radius-md);
-  background: var(--color-surface-lowest);
-  box-shadow: var(--shadow-2xl);
-  transition: transform var(--duration-slow) var(--ease-out);
-}
-
-.floatingCard:hover {
-  transform: translateY(-0.25rem);
-}
-
-@media (min-width: 640px) {
-  .floatingCard {
-    display: flex;
-  }
-}
-
-.floatingImage {
-  width: 5rem;
-  height: 3.5rem;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  object-position: top;
-}
-
-.floatingLabel {
-  letter-spacing: var(--tracking-wider);
-}
-
-.floatingTitle {
-  padding-right: var(--space-sm);
-  font: var(--type-tech);
-  font-weight: 600;
-  line-height: 1.25;
-}
-
 /* ---- Corporate integrity ---- */
 .integrityHeader {
   display: grid;

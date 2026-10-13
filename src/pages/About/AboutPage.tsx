@@ -1,5 +1,4 @@
-import modelsDuo from '@/assets/images/people/models-duo.webp';
-import modelsGroup from '@/assets/images/people/models-group.webp';
+import aboutUs from '@/assets/images/about-us.webp';
 import { CtaBanner, FeatureCard, FeatureCheck, FeatureMeta } from '@/components/common';
 import { Breadcrumbs, Button, Eyebrow, Icon, Pill, Section, SectionHeading } from '@/components/ui';
 import { company, routes } from '@/data/site';
@@ -59,10 +58,10 @@ export function AboutPage() {
           <div className={styles.heroMedia}>
             <figure className={styles.frame}>
               <img
-                src={modelsGroup}
+                src={aboutUs}
                 alt="MDX360 clinical and aesthetic specialists"
-                width={1000}
-                height={824}
+                width={1500}
+                height={1500}
                 fetchPriority="high"
                 className={styles.frameImage}
               />
@@ -77,13 +76,6 @@ export function AboutPage() {
                 <span className={styles.captionDot} aria-hidden="true" />
               </figcaption>
             </figure>
-            <div className={styles.floatingCard}>
-              <img src={modelsDuo} alt="" width={674} height={1000} className={styles.floatingImage} />
-              <div>
-                <Eyebrow className={styles.floatingLabel}>Certified Care</Eyebrow>
-                <p className={styles.floatingTitle}>Patient Safety Benchmark</p>
-              </div>
-            </div>
           </div>
         </div>
       </Section>
