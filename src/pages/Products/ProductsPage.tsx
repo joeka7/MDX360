@@ -150,7 +150,7 @@ export function ProductsPage() {
             <div>
               <p className={styles.eyebrow}>Enterprise Medical Systems</p>
               <h1 className={styles.title}>
-                Medical &amp; <span className={styles.titleMuted}>Aesthetic Systems</span>
+                Medical &amp; <span className={styles.titleAccent}>Aesthetic Systems</span>
               </h1>
               <p className={styles.lead}>
                 Explore our complete portfolio of advanced non-invasive medical technologies, body sculpting platforms,
