@@ -4,32 +4,35 @@
  */
 
 /* ---- Root & tokens ---- */
+/* Colours are the home page's: the shared text tokens, its accent ink, navy and tinted ground. */
 .page {
   --ink: var(--color-on-surface);
-  --teal: var(--color-primary);
+  --teal: #0077a8;
   --body: var(--color-on-surface-variant);
-  /* The design's #6c7980 is 4.48:1 on white, just short of AA for 11–13px captions. */
   --muted: #46566a;
-  --wash: var(--color-surface-low);
-  --slate: #1e293b;
+  --wash: #f5f8fb;
+  --navy: #0a1626;
   --cyan: var(--color-primary-container);
-  --line: rgb(16 28 44 / 0.12);
-  --on-dark: rgb(255 255 255 / 0.78);
-  --container: 1200px;
-  --pad: 40px;
-  /* Inset that lines a full-bleed element's content up with the container edge. */
-  --edge: max(var(--pad), calc((100vw - var(--container)) / 2 + var(--pad)));
+  --cyan-soft: #7fddff;
+  --line: #dce5ee;
+  --line-tint: #cfdce8;
+  --on-dark: #c3d0dd;
+  /* Inset that lines a full-bleed element's content up with the shared container edge. */
+  --edge: max(var(--gutter), calc((100cqw - var(--container-max)) / 2));
   --ease: var(--ease-reveal);
 
+  /* Lets --edge measure the page rather than the viewport, so a scrollbar doesn't skew it. */
+  container-type: inline-size;
   overflow-x: clip;
   background: #fff;
   color: var(--body);
 }
 
+/* Same content width and gutters as the home sections, header and footer. */
 .container {
-  max-width: var(--container);
+  max-width: var(--container-outer);
   margin: 0 auto;
-  padding: 0 var(--pad);
+  padding: 0 var(--gutter);
 }
 
 /* ---- Shared details ---- */
@@ -37,9 +40,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
+  font: var(--type-eyebrow);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--ink);
@@ -54,9 +55,7 @@
 }
 
 .caps {
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.4;
+  font: var(--type-overline);
   letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--muted);
@@ -76,13 +75,13 @@
 
 .h2 {
   margin-top: 20px;
-  line-height: 1.08;
+  line-height: 1.06;
   letter-spacing: var(--tracking-display);
 }
 
 .h3 {
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font: var(--type-title);
+  letter-spacing: -0.015em;
 }
 
 /* ---- Image slot ---- */
@@ -95,7 +94,7 @@
 .placeholder {
   position: relative;
   background-color: var(--wash);
-  background-image: repeating-linear-gradient(135deg, rgb(16 28 44 / 0.06) 0 1px, transparent 1px 14px);
+  background-image: repeating-linear-gradient(135deg, rgb(10 22 38 / 0.06) 0 1px, transparent 1px 14px);
 }
 
 .placeholderNote {
@@ -125,12 +124,14 @@
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   align-items: center;
-  margin-top: 28px;
+  /* Run up under the fixed glass header, as the Home hero does. */
+  margin-top: calc(-1 * var(--header-height));
 }
 
+/* Heights include the strip behind the header so the visible photo keeps its size. */
 .heroFigure {
   position: relative;
-  height: 720px;
+  height: calc(720px + var(--header-height));
   overflow: hidden;
 }
 
@@ -212,13 +213,12 @@
   margin-top: 24px;
   font-size: clamp(2.125rem, 1rem + 2.6vw, 3.375rem);
   line-height: 1.04;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--tracking-display);
 }
 
 .heroText {
   margin-top: 24px;
-  font-size: 17px;
-  line-height: 1.7;
+  font: var(--type-lead);
 }
 
 /* ---- 2. Key facts ---- */
@@ -287,15 +287,14 @@
 
 .integrityLead {
   margin-top: 28px;
-  font-size: 20px;
-  line-height: 1.6;
+  font: var(--type-lead-lg);
   color: var(--ink);
 }
 
 .integrityText {
   margin-top: 16px;
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .principles {
@@ -316,25 +315,23 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.05em;
-  color: rgb(16 28 44 / 0.18);
+  color: rgb(10 22 38 / 0.18);
 }
 
 @supports (-webkit-text-stroke: 1px) {
   .numeral {
     color: var(--wash);
-    -webkit-text-stroke: 1px rgb(16 28 44 / 0.18);
+    -webkit-text-stroke: 1px rgb(10 22 38 / 0.18);
   }
 }
 
 .principle .h3 {
   margin-top: 20px;
-  font-size: 22px;
 }
 
 .principle p {
   margin-top: 12px;
-  font-size: 15px;
-  line-height: 1.7;
+  font: var(--type-text);
 }
 
 .principle .metric {
@@ -387,14 +384,14 @@
   font-size: 26px;
   font-weight: 600;
   line-height: 1.35;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-title);
   color: var(--ink);
 }
 
 .support {
   margin-top: 20px;
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .closing {
@@ -413,7 +410,7 @@
   grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
   align-items: stretch;
   margin-top: 140px;
-  background: var(--slate);
+  background: var(--navy);
   color: var(--on-dark);
 }
 
@@ -421,7 +418,10 @@
   padding: 120px 88px 120px var(--edge);
 }
 
-.visionText .label,
+.visionText .label {
+  color: var(--cyan-soft);
+}
+
 .visionText .h2,
 .visionText .statement,
 .visionText .closing {
@@ -507,7 +507,7 @@
 
 .lineup figcaption {
   position: absolute;
-  right: 24px;
+  right: var(--edge);
   bottom: 16px;
   z-index: 2;
   font-size: 13px;
@@ -530,14 +530,12 @@
 }
 
 .pillarsHead .h2 {
-  font-size: clamp(2.125rem, 1.2rem + 2.3vw, 3rem);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
+  font: var(--type-section-sm);
+  letter-spacing: var(--tracking-display);
 }
 
 .pillarsNote {
-  font-size: 17px;
-  line-height: 1.65;
+  font: var(--type-lead);
 }
 
 .pillarList {
@@ -550,7 +548,7 @@
   display: flex;
   flex-direction: column;
   padding: 0 28px;
-  border-left: 1px solid rgb(16 28 44 / 0.16);
+  border-left: 1px solid var(--line-tint);
 }
 
 .pillar:first-child {
@@ -559,22 +557,18 @@
 }
 
 .pillarNum {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.4;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   color: var(--teal);
 }
 
 .pillar .h3 {
   margin-top: 16px;
-  font-size: 20px;
-  letter-spacing: -0.015em;
 }
 
 .pillar p {
   margin: 12px 0 20px;
-  font-size: 14px;
-  line-height: 1.7;
+  font: var(--type-text);
 }
 
 .pillarTag {
@@ -588,7 +582,9 @@
 /* ---- 7. Closing call to action ---- */
 .cta {
   overflow: hidden;
-  background: var(--slate);
+  /* Seam against the footer's darker navy, as light home sections mark theirs. */
+  border-bottom: 1px solid rgb(255 255 255 / 0.14);
+  background: var(--navy);
   color: var(--on-dark);
 }
 
@@ -604,23 +600,21 @@
   padding: 110px 0;
 }
 
-.ctaText .label,
-.ctaText .h2 {
-  color: #fff;
+.ctaText .label {
+  color: var(--cyan-soft);
 }
 
 .ctaText .h2 {
   margin-top: 24px;
-  font-size: clamp(2.25rem, 1rem + 2.6vw, 3.375rem);
-  line-height: 1.04;
-  letter-spacing: -0.04em;
+  font: var(--type-section-sm);
+  letter-spacing: var(--tracking-display);
+  color: #fff;
 }
 
 .ctaLead {
   max-width: 52ch;
   margin-top: 24px;
-  font-size: 17px;
-  line-height: 1.7;
+  font: var(--type-lead);
 }
 
 .ctaActions {
@@ -635,7 +629,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  min-height: 54px;
+  min-height: 56px;
   padding: 0 26px;
   border: 1px solid transparent;
   border-radius: 999px;
@@ -647,7 +641,7 @@
 
 .btnPrimary {
   background: var(--cyan);
-  color: var(--ink);
+  color: var(--navy);
 }
 
 .btnPrimary:hover {
@@ -811,7 +805,7 @@
   }
 
   .heroFigure {
-    height: 440px;
+    height: calc(440px + var(--header-height));
   }
 
   /* Clear of the panel that overlaps the photo from below. */
@@ -820,13 +814,13 @@
   }
 
   .heroPanel {
-    margin: -80px 40px 0;
+    margin: -80px var(--gutter) 0;
     padding: 40px;
   }
 
   .integrityPanel {
     grid-column: 1;
-    padding: 40px 32px 0;
+    padding: 40px 40px 0;
   }
 
   .placeholderNote {
@@ -843,11 +837,11 @@
   }
 
   .missionText {
-    padding: 56px 40px 0;
+    padding: 56px var(--gutter) 0;
   }
 
   .visionText {
-    padding: 88px 40px;
+    padding: 88px var(--gutter);
   }
 
   .lineup {
@@ -897,21 +891,16 @@
 
 /* ---- Mobile ---- */
 @media (max-width: 640px) {
-  .page {
-    --pad: 16px;
-  }
-
   .heroFigure {
-    height: 320px;
+    height: calc(320px + var(--header-height));
   }
 
   .heroCaption {
     bottom: 64px;
-    left: 16px;
   }
 
   .heroPanel {
-    margin: -48px 12px 0;
+    margin: -48px var(--gutter) 0;
     padding: 28px 20px;
   }
 
@@ -953,10 +942,6 @@
     padding: 28px 20px 0;
   }
 
-  .integrityLead {
-    font-size: 18px;
-  }
-
   .principles {
     grid-template-columns: minmax(0, 1fr);
     gap: 40px;
@@ -972,7 +957,7 @@
   }
 
   .missionText {
-    padding: 40px 16px 0;
+    padding: 40px var(--gutter) 0;
   }
 
   .statement {
@@ -984,12 +969,12 @@
   }
 
   .visionText {
-    padding: 64px 16px;
+    padding: 64px var(--gutter);
   }
 
   .lineup {
     min-height: 320px;
-    padding-inline: 16px;
+    padding-inline: var(--gutter);
   }
 
   .lineupDevice {
@@ -1003,11 +988,7 @@
 
   .lineup[data-cutout='false'] {
     min-height: 280px;
-    padding-inline: 16px;
-  }
-
-  .lineup figcaption {
-    right: 16px;
+    padding-inline: var(--gutter);
   }
 
   .pillars {
