@@ -119,7 +119,7 @@
 .title {
   margin-top: 20px;
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 1.4rem + 4.4vw, 5.25rem);
+  font-size: clamp(2.5rem, 1.4rem + 4.4vw, 5.25rem);
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: var(--tracking-display);
@@ -474,6 +474,56 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 56px 28px;
   }
+
+  /*
+   * Product-photo fallback: the photo is a full square scene of its own, so below desktop it fills
+   * the plate edge to edge under an in-flow meta strip instead of floating, framed, in empty plate.
+   */
+  .plate[data-cutout='false'] {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;
+  }
+
+  .plate[data-cutout='false'] .plateMeta {
+    position: static;
+    padding: 14px 16px;
+  }
+
+  .plate[data-cutout='false'] .image {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: 1 / 1;
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+/* Tablet, stacked hero: the three facts sit side by side instead of stretching across the page. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .specRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 18px 20px 18px 0;
+  }
+
+  .specRow + .specRow {
+    padding-left: 20px;
+    border-left: 1px solid var(--line);
+  }
+
+  .specRow dd {
+    text-align: left;
+  }
 }
 
 /* ---- Mobile ---- */
@@ -482,13 +532,32 @@
     padding-bottom: 80px;
   }
 
+  /* A tighter intro, so the category tabs reach the first screen. */
   .crumbRow {
-    padding-top: 36px;
+    padding-top: 28px;
+  }
+
+  .hero {
+    gap: 32px;
+    margin-top: 28px;
+  }
+
+  .title {
+    margin-top: 16px;
+  }
+
+  .lead {
+    margin-top: 16px;
+    font: var(--type-lead);
+  }
+
+  .specRow {
+    padding: 12px 0;
   }
 
   /* Bleeds through the gutter so the tab strip scrolls edge to edge. */
   .tabs {
-    margin: 44px calc(-1 * var(--gutter)) 0;
+    margin: 36px calc(-1 * var(--gutter)) 0;
     padding: 0 12px;
   }
 
@@ -496,17 +565,38 @@
     min-height: 48px;
   }
 
+  .count {
+    margin-top: 16px;
+  }
+
   .grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 48px;
+    gap: 40px;
+    margin-top: 20px;
   }
 
   .plate {
     aspect-ratio: 1 / 1;
   }
 
+  .tag {
+    margin-top: 18px;
+  }
+
   .name {
     font-size: 24px;
+  }
+
+  .feature {
+    margin-top: 12px;
+  }
+
+  .discover {
+    padding-top: 14px;
+  }
+
+  .feature + .discover {
+    margin-top: 18px;
   }
 }
 

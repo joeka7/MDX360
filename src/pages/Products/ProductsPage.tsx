@@ -82,6 +82,8 @@ function ArrowIcon() {
  */
 export function ProductsPage() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const tabsScrolledRef = useRef(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const category = parseCategory(searchParams.get(CATEGORY_PARAM));
   const visibleProducts = category === 'all' ? products : products.filter((product) => product.category === category);
@@ -101,6 +103,24 @@ export function ProductsPage() {
       delete root.dataset.motion;
     };
   }, []);
+
+  // On narrow screens the tab strip scrolls: keep the active tab in view, including on arrival from a
+  // pre-filtered link (e.g. the footer's category links). Only the strip scrolls, never the page.
+  useEffect(() => {
+    const strip = tabsRef.current;
+    const tab = strip?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (!strip || !tab) return;
+    const stripBox = strip.getBoundingClientRect();
+    const tabBox = tab.getBoundingClientRect();
+    const isFirstRun = !tabsScrolledRef.current;
+    tabsScrolledRef.current = true;
+    if (tabBox.left >= stripBox.left && tabBox.right <= stripBox.right) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    strip.scrollTo({
+      left: strip.scrollLeft + tabBox.left - stripBox.left - (stripBox.width - tabBox.width) / 2,
+      behavior: isFirstRun || reduceMotion ? 'instant' : 'smooth',
+    });
+  }, [category]);
 
   // Re-runs on every filter change so newly mounted cards are observed too.
   useEffect(() => {
@@ -168,7 +188,7 @@ export function ProductsPage() {
             </dl>
           </header>
 
-          <div className={styles.tabs} role="group" aria-label="Filter devices by category">
+          <div ref={tabsRef} className={styles.tabs} role="group" aria-label="Filter devices by category">
             {filterOptions.map((option) => {
               const isActive = category === option.id;
               return (
