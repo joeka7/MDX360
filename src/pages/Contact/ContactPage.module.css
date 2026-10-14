@@ -10,6 +10,8 @@
   --teal: #0077a8;
   --body: var(--color-on-surface-variant);
   --muted: #46566a;
+  /* Home's form-label tier. */
+  --strong: #33435a;
   --wash: #f5f8fb;
   --cyan: var(--color-primary-container);
   --line: #dce5ee;
@@ -35,7 +37,6 @@
   gap: 12px;
   margin: 0;
   font: var(--type-eyebrow);
-  font-weight: 600;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--ink);
@@ -51,7 +52,6 @@
 
 .caps {
   font: var(--type-overline);
-  font-weight: 600;
   letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--muted);
@@ -74,8 +74,7 @@
 }
 
 .h3 {
-  font-size: 20px;
-  line-height: 1.3;
+  font: var(--type-title);
   letter-spacing: -0.015em;
 }
 
@@ -135,15 +134,13 @@
 }
 
 .h1 {
-  font-size: clamp(2.375rem, 1.3rem + 3.2vw, 4.25rem);
-  line-height: 1.02;
-  letter-spacing: -0.045em;
+  font: var(--type-hero);
+  letter-spacing: var(--tracking-display);
 }
 
 .heroText {
   margin: 0;
-  font-size: 18px;
-  line-height: 1.7;
+  font: var(--type-lead-lg);
 }
 
 .facts {
@@ -168,7 +165,7 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-title);
   color: var(--ink);
 }
 
@@ -199,7 +196,7 @@
   margin-top: 20px;
   font-size: 26px;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-title);
 }
 
 .channels {
@@ -213,10 +210,8 @@
 }
 
 .channels dt {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: 0.12em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -325,15 +320,13 @@
 
 .h2 {
   margin-top: 20px;
-  font-size: clamp(2.125rem, 1.4rem + 1.8vw, 3rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  font: var(--type-section-sm);
+  letter-spacing: var(--tracking-display);
 }
 
 .incIntro {
   margin: 0;
-  font-size: 17px;
-  line-height: 1.7;
+  font: var(--type-lead);
 }
 
 .incList {
@@ -352,8 +345,8 @@
 
 .incNum {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   color: var(--teal);
 }
 
@@ -363,16 +356,14 @@
 
 .incList p {
   margin: 10px 0 0;
-  font-size: 15px;
-  line-height: 1.7;
+  font: var(--type-text);
 }
 
 .incTag {
   display: block;
   margin-top: 14px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font: var(--type-overline);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -391,9 +382,8 @@
 
 .h2Mid {
   margin-top: 20px;
-  font-size: clamp(1.75rem, 1.3rem + 1vw, 2.25rem);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font: var(--type-title-lg);
+  letter-spacing: var(--tracking-title);
 }
 
 .textLink {
@@ -483,8 +473,7 @@
 .devList p {
   flex: 1;
   margin: 8px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
+  font: var(--type-text);
 }
 
 .devRow {
@@ -495,7 +484,7 @@
   margin-top: 14px;
   padding-top: 6px;
   border-top: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
 }
 
@@ -540,13 +529,12 @@
 .h2Tender {
   font-size: 24px;
   line-height: 1.3;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-title);
 }
 
 .tender p {
   margin: 6px 0 0;
-  font-size: 15px;
-  line-height: 1.6;
+  font: var(--type-text);
 }
 
 .outlineBtn {
@@ -610,10 +598,6 @@
   .incHead {
     grid-template-columns: minmax(0, 1fr);
     gap: 40px;
-  }
-
-  .h1 {
-    font-size: clamp(2.375rem, 1rem + 4.4vw, 3.25rem);
   }
 
   .facts {

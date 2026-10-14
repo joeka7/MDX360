@@ -1,6 +1,6 @@
 /*
  * Contact enquiry form: open and card-free, with underlined fields in two numbered groups.
- * Colour tokens (--ink, --teal, --muted, --cyan, --line, --error, --ease) come from the page root.
+ * Colour tokens (--ink, --strong, --teal, --muted, --cyan, --line, --error, --ease) come from the page root.
  */
 
 .form {
@@ -13,7 +13,6 @@
   gap: 12px;
   margin: 0;
   font: var(--type-eyebrow);
-  font-weight: 600;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--ink);
@@ -29,7 +28,6 @@
 
 .caps {
   font: var(--type-overline);
-  font-weight: 600;
   letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   color: var(--muted);
@@ -37,10 +35,7 @@
 
 .title {
   margin: 20px 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 1.4rem + 1.4vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.05;
+  font: var(--type-section-sm);
   letter-spacing: var(--tracking-display);
   color: var(--ink);
 }
@@ -61,7 +56,7 @@
   margin-bottom: 28px;
   padding: 0;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink);
@@ -100,7 +95,7 @@
   font-size: 13px;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--ink);
+  color: var(--strong);
 }
 
 .required {
@@ -119,7 +114,7 @@
   background: transparent;
   color: var(--ink);
   font: inherit;
-  font-size: 17px;
+  font-size: 16px;
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
@@ -336,7 +331,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
 }
 
