@@ -152,7 +152,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: var(--ca-focus, center);
+  transform-origin: var(--ca-focus, center);
+  transform: scale(var(--ca-zoom, 1));
 }
 
 .body {
@@ -252,12 +254,25 @@
 }
 
 /*
- * Phones: the three cards stack as equals, so every card opens on the same edge-to-edge 16:9
+ * Phones: the three cards stack as equals, so every card opens on the same edge-to-edge square
  * image instead of the secondary cards' inset frame, which only reads beside the featured card.
+ * The square crops away the empty backdrop beside the devices; each image's mobile focus/zoom
+ * frames its devices to fill the panel.
  */
 @media (max-width: 640px) {
   .stack {
     grid-template-columns: 1fr;
+  }
+
+  .cardFeatured .media,
+  .card:not(.cardFeatured) .media {
+    aspect-ratio: 1 / 1;
+  }
+
+  .mediaImg {
+    object-position: var(--ca-focus-m, var(--ca-focus, center));
+    transform-origin: var(--ca-focus-m, var(--ca-focus, center));
+    transform: scale(var(--ca-zoom-m, var(--ca-zoom, 1)));
   }
 
   .body {

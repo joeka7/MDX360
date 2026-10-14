@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, type CSSProperties } from 'react';
 import { cx } from '@/utils/cx';
 import { REVEAL_OBSERVER_OPTIONS } from '@/utils/reveal';
 import { pillars } from '../content';
@@ -14,9 +14,16 @@ export interface Pillar {
   /**
    * Optional media. Without it the card shows a plain media panel. `focus` is the point (CSS
    * object-position) kept in frame when the panel crops the image; `zoom` enlarges the image
-   * around that point, for artwork with a lot of empty space around the subject.
+   * around that point, for artwork with a lot of empty space around the subject. `mobile` overrides
+   * both for the square phone panel, so the subject fills it instead of leaving empty backdrop.
    */
-  image?: { src: string; alt: string; focus?: string; zoom?: number };
+  image?: {
+    src: string;
+    alt: string;
+    focus?: string;
+    zoom?: number;
+    mobile?: { focus?: string; zoom?: number };
+  };
 }
 
 function PillarCard({ pillar, featured, order }: { pillar: Pillar; featured?: boolean; order: number }) {
@@ -34,11 +41,14 @@ function PillarCard({ pillar, featured, order }: { pillar: Pillar; featured?: bo
             className={styles.mediaImg}
             src={pillar.image.src}
             alt={pillar.image.alt}
-            style={{
-              objectPosition: pillar.image.focus,
-              transformOrigin: pillar.image.focus,
-              transform: pillar.image.zoom ? `scale(${pillar.image.zoom})` : undefined,
-            }}
+            style={
+              {
+                '--ca-focus': pillar.image.focus,
+                '--ca-zoom': pillar.image.zoom,
+                '--ca-focus-m': pillar.image.mobile?.focus,
+                '--ca-zoom-m': pillar.image.mobile?.zoom,
+              } as CSSProperties
+            }
             loading="lazy"
             decoding="async"
           />

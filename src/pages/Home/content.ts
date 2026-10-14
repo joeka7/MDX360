@@ -53,8 +53,9 @@ export const heroDevices: HeroDevice[] = [
 
 /**
  * Clinical Architecture pillars: three informational concepts (not links). The first entry is the
- * featured card. Images are cropped with object-fit: cover (the secondary panels are 16:9); use
- * `focus` and `zoom` to keep the subject in frame.
+ * featured card. Images are cropped with object-fit: cover (the secondary panels are 16:9, all panels
+ * are square on phones); use `focus` and `zoom` to keep the subject in frame, and `mobile` to
+ * re-frame it for the square.
  */
 export const pillars: Pillar[] = [
   {
@@ -67,6 +68,7 @@ export const pillars: Pillar[] = [
       src: aestheticPrecisionImage,
       alt: 'A line-up of white aesthetic treatment devices with touchscreen consoles and handpieces',
       focus: 'right center',
+      mobile: { focus: '100% 52%', zoom: 1.1 },
     },
   },
   {
@@ -80,6 +82,7 @@ export const pillars: Pillar[] = [
       alt: 'Two white therapy devices on wheeled stands with touchscreen and cabled handpieces',
       focus: '92% 68%',
       zoom: 1.2,
+      mobile: { focus: '100% 53%', zoom: 1.05 },
     },
   },
   {
@@ -93,6 +96,7 @@ export const pillars: Pillar[] = [
       alt: 'Two diagnostic consoles on wheeled stands with data-display touchscreens and probe handpieces',
       focus: '82% 73%',
       zoom: 1.1,
+      mobile: { focus: '92% 52%', zoom: 1 },
     },
   },
 ];
