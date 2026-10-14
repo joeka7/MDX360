@@ -1,14 +1,10 @@
+import midPhoto from '@/assets/images/about-mid.webp';
+import mid2Photo from '@/assets/images/about-mid-2.webp';
 import heroPhoto from '@/assets/images/about-us.webp';
 import sevenDHifoPhoto from '@/assets/images/products/7d-hifo.webp';
 import hydroPlasmaPhoto from '@/assets/images/products/hydro-plasma.webp';
 import shapeMasterPhoto from '@/assets/images/products/shape-master.webp';
 import shockWaveXPhoto from '@/assets/images/products/shock-wave-x.webp';
-
-/**
- * Commissioned About photography. Drop each file into `src/assets/images/about/` under the name
- * below and the page picks it up; until then its ImageSlot renders a neutral placeholder.
- */
-const aboutPhotos = import.meta.glob<string>('/src/assets/images/about/*.webp', { eager: true, import: 'default' });
 
 /**
  * Transparent-background cut-outs, named by product slug: the same folder the Products page and
@@ -29,10 +25,10 @@ function device(slug: string, fallback: string): DeviceImage {
 export const aboutImages = {
   /** 1500 × 1500 original. */
   hero: heroPhoto,
-  /** ≥ 2400 × 1000: the assembly or calibration environment. */
-  architecturalBand: aboutPhotos['/src/assets/images/about/architectural-band.webp'] as string | undefined,
-  /** ≥ 1400 × 1600: a technician's hands calibrating a treatment handpiece. */
-  calibrationCloseup: aboutPhotos['/src/assets/images/about/calibration-closeup.webp'] as string | undefined,
+  /** 1672 × 941 original: the assembly or calibration environment. */
+  architecturalBand: midPhoto,
+  /** 2400 × 1792 original: a technician's hands calibrating a treatment handpiece. */
+  calibrationCloseup: mid2Photo,
   lineup: {
     hydroPlasma: device('hydro-plasma', hydroPlasmaPhoto),
     shapeMaster: device('shape-master', shapeMasterPhoto),
