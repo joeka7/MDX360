@@ -91,7 +91,7 @@ export function HomeHero() {
             </p>
             <div className={styles.actions}>
               <ArrowFillButton btnText="Explore Our Devices" href="#featured-devices" className={styles.primaryAction} />
-              <a href="https://mdx360.com/enquire-now/" className={styles.secondaryAction}>
+              <a href="#enquiry-portal" className={styles.secondaryAction}>
                 Enquire Now
               </a>
             </div>

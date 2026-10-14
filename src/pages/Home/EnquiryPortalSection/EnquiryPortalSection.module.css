@@ -253,21 +253,33 @@
     box-shadow: none;
   }
 
+  /* Panel copy sits on the page gutter, in line with the sections above and the footer below. */
   .intro {
-    padding: 44px 20px;
+    padding: 48px var(--gutter);
   }
 
   .intro::after {
-    left: 20px;
-    right: 20px;
+    left: var(--gutter);
+    right: var(--gutter);
   }
 
   .formPanel {
-    padding: 36px 20px;
+    padding: 40px var(--gutter) 48px;
   }
 
   .contact {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Small phones: the title steps below the hero title, and the submit runs full width like the hero CTA. */
+@media (max-width: 479px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .formPanel button[type='submit'] {
+    width: 100%;
   }
 }
 

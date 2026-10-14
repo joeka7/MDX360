@@ -39,9 +39,10 @@
   padding: var(--space-xl) var(--gutter);
 }
 
+/* Stacked, the stage's own headroom already separates it from the CTAs, so the gap stays tight. */
 .grid {
   display: grid;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
 }
 
 /* Desktop: quiet copy column on the left, devices on the right, trust strip at the bottom. */
@@ -133,10 +134,59 @@
   text-decoration-thickness: 2px;
 }
 
-/* Primary CTA is the shared ArrowFillButton; the hero only stretches it on small phones. */
+/*
+ * Small phones: the actions stack full width. The primary CTA (the shared ArrowFillButton) leads;
+ * the enquiry link becomes an outlined pill of the same height beneath it, bordered like the
+ * outlined pills on the catalogue's navy banner, so it reads as a second button, not a footnote.
+ */
 @media (max-width: 479px) {
+  /* A slightly tighter rhythm keeps both actions above the fold on short phone screens. */
+  .inner {
+    padding-top: 2rem;
+  }
+
+  .copy {
+    gap: 1.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    align-self: stretch;
+    gap: 0.75rem;
+  }
+
   .primaryAction {
     width: 100%;
+  }
+
+  .secondaryAction {
+    justify-content: center;
+    /* ArrowFillButton's height. */
+    min-height: 3.25rem;
+    padding-inline: 1.75rem;
+    border: 1px solid rgb(255 255 255 / 0.28);
+    border-radius: var(--radius-round);
+    text-decoration: none;
+    transition: border-color var(--duration-hover) linear;
+  }
+}
+
+@media (max-width: 479px) and (hover: hover) {
+  .secondaryAction:hover {
+    border-color: var(--hero-ink);
+  }
+}
+
+/* Narrow phones: a touch less tracking keeps the eyebrow on one line beside its rule. */
+@media (max-width: 379px) {
+  .eyebrow {
+    gap: 0.625rem;
+    letter-spacing: 0.12em;
+  }
+
+  .eyebrowRule {
+    width: 20px;
   }
 }
 
@@ -293,16 +343,11 @@
   gap: 0.75rem;
 }
 
+/* One row of five at every width, so the index always reads as a single progress line. */
 .selectorList {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem 0.75rem;
-}
-
-@media (min-width: 480px) {
-  .selectorList {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
 }
 
 .selectorItem {
@@ -369,18 +414,20 @@
 }
 
 /* ---- Trust strip ---- */
+/* Three across at every width, as on desktop, so no item is left on a row of its own. */
 .trust {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem 2rem;
   margin: 0;
   padding-top: 24px;
   border-top: 1px solid var(--hero-hairline);
 }
 
-@media (min-width: 480px) {
+@media (max-width: 639px) {
   .trust {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-md);
+    padding-top: 20px;
   }
 }
 
@@ -400,6 +447,12 @@
   margin: 0;
   font: 600 0.9375rem / 1.4 var(--font-body);
   color: var(--hero-ink);
+}
+
+@media (max-width: 479px) {
+  .trustValue {
+    font-size: 11px;
+  }
 }
 
 /*

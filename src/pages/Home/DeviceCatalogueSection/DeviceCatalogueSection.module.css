@@ -596,9 +596,12 @@
     grid-row: auto;
   }
 
+  /* Drops the wide layout's grid gap and centring too, so every stacked tile spaces alike. */
   .tile[data-layout] {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     padding: 28px;
   }
 
@@ -662,7 +665,7 @@
   }
 
   .tile[data-layout] {
-    padding: 22px;
+    padding: 20px;
   }
 
   .tile[data-layout] .media,
@@ -670,27 +673,82 @@
     height: 260px;
   }
 
+  /* Square product photos fill the tile's full width, so image and copy share one column edge. */
+  .tile[data-image='photo'] .media {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* A compact chip and Discover pill, so every tile's footer holds on one line. */
+  .footer {
+    gap: 10px 12px;
+  }
+
+  .tech {
+    padding: 6px 11px;
+    font-size: 12px;
+  }
+
   .go {
+    height: 44px;
+    min-width: 44px;
     max-width: 180px;
+    font-size: 13px;
   }
 
   .goLabel {
+    padding-left: 18px;
     opacity: 1;
   }
 
+  .goIcon {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
   .banner {
-    padding: 36px 24px;
+    padding: 32px 20px;
   }
 
   .banner::before {
-    left: 24px;
-    right: 24px;
+    left: 20px;
+    right: 20px;
   }
 
   .cta {
     width: 100%;
+    gap: 12px;
+    padding: 0 22px;
     justify-content: space-between;
     box-sizing: border-box;
+  }
+}
+
+/* Small phones: the section title steps below the hero title, and runs the full column. */
+@media (max-width: 479px) {
+  .title {
+    max-width: none;
+    font-size: 2rem;
+  }
+
+  .cta {
+    font-size: 0.875rem;
+  }
+}
+
+/* Narrow phones: a little less air in the footer keeps the longest chip beside its Discover pill. */
+@media (max-width: 379px) {
+  .footer {
+    column-gap: 8px;
+  }
+
+  .tech {
+    padding-inline: 9px;
+  }
+
+  .goLabel {
+    padding-left: 14px;
   }
 }
 

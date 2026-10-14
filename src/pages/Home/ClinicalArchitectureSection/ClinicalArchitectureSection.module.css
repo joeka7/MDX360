@@ -251,6 +251,10 @@
   }
 }
 
+/*
+ * Phones: the three cards stack as equals, so every card opens on the same edge-to-edge 16:9
+ * image instead of the secondary cards' inset frame, which only reads beside the featured card.
+ */
 @media (max-width: 640px) {
   .stack {
     grid-template-columns: 1fr;
@@ -261,11 +265,19 @@
   }
 
   .card:not(.cardFeatured) .media {
-    margin: 24px 24px 0;
+    margin: 0;
+    border-radius: 0;
   }
 
   .card:not(.cardFeatured) .body {
-    padding: 20px 24px 24px;
+    padding: 24px;
+  }
+}
+
+/* Small phones: section titles step below the 40px hero title (the design system's mobile 2rem). */
+@media (max-width: 479px) {
+  .title {
+    font-size: 2rem;
   }
 }
 
