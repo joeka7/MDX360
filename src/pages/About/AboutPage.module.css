@@ -808,19 +808,26 @@
     height: calc(440px + var(--header-height));
   }
 
-  /* Clear of the panel that overlaps the photo from below. */
+  /*
+   * Stacked, the white panels run in from the left edge and stop a gutter short of the right,
+   * so their text shares the container edge with every other section while the photo still
+   * shows beside them. The caption sits flush on the same edge, clear of the panel below.
+   */
   .heroCaption {
     bottom: 104px;
+    left: 0;
+    padding-left: var(--gutter);
   }
 
   .heroPanel {
-    margin: -80px var(--gutter) 0;
-    padding: 40px;
+    margin: -80px var(--gutter) 0 0;
+    padding: 40px 0 40px var(--gutter);
   }
 
   .integrityPanel {
     grid-column: 1;
-    padding: 40px 40px 0;
+    margin-left: calc(-1 * var(--gutter));
+    padding: 40px 0 0 var(--gutter);
   }
 
   .placeholderNote {
@@ -854,6 +861,12 @@
 
   .lineupCenter {
     height: 360px;
+  }
+
+  /* The photo row sets its own height; the side-column minimum would only add empty stage. */
+  .lineup[data-cutout='false'] {
+    min-height: 0;
+    padding-top: 56px;
   }
 
   .pillarsHead {
@@ -900,20 +913,25 @@
   }
 
   .heroPanel {
-    margin: -48px var(--gutter) 0;
-    padding: 28px 20px;
+    margin: -48px var(--gutter) 0 0;
+    padding: 28px 0 28px var(--gutter);
   }
 
   .crumb {
     margin-bottom: 28px;
   }
 
+  /* One row per fact, figure and label on a shared baseline, read like a spec sheet. */
   .facts {
     grid-template-columns: minmax(0, 1fr);
   }
 
   .facts > div {
-    padding: 20px 0;
+    flex-flow: row wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+    padding: 16px 0;
   }
 
   .facts > div + div {
@@ -923,11 +941,11 @@
   }
 
   .facts dt {
-    font-size: 34px;
+    font-size: 28px;
   }
 
   .band {
-    margin-top: 88px;
+    margin-top: 64px;
   }
 
   .bandImage {
@@ -939,7 +957,7 @@
   }
 
   .integrityPanel {
-    padding: 28px 20px 0;
+    padding: 28px 0 0 var(--gutter);
   }
 
   .principles {
@@ -948,8 +966,16 @@
     margin-top: 64px;
   }
 
+  .numeral {
+    font-size: 44px;
+  }
+
+  .principle .h3 {
+    margin-top: 14px;
+  }
+
   .mission {
-    margin-top: 96px;
+    margin-top: 80px;
   }
 
   .missionImage {
@@ -965,7 +991,7 @@
   }
 
   .vision {
-    margin-top: 88px;
+    margin-top: 72px;
   }
 
   .visionText {
@@ -986,9 +1012,27 @@
     height: 250px;
   }
 
+  /*
+   * Three squares across a phone leave each device thumbnail-sized. Portrait frames trim only
+   * the photos' empty side margins (every device sits within the middle three-quarters), so the
+   * equipment scales up by a third with nothing cropped.
+   */
   .lineup[data-cutout='false'] {
-    min-height: 280px;
-    padding-inline: var(--gutter);
+    min-height: 0;
+    padding: 40px var(--gutter) 0;
+  }
+
+  .lineup[data-cutout='false'] .lineupStage {
+    gap: 8px;
+  }
+
+  .lineup[data-cutout='false'] .lineupDevice {
+    width: calc((100% - 16px) * 0.31);
+    aspect-ratio: 3 / 4;
+  }
+
+  .lineup[data-cutout='false'] .lineupCenter {
+    width: calc((100% - 16px) * 0.38);
   }
 
   .pillars {
@@ -997,11 +1041,19 @@
 
   .pillarList {
     grid-template-columns: minmax(0, 1fr);
+    row-gap: 32px;
+    margin-top: 48px;
   }
 
   .pillar {
     padding: 0;
     border-left: 0;
+  }
+
+  /* The column rules become row rules, so the four pillars still read as a set. */
+  .pillar + .pillar {
+    padding-top: 32px;
+    border-top: 1px solid var(--line-tint);
   }
 
   .ctaText {
@@ -1018,8 +1070,10 @@
     height: 300px;
   }
 
+  /* On the text's left edge rather than floating off it, at the column's width. */
   .ctaDevice[data-cutout='false'] {
-    width: min(100%, 300px);
+    justify-self: start;
+    width: min(100%, 420px);
     margin-bottom: 72px;
   }
 }
