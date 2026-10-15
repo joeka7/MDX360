@@ -1,11 +1,14 @@
-import type {
-  InputHTMLAttributes,
-  ReactNode,
-  SelectHTMLAttributes,
-  TextareaHTMLAttributes,
+import {
+  useLayoutEffect,
+  useRef,
+  type InputHTMLAttributes,
+  type ReactNode,
+  type SelectHTMLAttributes,
+  type TextareaHTMLAttributes,
 } from 'react';
 import type { IconName } from '@/types/product';
 import { cx } from '@/utils/cx';
+import { PHONE_PLACEHOLDER, phoneNumberError } from '@/utils/phone';
 import { Icon } from '../Icon/Icon';
 import styles from './Form.module.css';
 
@@ -58,6 +61,40 @@ export function Select({ icon, className, children, ...props }: SelectProps) {
       </select>
       <Icon name="expand_more" size={18} className={styles.trailingIcon} />
     </div>
+  );
+}
+
+type PhoneInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value'> & { value: string };
+
+/**
+ * International phone number, typed in full with its country calling code. It is checked for
+ * plausible characters and length rather than any one national format. Without a `className` it
+ * takes the standard control style.
+ */
+export function PhoneInput({ className, value, onChange, ...props }: PhoneInputProps) {
+  const ref = useRef<HTMLInputElement>(null);
+
+  // Keeps the custom validity in step with the value, including programmatic resets.
+  useLayoutEffect(() => {
+    ref.current?.setCustomValidity(phoneNumberError(value));
+  }, [value]);
+
+  return (
+    <input
+      ref={ref}
+      type="tel"
+      inputMode="tel"
+      autoComplete="tel"
+      placeholder={PHONE_PLACEHOLDER}
+      {...props}
+      className={className ?? styles.control}
+      value={value}
+      onChange={(event) => {
+        // Set before the change handlers run, so form-level validation sees the new state.
+        event.currentTarget.setCustomValidity(phoneNumberError(event.currentTarget.value));
+        onChange?.(event);
+      }}
+    />
   );
 }
 

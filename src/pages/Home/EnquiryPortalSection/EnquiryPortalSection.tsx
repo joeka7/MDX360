@@ -1,8 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { EnquiryForm } from '@/components/common';
-import { company } from '@/data/site';
+import { company, enquiryBenefits } from '@/data/site';
 import { REVEAL_OBSERVER_OPTIONS } from '@/utils/reveal';
-import { enquiryBenefits } from '../content';
 import styles from './EnquiryPortalSection.module.css';
 
 /**
@@ -41,7 +40,7 @@ export function EnquiryPortalSection() {
       <div className={styles.inner}>
         <div className={styles.split}>
           <div className={styles.intro}>
-            <p className={styles.eyebrow}>Direct Clinical Inquiries</p>
+            <p className={styles.eyebrow}>Enquire</p>
             <h2 id="enquiry-portal-title" className={styles.title}>
               Take Your Practice to the Next Level
             </h2>

@@ -150,9 +150,3 @@ export const capabilities: Array<{ icon: IconName; title: string; body: string }
     body: 'Direct 24/7 access to biomedical engineering desks, ongoing clinical updates, and software firmware calibration over the entire hardware lifecycle.',
   },
 ];
-
-export const enquiryBenefits = [
-  'Direct OEM Device Pricing & Specification Sheets',
-  'Regional Clinical Certification Demonstrations',
-  'Bespoke Multi-Unit Enterprise Leasing Available',
-];

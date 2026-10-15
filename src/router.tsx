@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '@/components/layout';
 import { AboutPage } from '@/pages/About/AboutPage';
 import { ContactPage } from '@/pages/Contact/ContactPage';
+import { EnquirePage } from '@/pages/Enquire/EnquirePage';
 import { HomePage } from '@/pages/Home/HomePage';
 import { NotFoundPage } from '@/pages/NotFound/NotFoundPage';
 import { ProductPage } from '@/pages/Product/ProductPage';
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: 'products', element: <ProductsPage /> },
       { path: 'products/:slug', element: <ProductPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'enquire', element: <EnquirePage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

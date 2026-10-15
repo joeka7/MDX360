@@ -1,136 +1,441 @@
+/*
+ * Commercial enquiry form ("Editorial Split" form panel): filled fields in numbered groups.
+ * Used on white panels (Home enquiry section, Enquire page, product pages), so its colour tokens
+ * are declared here. The cyan accent (#0DC2FF) is never used as text on white; text accents use
+ * --ef-accent-ink.
+ */
+.form,
+.success {
+  --ef-accent: var(--color-primary-container);
+  --ef-accent-ink: #0077a8;
+  --ef-navy: #0a1626;
+  --ef-text: #33435a;
+  --ef-text-muted: #5b6b7f;
+  --ef-field: #f2f6fa;
+  --ef-field-hover: #ebf1f7;
+  --ef-field-focus: #eaf7fd;
+  --ef-field-line: #9fb0c2;
+  --ef-rule: #e1e8ef;
+  --ef-error: #b42318;
+  --ef-error-bg: #fef3f2;
+  --ef-ease: var(--ease-reveal);
+
+  color: var(--ef-navy);
+}
+
 .form {
+  margin: 0;
+}
+
+/* ---- Groups ---- */
+.group {
+  min-width: 0;
+  margin: 0 0 32px;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-md);
-}
-
-@media (min-width: 640px) {
-  .row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* ---- Phone with country code ---- */
-.phoneGroup {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.phoneGroup > :first-child {
-  width: 9rem;
-  flex-shrink: 0;
-}
-
-.countryCode {
-  padding-left: 0.5rem;
-}
-
-/* ---- Quick select ---- */
-.quickSelect {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  padding-top: var(--space-xs);
-}
-
-.quickSelectLabel {
-  font: var(--type-label);
-  letter-spacing: var(--tracking-wider);
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-outline);
+  color: var(--ef-navy);
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
+.legend::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ef-rule);
 }
 
-.chip {
-  padding: var(--space-xs) 0.75rem;
-  border-radius: var(--radius-lg);
-  background: var(--color-surface-container);
-  color: var(--color-on-surface);
-  font: var(--type-label);
-  transition:
-    background-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+.legendIndex {
+  color: var(--ef-accent-ink);
 }
 
-.chip:hover,
-.chipActive {
-  background: var(--color-primary-container);
-  color: var(--color-on-secondary-fixed);
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 24px;
 }
 
-/* ---- Submit ---- */
-.submitRow {
+.full {
+  grid-column: 1 / -1;
+}
+
+/* ---- Fields ---- */
+.field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  padding-top: var(--space-sm);
+  gap: 6px;
+  min-width: 0;
 }
 
-@media (min-width: 640px) {
-  .submitRowInline {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+.label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ef-text);
 }
 
-.submitPending :global(.material-symbols-outlined) {
-  animation: spin 1s linear infinite;
+.required {
+  color: var(--ef-error);
 }
 
-.secureNote {
+.optional {
+  font-weight: 500;
+  color: var(--ef-text-muted);
+}
+
+.control {
+  position: relative;
+  background: var(--ef-field);
+  border-radius: 4px 4px 0 0;
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.control::before,
+.control::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.control::before {
+  height: 1px;
+  background: var(--ef-field-line);
+}
+
+/* Focus underline draws in from the left. */
+.control::after {
+  height: 2px;
+  background: var(--ef-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ef-ease);
+}
+
+.control:hover {
+  background: var(--ef-field-hover);
+}
+
+.control:focus-within {
+  background: var(--ef-field-focus);
+}
+
+.control:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* Keyboard focus also gets a soft ring. Without :has() the underline and fill still show. */
+.control:has(:focus-visible) {
+  box-shadow: 0 0 0 3px rgb(13 194 255 / 0.25);
+}
+
+/*
+ * Invalid: flagged by the form after a submit attempt (aria-invalid), or by the browser once the
+ * visitor has edited the field (:user-invalid).
+ */
+.control:has([aria-invalid='true']),
+.control:has(:user-invalid) {
+  background: var(--ef-error-bg);
+}
+
+.control:has([aria-invalid='true'])::before,
+.control:has(:user-invalid)::before {
+  height: 2px;
+  background: var(--ef-error);
+}
+
+.input,
+.select,
+.textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 54px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ef-navy);
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: none;
+}
+
+.textarea {
+  height: 120px;
+  padding: 14px 16px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.select {
+  appearance: none;
+  padding-right: 44px;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* Nothing chosen yet: the prompt reads like a placeholder. */
+.selectEmpty {
+  color: #7a8899;
+}
+
+.select option {
+  color: var(--ef-navy);
+}
+
+.selectIcon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  margin-top: -4px;
+  pointer-events: none;
+  color: var(--ef-navy);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #7a8899;
+  opacity: 1;
+}
+
+.hint,
+.error {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.hint {
+  color: var(--ef-text-muted);
+}
+
+.error {
+  font-weight: 600;
+  color: var(--ef-error);
+}
+
+/* Product pages: the device is fixed, so it is stated rather than offered as a choice. */
+.fixedDevice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 54px;
+  margin: 0;
+  padding: 8px 16px;
+  border-left: 2px solid var(--ef-accent);
+  background: var(--ef-field);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.fixedDeviceNote {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ef-text-muted);
+}
+
+/* ---- Failure message ---- */
+.formError {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background: var(--ef-error-bg);
+  color: #7a271a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.requiredNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--ef-text-muted);
+}
+
+/* ---- Route to the full form (compact variant) ---- */
+.fullForm {
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--ef-rule);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ef-text);
+}
+
+.fullFormLink {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  font: var(--type-label);
-  text-transform: uppercase;
-  color: var(--color-outline);
+  gap: 8px;
+  font-weight: 600;
+  color: var(--ef-accent-ink);
+  text-decoration: underline;
+  text-decoration-color: rgb(0 119 168 / 0.35);
+  text-underline-offset: 4px;
+  transition:
+    color 0.2s,
+    text-decoration-color 0.2s;
 }
 
-.secureNoteIcon {
-  color: var(--color-primary);
+.fullFormLink:hover {
+  color: var(--ef-navy);
+  text-decoration-color: currentColor;
 }
 
-/* ---- Feedback ---- */
-.feedback {
+.fullFormLink:focus-visible {
+  outline: 2px solid var(--ef-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.fullFormLink svg {
+  flex: none;
+  transition: transform 0.3s var(--ef-ease);
+}
+
+.fullFormLink:hover svg,
+.fullFormLink:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* ---- Success ---- */
+.success {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 0.75rem;
-  padding: var(--space-md);
-  border-radius: var(--radius-sm);
-  background: var(--color-surface-container);
-  color: var(--color-primary);
+  justify-content: center;
+  min-height: 560px;
+  animation: fadeDown 0.6s var(--ef-ease) both;
 }
 
-.feedbackError {
-  background: #ffdad6;
-  color: var(--color-error);
+/* Focused programmatically so it is announced; it is not interactive, so no ring. */
+.success:focus {
+  outline: none;
 }
 
-.feedbackTitle {
-  font: var(--type-tech);
+.successIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--ef-navy);
+  color: var(--ef-accent);
+}
+
+.successTitle {
+  margin: 28px 0 12px;
+  font-family: var(--font-display);
+  font-size: 34px;
   font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
-.feedbackText {
-  font: var(--type-body-sm);
-  color: var(--color-on-surface-variant);
+.successText {
+  max-width: 46ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #46566a;
 }
 
-.privacy {
-  font: var(--type-label);
-  font-weight: 400;
-  text-align: center;
-  color: var(--color-outline);
+.startOver {
+  min-height: 44px;
+  margin-top: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ef-accent-ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.startOver:hover {
+  color: var(--ef-navy);
+}
+
+.startOver:focus-visible {
+  outline: 2px solid var(--ef-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .success {
+    min-height: 420px;
+  }
+}
+
+/* Small phones: the submit runs full width, like the hero CTA. */
+@media (max-width: 479px) {
+  .submit {
+    width: 100%;
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .control,
+  .control::after,
+  .fullFormLink,
+  .fullFormLink svg {
+    transition: none;
+  }
+
+  .fullFormLink:hover svg,
+  .fullFormLink:focus-visible svg {
+    transform: none;
+  }
+
+  .success {
+    animation: none;
+  }
 }

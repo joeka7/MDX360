@@ -62,20 +62,12 @@
 }
 
 .h1,
-.h2,
 .h2Small,
-.h2Mid,
-.h2Tender,
-.h3 {
+.h2Commercial {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--ink);
-}
-
-.h3 {
-  font: var(--type-title);
-  letter-spacing: -0.015em;
 }
 
 /* ---- 1. Hero ---- */
@@ -176,7 +168,7 @@
   color: var(--muted);
 }
 
-/* ---- 2. Headquarters & enquiry ---- */
+/* ---- 2. Headquarters & contact form ---- */
 .main {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
@@ -298,243 +290,52 @@
   border-radius: 2px;
 }
 
-/* Lands below the fixed header when an Enquire action scrolls to it. */
 .formSlot {
   min-width: 0;
-  scroll-margin-top: calc(var(--header-height) + 24px);
 }
 
-/* ---- 3. Enterprise inclusions ---- */
-.inclusions {
-  margin-top: 160px;
-  padding-top: 28px;
-  border-top: 1px solid var(--ink);
-}
-
-.incHead {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 72px;
-  align-items: end;
-}
-
-.h2 {
-  margin-top: 20px;
-  font: var(--type-section-sm);
-  letter-spacing: var(--tracking-display);
-}
-
-.incIntro {
-  margin: 0;
-  font: var(--type-lead);
-}
-
-.incList {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 40px;
-  margin: 64px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.incList li {
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-}
-
-.incNum {
-  display: block;
-  font: var(--type-overline);
-  letter-spacing: var(--tracking-overline);
-  color: var(--teal);
-}
-
-.incList .h3 {
-  margin-top: 14px;
-}
-
-.incList p {
-  margin: 10px 0 0;
-  font: var(--type-text);
-}
-
-.incTag {
-  display: block;
-  margin-top: 14px;
-  font: var(--type-overline);
-  letter-spacing: var(--tracking-overline);
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ---- 4. Featured devices ---- */
-.devices {
-  margin-top: 140px;
-}
-
-.devHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-}
-
-.h2Mid {
-  margin-top: 20px;
-  font: var(--type-title-lg);
-  letter-spacing: var(--tracking-title);
-}
-
-.textLink {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-weight: 600;
-  color: var(--teal);
-  transition: color 0.2s;
-}
-
-.textLink:hover {
-  color: var(--ink);
-}
-
-.textLink:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-.textLink svg {
-  transition: transform 0.3s var(--ease);
-}
-
-.textLink:hover svg,
-.textLink:focus-visible svg {
-  transform: translateX(4px);
-}
-
-.devList {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px;
-  margin: 40px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.devList li {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.devImg {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  padding: 20px;
-  background: var(--wash);
-  object-fit: contain;
-}
-
-/* Fallback when no cut-out exists: the product photo fills the plate. */
-.devImgPhoto {
-  padding: 0;
-  object-fit: cover;
-}
-
-.devCat {
-  display: block;
-  margin-top: 16px;
-}
-
-.devList .h3 {
-  margin-top: 6px;
-}
-
-.devName {
-  transition: color 0.2s;
-}
-
-.devName:hover {
-  color: var(--teal);
-}
-
-.devName:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-.devList p {
-  flex: 1;
-  margin: 8px 0 0;
-  font: var(--type-text);
-}
-
-.devRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-top: 14px;
-  padding-top: 6px;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.devEnquire {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  min-height: 40px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--teal);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.devEnquire:hover {
-  color: var(--ink);
-}
-
-.devEnquire:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-/* ---- 5. Tender line ---- */
-.tender {
+/* ---- 3. Commercial enquiries: points device, pricing and distribution questions to Enquire ---- */
+.commercial {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 32px;
-  margin: 140px 0 120px;
+  margin: 120px 0;
   padding: 32px 0;
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--line);
 }
 
-.h2Tender {
+.h2Commercial {
   font-size: 24px;
   line-height: 1.3;
   letter-spacing: var(--tracking-title);
 }
 
-.tender p {
+.commercial p {
+  max-width: 68ch;
   margin: 6px 0 0;
   font: var(--type-text);
+}
+
+.inlineLink {
+  font-weight: 600;
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: rgb(0 119 168 / 0.35);
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+  transition: color 0.2s;
+}
+
+.inlineLink:hover {
+  color: var(--ink);
+}
+
+.inlineLink:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .outlineBtn {
@@ -576,26 +377,10 @@
   transform: translateY(16px);
 }
 
-.page[data-motion='ready'] .incList li:nth-child(2),
-.page[data-motion='ready'] .devList li:nth-child(2) {
-  transition-delay: 80ms;
-}
-
-.page[data-motion='ready'] .incList li:nth-child(3),
-.page[data-motion='ready'] .devList li:nth-child(3) {
-  transition-delay: 160ms;
-}
-
-.page[data-motion='ready'] .incList li:nth-child(4),
-.page[data-motion='ready'] .devList li:nth-child(4) {
-  transition-delay: 240ms;
-}
-
 /* ---- Tablet ---- */
 @media (max-width: 1024px) {
   .heroGrid,
-  .main,
-  .incHead {
+  .main {
     grid-template-columns: minmax(0, 1fr);
     gap: 40px;
   }
@@ -628,31 +413,10 @@
     column-gap: 32px;
   }
 
-  .incList,
-  .devList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .incList {
-    row-gap: 48px;
-  }
-
-  .devList {
-    row-gap: 48px;
-  }
-
   /* 44px touch targets: tablets are touch devices too. Plain values match, so paired channels align. */
   .channelValue,
-  .channelLink,
-  .devEnquire {
+  .channelLink {
     min-height: 44px;
-  }
-
-  .devName {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    margin-block: -10px;
   }
 }
 
@@ -666,12 +430,8 @@
     margin-bottom: 28px;
   }
 
-  .heroGrid,
-  .incHead {
-    gap: 20px;
-  }
-
   .heroGrid {
+    gap: 20px;
     margin-top: 20px;
   }
 
@@ -733,67 +493,9 @@
     margin-top: 24px;
   }
 
-  .inclusions,
-  .devices {
-    margin-top: 80px;
-  }
-
-  .incList {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-    margin-top: 40px;
-  }
-
-  .devHead,
-  .tender {
+  .commercial {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .devHead {
-    gap: 12px;
-  }
-
-  /*
-   * A compact index rather than four screen-wide photos: thumbnail beside the copy, the
-   * highlight and Enquire row across the full width beneath.
-   */
-  .devList {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-    margin-top: 28px;
-  }
-
-  .devList li {
-    display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr auto;
-    column-gap: 16px;
-  }
-
-  .devImg {
-    grid-row: 1 / 4;
-    align-self: start;
-    padding: 8px;
-  }
-
-  .devImgPhoto {
-    padding: 0;
-  }
-
-  .devCat {
-    margin-top: 0;
-  }
-
-  .devList p {
-    margin-top: 6px;
-  }
-
-  .devRow {
-    grid-column: 1 / -1;
-  }
-
-  .tender {
     gap: 24px;
     margin: 80px 0 72px;
   }
@@ -815,16 +517,8 @@
   .crumb a,
   .channelLink,
   .mapLink,
-  .textLink,
-  .textLink svg,
-  .devName,
-  .devEnquire,
+  .inlineLink,
   .outlineBtn {
     transition: none;
-  }
-
-  .textLink:hover svg,
-  .textLink:focus-visible svg {
-    transform: none;
   }
 }

@@ -1,511 +1,348 @@
-import { useId, useState, type FormEvent, type ReactNode } from 'react';
-import { ArrowFillButton, Button, Checkbox, Field, Icon, Input, Select, Textarea } from '@/components/ui';
-import { getProductsBySlugs, products } from '@/data/products';
-import { acquisitionTimelines, countryCodes } from '@/data/site';
+import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowFillButton, Icon, PhoneInput } from '@/components/ui';
+import { products } from '@/data/products';
+import { enquiryTypes, routes } from '@/data/site';
+import { describedBy, useFieldErrors } from '@/hooks/useFieldErrors';
 import { submitEnquiry } from '@/services/enquiry';
 import type { Product } from '@/types/product';
+import type { EnquiryTypeId } from '@/types/site';
 import { cx } from '@/utils/cx';
+import { PHONE_HINT } from '@/utils/phone';
 import styles from './EnquiryForm.module.css';
-import compact from './EnquiryFormCompact.module.css';
 
 /**
- * - `general`: full contact-page form (country code, device picker, quick select, consent).
- * - `compact`: shorter form with a device picker.
- * - `product`: enquiry scoped to a single product (location + acquisition timeline).
+ * The commercial enquiry form: one set of fields, validation and submission, in three lengths.
+ * - `enquire`: the full form on the Enquire page. Adds city, country and enquiry type; the device is required.
+ * - `compact`: the Home enquiry section. Contact details, an optional device and a message.
+ * - `product`: a product page. The full form, with the device fixed to that product.
  */
-export type EnquiryFormVariant = 'general' | 'compact' | 'product';
+export type EnquiryFormVariant = 'enquire' | 'compact' | 'product';
 
+/** Device option for several devices or a visitor who hasn't decided. */
 const PORTFOLIO_VALUE = 'portfolio';
 
-interface EnquiryFormProps {
-  variant?: EnquiryFormVariant;
-  /** Required for the `product` variant. */
-  product?: Product;
-  /** Controlled device selection (slug). Leave unset for the form to manage it. */
-  device?: string;
-  onDeviceChange?: (slug: string) => void;
-  /** Product slugs offered as one-click chips (general variant). */
-  quickSelectSlugs?: string[];
+type EnquiryFormProps = {
+  /** Device slug to start with, already checked against the catalogue. Ignored by `product`. */
+  initialDevice?: string;
+  /** Enquiry type to start with. Ignored by `compact`, which has no enquiry type. */
+  initialEnquiryType?: EnquiryTypeId;
   /** Content rendered above the fields, inside the form. */
   header?: ReactNode;
-  submitLabel?: string;
   className?: string;
-}
+} & ({ variant: 'product'; product: Product } | { variant: 'enquire' | 'compact'; product?: undefined });
+
+type FieldName =
+  | 'name'
+  | 'email'
+  | 'phone'
+  | 'organization'
+  | 'city'
+  | 'country'
+  | 'device'
+  | 'enquiryType'
+  | 'message';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
-const initialValues = {
-  name: '',
-  clinic: '',
-  email: '',
-  countryCode: countryCodes[0].code,
-  phone: '',
-  location: '',
-  timeline: acquisitionTimelines[0],
-  message: '',
-  consent: false,
-};
+type ControlEvent = ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 
 export function EnquiryForm({
-  variant = 'general',
+  variant,
   product,
-  device: controlledDevice,
-  onDeviceChange,
-  quickSelectSlugs = [],
+  initialDevice,
+  initialEnquiryType,
   header,
-  submitLabel = 'Submit Clinical Enquiry',
   className,
 }: EnquiryFormProps) {
   const id = useId();
-  const [values, setValues] = useState(initialValues);
-  const [internalDevice, setInternalDevice] = useState(variant === 'compact' ? products[0].slug : '');
-  const [status, setStatus] = useState<Status>('idle');
+  const isCompact = variant === 'compact';
+  /** City, country and enquiry type: the full form only (Enquire and product pages). */
+  const isFull = !isCompact;
 
-  const device = product?.slug ?? controlledDevice ?? internalDevice;
-  const setDevice = (slug: string) => {
-    setInternalDevice(slug);
-    onDeviceChange?.(slug);
+  const initialValues: Record<FieldName, string> = {
+    name: '',
+    email: '',
+    phone: '',
+    organization: '',
+    city: '',
+    country: '',
+    device: product?.slug ?? initialDevice ?? '',
+    enquiryType: (isFull && initialEnquiryType) || '',
+    message: '',
   };
 
-  const setField =
-    <K extends keyof typeof initialValues>(key: K) =>
-    (value: (typeof initialValues)[K]) =>
-      setValues((current) => ({ ...current, [key]: value }));
+  const [values, setValues] = useState(initialValues);
+  const [status, setStatus] = useState<Status>('idle');
+  const { errors, validate, handleChange, clearErrors } = useFieldErrors();
+  const pending = useRef(false);
+  const successRef = useRef<HTMLDivElement>(null);
 
-  const isGeneral = variant === 'general';
-  const isProduct = variant === 'product';
-  const fieldId = (name: string) => `${id}-${name}`;
+  // Move focus to the confirmation so it is announced and keyboard users aren't left on a removed button.
+  useEffect(() => {
+    if (status === 'success') successRef.current?.focus();
+  }, [status]);
+
+  const fieldId = (name: FieldName) => `${id}-${name}`;
+
+  /** Shared props for a control: identity, value, change handler and error wiring. */
+  const control = (name: FieldName, hasHint = false) => ({
+    id: fieldId(name),
+    name,
+    value: values[name],
+    onChange: (event: ControlEvent) => setValues((current) => ({ ...current, [name]: event.target.value })),
+    'aria-invalid': errors[name] ? true : undefined,
+    'aria-describedby': describedBy(fieldId(name), hasHint, errors[name]),
+  });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (pending.current || !validate(event.currentTarget)) return;
+
+    pending.current = true;
     setStatus('submitting');
+    const city = values.city.trim();
+    const country = values.country.trim();
     try {
       await submitEnquiry({
-        name: values.name,
-        clinic: values.clinic,
-        email: values.email,
-        phone: values.phone,
-        countryCode: isGeneral ? values.countryCode : undefined,
-        location: isProduct ? values.location : undefined,
-        timeline: isProduct ? values.timeline : undefined,
-        device: device || undefined,
-        message: values.message || undefined,
-        consent: isGeneral ? values.consent : undefined,
+        formType: 'enquiry',
+        name: values.name.trim(),
+        email: values.email.trim(),
+        phone: values.phone.trim(),
+        clinic: values.organization.trim(),
+        location: isFull ? `${city}, ${country}` : undefined,
+        city: isFull ? city : undefined,
+        country: isFull ? country : undefined,
+        device: values.device || undefined,
+        enquiryType: isFull ? (values.enquiryType as EnquiryTypeId) : undefined,
+        message: values.message.trim() || undefined,
         source: product ? `product:${product.slug}` : variant,
       });
       setStatus('success');
-      setValues(initialValues);
     } catch {
+      // Entered values are kept so the visitor can simply try again.
       setStatus('error');
+    } finally {
+      pending.current = false;
     }
   }
 
-  if (status === 'success' && variant === 'compact') {
+  const startOver = () => {
+    setValues(initialValues);
+    clearErrors();
+    setStatus('idle');
+  };
+
+  if (status === 'success') {
     return (
-      <div className={cx(compact.success, className)} role="status">
-        <span className={compact.successIcon}>
+      <div ref={successRef} className={cx(styles.success, className)} role="status" tabIndex={-1}>
+        <span className={styles.successIcon}>
           <Icon name="check" size={36} />
         </span>
-        <h3 className={compact.successTitle}>Enquiry Registered</h3>
-        <p className={compact.successText}>
-          Thank you. An MDX360 clinical director has received your inquiry and will furnish device dossiers and
-          commercial specs within 24 hours.
+        <p className={styles.successTitle}>Enquiry Sent</p>
+        <p className={styles.successText}>
+          Thank you. Your enquiry{product ? ` about ${product.name}` : ''} has been sent to the MDX360 team, who will
+          reply by email or phone.
         </p>
+        <button type="button" className={styles.startOver} onClick={startOver}>
+          Send another enquiry
+        </button>
       </div>
     );
   }
 
   const submitting = status === 'submitting';
+  const legend = (index: number, title: string) => (
+    <legend className={styles.legend}>
+      <span className={styles.legendIndex} aria-hidden="true">
+        {String(index).padStart(2, '0')}
+      </span>{' '}
+      {title}
+    </legend>
+  );
 
-  // Compact (Home enquiry portal): same fields, order and handlers, grouped into numbered fieldsets.
-  if (variant === 'compact') {
-    return (
-      <form className={cx(compact.form, className)} onSubmit={handleSubmit} aria-busy={submitting || undefined}>
-        {header}
+  return (
+    <form
+      className={cx(styles.form, className)}
+      onSubmit={handleSubmit}
+      onChange={handleChange}
+      noValidate
+      aria-busy={submitting || undefined}
+    >
+      {header}
 
-        <fieldset className={compact.group}>
-          <legend className={compact.legend}>
-            <span className={compact.legendIndex} aria-hidden="true">
-              01
-            </span>{' '}
-            About you
-          </legend>
-          <div className={compact.grid}>
-            <CompactField label="Practitioner / Full Name" htmlFor={fieldId('name')} required>
+      <fieldset className={styles.group}>
+        {legend(1, 'Your details')}
+        <div className={styles.grid}>
+          <Field label="Full Name" htmlFor={fieldId('name')} required error={errors.name}>
+            <input
+              {...control('name')}
+              className={styles.input}
+              placeholder="Dr. Sarah Al-Mansoor"
+              autoComplete="name"
+              required
+            />
+          </Field>
+          <Field label="Work Email" htmlFor={fieldId('email')} required error={errors.email}>
+            <input
+              {...control('email')}
+              className={styles.input}
+              type="email"
+              placeholder="sarah@apexderma.ae"
+              autoComplete="email"
+              required
+            />
+          </Field>
+          <Field label="Phone / WhatsApp" htmlFor={fieldId('phone')} required hint={PHONE_HINT} error={errors.phone}>
+            <PhoneInput {...control('phone', true)} className={styles.input} required />
+          </Field>
+          <Field label="Clinic, Hospital or Company" htmlFor={fieldId('organization')} required error={errors.organization}>
+            <input
+              {...control('organization')}
+              className={styles.input}
+              placeholder="Apex Derma Center"
+              autoComplete="organization"
+              required
+            />
+          </Field>
+        </div>
+      </fieldset>
+
+      {isFull && (
+        <fieldset className={styles.group}>
+          {legend(2, 'Your location')}
+          <div className={styles.grid}>
+            <Field label="City" htmlFor={fieldId('city')} required error={errors.city}>
               <input
-                id={fieldId('name')}
-                className={compact.input}
-                placeholder="Dr. Sarah Al-Mansoor"
-                autoComplete="name"
+                {...control('city')}
+                className={styles.input}
+                placeholder="Dubai"
+                autoComplete="address-level2"
                 required
-                value={values.name}
-                onChange={(e) => setField('name')(e.target.value)}
               />
-            </CompactField>
-            <CompactField label="Clinic or Facility Name" htmlFor={fieldId('clinic')} required>
+            </Field>
+            <Field label="Country" htmlFor={fieldId('country')} required error={errors.country}>
               <input
-                id={fieldId('clinic')}
-                className={compact.input}
-                placeholder="Apex Derma Center"
-                autoComplete="organization"
+                {...control('country')}
+                className={styles.input}
+                placeholder="United Arab Emirates"
+                autoComplete="country-name"
                 required
-                value={values.clinic}
-                onChange={(e) => setField('clinic')(e.target.value)}
               />
-            </CompactField>
+            </Field>
           </div>
         </fieldset>
+      )}
 
-        <fieldset className={compact.group}>
-          <legend className={compact.legend}>
-            <span className={compact.legendIndex} aria-hidden="true">
-              02
-            </span>{' '}
-            How we reach you
-          </legend>
-          <div className={compact.grid}>
-            <CompactField label="Contact Phone Number" htmlFor={fieldId('phone')} required>
-              <input
-                id={fieldId('phone')}
-                className={compact.input}
-                type="tel"
-                placeholder="+971 50 000 0000"
-                autoComplete="tel"
-                required
-                value={values.phone}
-                onChange={(e) => setField('phone')(e.target.value)}
-              />
-            </CompactField>
-            <CompactField label="Professional Email" htmlFor={fieldId('email')} required>
-              <input
-                id={fieldId('email')}
-                className={compact.input}
-                type="email"
-                placeholder="sarah@apexderma.ae"
-                autoComplete="email"
-                required
-                value={values.email}
-                onChange={(e) => setField('email')(e.target.value)}
-              />
-            </CompactField>
-          </div>
-        </fieldset>
-
-        <fieldset className={compact.group}>
-          <legend className={compact.legend}>
-            <span className={compact.legendIndex} aria-hidden="true">
-              03
-            </span>{' '}
-            Your enquiry
-          </legend>
-          <div className={compact.grid}>
-            <CompactField label="Primary Device of Interest" htmlFor={fieldId('device')} optional full>
+      <fieldset className={styles.group}>
+        {legend(isFull ? 3 : 2, 'Your enquiry')}
+        <div className={styles.grid}>
+          {product ? (
+            <div className={styles.field}>
+              <span className={styles.label}>Device of Interest</span>
+              <p className={styles.fixedDevice}>
+                {product.name}
+                <span className={styles.fixedDeviceNote}>{product.enquiryLabel}</span>
+              </p>
+            </div>
+          ) : (
+            <Field
+              label="Device of Interest"
+              htmlFor={fieldId('device')}
+              required={!isCompact}
+              optional={isCompact}
+              full={isCompact}
+              error={errors.device}
+            >
               <select
-                id={fieldId('device')}
-                className={compact.select}
-                value={device}
-                onChange={(e) => setDevice(e.target.value)}
+                {...control('device')}
+                className={cx(styles.select, !values.device && styles.selectEmpty)}
+                required={!isCompact}
               >
+                <option value="" disabled={!isCompact}>
+                  Select a device
+                </option>
                 {products.map((option) => (
                   <option key={option.slug} value={option.slug}>
                     {option.name} ({option.enquiryLabel})
                   </option>
                 ))}
-                <option value={PORTFOLIO_VALUE}>Portfolio Consultation (Multiple Clinical Platforms)</option>
+                <option value={PORTFOLIO_VALUE}>Several devices / Not sure yet</option>
               </select>
-              <svg
-                className={compact.selectIcon}
-                width="12"
-                height="8"
-                viewBox="0 0 12 8"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                aria-hidden="true"
-                focusable="false"
+              <Chevron />
+            </Field>
+          )}
+
+          {isFull && (
+            <Field label="Enquiry Type" htmlFor={fieldId('enquiryType')} required error={errors.enquiryType}>
+              <select
+                {...control('enquiryType')}
+                className={cx(styles.select, !values.enquiryType && styles.selectEmpty)}
+                required
               >
-                <path d="M1 1.5l5 5 5-5" />
-              </svg>
-            </CompactField>
-            <CompactField
-              label="Clinical Requirements & Special Inquiries"
-              htmlFor={fieldId('message')}
-              optional
-              full
-            >
-              <textarea
-                id={fieldId('message')}
-                className={compact.textarea}
-                rows={3}
-                placeholder="Detail your clinical caseload, facility location, and desired demonstration timeline..."
-                value={values.message}
-                onChange={(e) => setField('message')(e.target.value)}
-              />
-            </CompactField>
-          </div>
-        </fieldset>
-
-        {status === 'error' && (
-          <p className={compact.formError} role="alert">
-            We couldn&apos;t send your enquiry. Please try again or contact us directly by phone or email.
-          </p>
-        )}
-
-        <ArrowFillButton
-          type="submit"
-          btnText={submitting ? 'Sending Enquiry…' : submitLabel}
-          fillColor="#2d3038"
-          hoverTextColor="#ffffff"
-          circleColor="#2d3038"
-          hoverCircleColor="#ffffff"
-          arrowColor="#ffffff"
-          hoverArrowColor="#0dc2ff"
-          disabled={submitting}
-        />
-        <p className={compact.requiredNote}>
-          <span className={compact.required} aria-hidden="true">
-            *
-          </span>{' '}
-          Required fields
-        </p>
-      </form>
-    );
-  }
-
-  return (
-    <form className={cx(styles.form, className)} onSubmit={handleSubmit}>
-      {header}
-
-      <div className={styles.row}>
-        <Field label={isGeneral ? 'Full Name' : 'Practitioner / Full Name'} htmlFor={fieldId('name')} required>
-          <Input
-            id={fieldId('name')}
-            icon={isGeneral ? 'badge' : undefined}
-            placeholder="Dr. Sarah Al-Mansoor"
-            autoComplete="name"
-            required
-            value={values.name}
-            onChange={(e) => setField('name')(e.target.value)}
-          />
-        </Field>
-        <Field label={isGeneral ? 'Clinic / Hospital Name' : 'Clinic or Facility Name'} htmlFor={fieldId('clinic')} required>
-          <Input
-            id={fieldId('clinic')}
-            icon={isGeneral ? 'local_hospital' : undefined}
-            placeholder="Apex Derma Center"
-            autoComplete="organization"
-            required
-            value={values.clinic}
-            onChange={(e) => setField('clinic')(e.target.value)}
-          />
-        </Field>
-      </div>
-
-      <div className={styles.row}>
-        <Field
-          label={isProduct ? 'Direct Phone / WhatsApp' : 'Contact Phone Number'}
-          htmlFor={fieldId('phone')}
-          required
-        >
-          {isGeneral ? (
-            <div className={styles.phoneGroup}>
-              <Select
-                aria-label="Country code"
-                className={styles.countryCode}
-                value={values.countryCode}
-                onChange={(e) => setField('countryCode')(e.target.value)}
-              >
-                {countryCodes.map((country) => (
-                  <option key={country.code} value={country.code}>
-                    ({country.code}) {country.label}
+                <option value="" disabled>
+                  Select an enquiry type
+                </option>
+                {enquiryTypes.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.label}
                   </option>
                 ))}
-              </Select>
-              <Input
-                id={fieldId('phone')}
-                type="tel"
-                placeholder="50 000 0000"
-                autoComplete="tel-national"
-                required
-                value={values.phone}
-                onChange={(e) => setField('phone')(e.target.value)}
-              />
-            </div>
-          ) : (
-            <Input
-              id={fieldId('phone')}
-              type="tel"
-              placeholder="+971 50 000 0000"
-              autoComplete="tel"
-              required
-              value={values.phone}
-              onChange={(e) => setField('phone')(e.target.value)}
-            />
+              </select>
+              <Chevron />
+            </Field>
           )}
-        </Field>
-        <Field label="Professional Email" htmlFor={fieldId('email')} required>
-          <Input
-            id={fieldId('email')}
-            type="email"
-            icon={isGeneral ? 'alternate_email' : undefined}
-            placeholder="sarah@apexderma.ae"
-            autoComplete="email"
-            required
-            value={values.email}
-            onChange={(e) => setField('email')(e.target.value)}
-          />
-        </Field>
-      </div>
 
-      {isProduct && (
-        <div className={styles.row}>
-          <Field label="Clinic Location (City, Country)" htmlFor={fieldId('location')} required>
-            <Input
-              id={fieldId('location')}
-              placeholder="Dubai, UAE"
-              autoComplete="address-level2"
-              required
-              value={values.location}
-              onChange={(e) => setField('location')(e.target.value)}
+          <Field label="Message" htmlFor={fieldId('message')} optional full error={errors.message}>
+            <textarea
+              {...control('message')}
+              className={styles.textarea}
+              rows={3}
+              placeholder="Quantities, preferred configuration, timing, or any questions about the device..."
             />
           </Field>
-          <Field label="Anticipated Acquisition Timeline" htmlFor={fieldId('timeline')}>
-            <Select
-              id={fieldId('timeline')}
-              value={values.timeline}
-              onChange={(e) => setField('timeline')(e.target.value)}
-            >
-              {acquisitionTimelines.map((timeline) => (
-                <option key={timeline}>{timeline}</option>
-              ))}
-            </Select>
-          </Field>
         </div>
-      )}
-
-      {!isProduct && (
-        <Field label="Primary Device of Interest" htmlFor={fieldId('device')} required={isGeneral}>
-          <Select
-            id={fieldId('device')}
-            icon={isGeneral ? 'medical_services' : undefined}
-            required={isGeneral}
-            value={device}
-            onChange={(e) => setDevice(e.target.value)}
-          >
-            {isGeneral && (
-              <option value="" disabled>
-                Select an MDX360 Clinical Platform
-              </option>
-            )}
-            {products.map((option) => (
-              <option key={option.slug} value={option.slug}>
-                {option.name} ({option.enquiryLabel})
-              </option>
-            ))}
-            <option value={PORTFOLIO_VALUE}>Portfolio Consultation (Multiple Clinical Platforms)</option>
-          </Select>
-        </Field>
-      )}
-
-      {isGeneral && quickSelectSlugs.length > 0 && (
-        <div className={styles.quickSelect}>
-          <span className={styles.quickSelectLabel}>Popular Inquiries Quick Select</span>
-          <div className={styles.chips}>
-            {getProductsBySlugs(quickSelectSlugs).map((option) => (
-              <button
-                key={option.slug}
-                type="button"
-                className={cx(styles.chip, device === option.slug && styles.chipActive)}
-                aria-pressed={device === option.slug}
-                onClick={() => setDevice(option.slug)}
-              >
-                {option.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <Field
-        label={isGeneral ? 'Clinical Requirements & Trial Specifications' : 'Clinical Requirements & Special Inquiries'}
-        htmlFor={fieldId('message')}
-      >
-        <Textarea
-          id={fieldId('message')}
-          rows={isGeneral ? 4 : 3}
-          placeholder={
-            isProduct
-              ? 'Please include questions regarding applicator dimensions, regional certifications, or scheduled clinical demonstrations...'
-              : 'Detail your clinical caseload, facility location, and desired demonstration timeline...'
-          }
-          value={values.message}
-          onChange={(e) => setField('message')(e.target.value)}
-        />
-      </Field>
-
-      {isGeneral && (
-        <Checkbox
-          id={fieldId('consent')}
-          required
-          checked={values.consent}
-          onChange={(e) => setField('consent')(e.target.checked)}
-          label="I agree to the processing of contact details for clinical support, device specifications transmission, and authorized medical representative consultation."
-        />
-      )}
-
-      <div className={cx(styles.submitRow, isGeneral && styles.submitRowInline)}>
-        <Button
-          type="submit"
-          fullWidth={!isGeneral}
-          disabled={submitting}
-          icon={submitting ? 'progress_activity' : isProduct ? 'send' : undefined}
-          trailingIcon={isGeneral && !submitting ? 'send' : undefined}
-          className={cx(submitting && styles.submitPending)}
-        >
-          {submitting ? 'Sending Enquiry…' : submitLabel}
-        </Button>
-        {isGeneral && (
-          <span className={styles.secureNote}>
-            <Icon name="lock" size={16} className={styles.secureNoteIcon} />
-            Encrypted 256-Bit Transmission
-          </span>
-        )}
-      </div>
-
-      {status === 'success' && (
-        <div className={styles.feedback} role="status">
-          <Icon name="task_alt" size={24} />
-          <div>
-            <p className={styles.feedbackTitle}>Enquiry Logged Successfully</p>
-            <p className={styles.feedbackText}>
-              {product
-                ? `Thank you. Your enquiry for ${product.name} has been dispatched to our engineering desk. A specialist will follow up within 24 hours.`
-                : 'Your enquiry has been assigned to our UAE biomedical engineering office. A clinical liaison will be in touch shortly.'}
-            </p>
-          </div>
-        </div>
-      )}
+      </fieldset>
 
       {status === 'error' && (
-        <div className={cx(styles.feedback, styles.feedbackError)} role="alert">
-          <Icon name="error" size={24} />
-          <p className={styles.feedbackText}>
-            We couldn&apos;t send your enquiry. Please try again or contact us directly by phone or email.
-          </p>
-        </div>
+        <p className={styles.formError} role="alert">
+          We couldn&apos;t send your enquiry. Please try again or contact us directly by phone or email.
+        </p>
       )}
 
-      {isProduct && (
-        <p className={styles.privacy}>
-          We respect institutional privacy. Information submitted is treated under strict medical device
-          non-disclosure protocols.
+      <ArrowFillButton
+        type="submit"
+        btnText={submitting ? 'Sending Enquiry…' : 'Send Enquiry'}
+        fillColor="#2d3038"
+        hoverTextColor="#ffffff"
+        circleColor="#2d3038"
+        hoverCircleColor="#ffffff"
+        arrowColor="#ffffff"
+        hoverArrowColor="#0dc2ff"
+        disabled={submitting}
+        className={styles.submit}
+      />
+      <p className={styles.requiredNote}>
+        <span className={styles.required} aria-hidden="true">
+          *
+        </span>{' '}
+        Required fields
+      </p>
+
+      {isCompact && (
+        <p className={styles.fullForm}>
+          Need a quotation for several devices or distribution terms?{' '}
+          <Link to={routes.enquire} className={styles.fullFormLink}>
+            Use the full enquiry form
+            <ArrowIcon />
+          </Link>
         </p>
       )}
     </form>
   );
 }
 
-interface CompactFieldProps {
+interface FieldProps {
   label: ReactNode;
   htmlFor: string;
   required?: boolean;
@@ -513,18 +350,22 @@ interface CompactFieldProps {
   optional?: boolean;
   /** Span both grid columns. */
   full?: boolean;
+  /** Helper text under the control, read as part of its description (`<htmlFor>-hint`). */
+  hint?: string;
+  /** Validation message under the control (`<htmlFor>-error`). */
+  error?: string;
   children: ReactNode;
 }
 
-/** Label + filled control wrapper for the compact variant. */
-function CompactField({ label, htmlFor, required, optional, full, children }: CompactFieldProps) {
+/** Label + filled control wrapper, with optional helper text and error message. */
+function Field({ label, htmlFor, required, optional, full, hint, error, children }: FieldProps) {
   return (
-    <div className={cx(compact.field, full && compact.full)}>
-      <label className={compact.label} htmlFor={htmlFor}>
+    <div className={cx(styles.field, full && styles.full)}>
+      <label className={styles.label} htmlFor={htmlFor}>
         <span>
           {label}
           {required && (
-            <span className={compact.required} aria-hidden="true">
+            <span className={styles.required} aria-hidden="true">
               {' '}
               *
             </span>
@@ -533,11 +374,56 @@ function CompactField({ label, htmlFor, required, optional, full, children }: Co
         {optional && (
           <>
             {' '}
-            <span className={compact.optional}>Optional</span>
+            <span className={styles.optional}>Optional</span>
           </>
         )}
       </label>
-      <div className={compact.control}>{children}</div>
+      <div className={styles.control}>{children}</div>
+      {hint && (
+        <p id={`${htmlFor}-hint`} className={styles.hint}>
+          {hint}
+        </p>
+      )}
+      {error && (
+        <p id={`${htmlFor}-error`} className={styles.error}>
+          {error}
+        </p>
+      )}
     </div>
+  );
+}
+
+function Chevron() {
+  return (
+    <svg
+      className={styles.selectIcon}
+      width="12"
+      height="8"
+      viewBox="0 0 12 8"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M1 1.5l5 5 5-5" />
+    </svg>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      width="16"
+      height="12"
+      viewBox="0 0 18 12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M1 6h15M11 1l5 5-5 5" />
+    </svg>
   );
 }

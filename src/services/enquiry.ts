@@ -1,16 +1,27 @@
+import type { ContactTopicId, EnquiryTypeId } from '@/types/site';
+
 export interface EnquiryPayload {
+  /**
+   * `enquiry`: commercial enquiry (Home, Enquire page, product pages).
+   * `contact`: general message from the Contact page.
+   */
+  formType: 'enquiry' | 'contact';
   name: string;
-  clinic: string;
   email: string;
-  phone: string;
-  countryCode?: string;
+  /** Full international number as typed, country calling code included. Optional on contact messages. */
+  phone?: string;
+  /** Clinic, hospital or company. Optional on contact messages. */
+  clinic?: string;
+  /** "City, Country" (also sent separately as `city` and `country`). */
   location?: string;
-  timeline?: string;
-  /** Product slug, or `portfolio` for multi-product enquiries. */
+  city?: string;
+  country?: string;
+  /** Product slug, or `portfolio` for several devices / not sure yet. */
   device?: string;
+  enquiryType?: EnquiryTypeId;
+  topic?: ContactTopicId;
   message?: string;
-  consent?: boolean;
-  /** Where on the site the enquiry was submitted from. */
+  /** Where on the site it was submitted from: `enquire`, `compact` (Home), `product:<slug>` or `contact`. */
   source: string;
 }
 

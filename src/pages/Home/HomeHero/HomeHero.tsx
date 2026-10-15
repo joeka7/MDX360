@@ -1,5 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowFillButton } from '@/components/ui';
+import { routes } from '@/data/site';
 import { cx } from '@/utils/cx';
 import { heroDevices, heroTrust } from '../content';
 import { HeroDevices } from './HeroDevices';
@@ -91,9 +93,9 @@ export function HomeHero() {
             </p>
             <div className={styles.actions}>
               <ArrowFillButton btnText="Explore Our Devices" href="#featured-devices" className={styles.primaryAction} />
-              <a href="#enquiry-portal" className={styles.secondaryAction}>
+              <Link to={routes.enquire} className={styles.secondaryAction}>
                 Enquire Now
-              </a>
+              </Link>
             </div>
           </div>
 

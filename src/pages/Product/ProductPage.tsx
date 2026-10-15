@@ -255,7 +255,6 @@ function ProductTemplate({ product }: { product: Product }) {
             <EnquiryForm
               variant="product"
               product={product}
-              submitLabel={`Submit ${product.name} Clinical Enquiry`}
               header={
                 <div className={styles.enquiryFormHeader}>
                   <Eyebrow>Enquiry Focus</Eyebrow>

@@ -1,26 +1,14 @@
 /*
- * Home enquiry portal ("Editorial Split"). The tokens below are scoped to the section and are
- * also read by the compact EnquiryForm rendered inside it. The cyan accent (#0DC2FF) is never
- * used as text on white; text accents on white use --ep-accent-ink.
+ * Home enquiry portal ("Editorial Split"). The tokens below are scoped to the section; the
+ * EnquiryForm inside the white panel declares its own.
  */
 .section {
   --ep-accent: #0dc2ff;
   --ep-accent-soft: #7fddff;
-  --ep-accent-ink: #0077a8;
   --ep-navy: #0a1626;
-  --ep-text: #33435a;
-  --ep-text-muted: #5b6b7f;
   --ep-on-navy-muted: #c3d0dd;
   --ep-on-navy-label: #8ea0b4;
-  --ep-field: #f2f6fa;
-  --ep-field-hover: #ebf1f7;
-  --ep-field-focus: #eaf7fd;
-  --ep-field-line: #9fb0c2;
-  --ep-rule: #e1e8ef;
-  --ep-error: #b42318;
-  --ep-error-bg: #fef3f2;
   --ep-page: #f5f8fb;
-  --ep-font-display: var(--font-display, system-ui, sans-serif);
   --ep-ease: var(--ease-reveal);
   --ep-ease-io: cubic-bezier(0.7, 0, 0.2, 1);
 
@@ -272,14 +260,10 @@
   }
 }
 
-/* Small phones: the title steps below the hero title, and the submit runs full width like the hero CTA. */
+/* Small phones: the title steps below the hero title. */
 @media (max-width: 479px) {
   .title {
     font-size: 2rem;
-  }
-
-  .formPanel button[type='submit'] {
-    width: 100%;
   }
 }
 

@@ -251,7 +251,7 @@ export function AboutPage() {
                 therapeutic, and diagnostic needs with precision and confidence.
               </p>
               <div className={styles.ctaActions}>
-                <Link to={routes.contact} className={styles.btnPrimary}>
+                <Link to={routes.enquire} className={styles.btnPrimary}>
                   Enquire Now
                   <ArrowIcon />
                 </Link>

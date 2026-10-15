@@ -6,7 +6,7 @@ import { cx } from '@/utils/cx';
 import { Logo } from '../Logo/Logo';
 import styles from './Header.module.css';
 
-const headerCta = { label: 'Enquire Now', to: routes.contact } as const;
+const headerCta = { label: 'Enquire Now', to: routes.enquire } as const;
 
 /** Must match the desktop breakpoint in Header.module.css. */
 const DESKTOP_QUERY = '(min-width: 768px)';

@@ -1,4 +1,4 @@
-import type { CountryCode, NavLink, SocialLink } from '@/types/site';
+import type { ContactTopicId, EnquiryTypeId, FormOption, NavLink, SocialLink } from '@/types/site';
 
 /**
  * Company-wide contact and brand details.
@@ -29,6 +29,8 @@ export const routes = {
   about: '/about',
   products: '/products',
   contact: '/contact',
+  /** Commercial enquiry form. Reads optional `?product=<slug>` and `?type=<EnquiryTypeId>` presets. */
+  enquire: '/enquire',
   privacy: '/privacy-policy',
   terms: '/terms-of-service',
   product: (slug: string) => `/products/${slug}`,
@@ -47,6 +49,7 @@ export const footerNav: NavLink[] = [
   { label: 'Home', to: routes.home },
   { label: 'About Us', to: routes.about },
   { label: 'Products Showcase', to: routes.products },
+  { label: 'Enquire Now', to: routes.enquire },
   { label: 'Contact Us', to: routes.contact },
 ];
 
@@ -70,30 +73,25 @@ export const socialLinks: SocialLink[] = [
   { platform: 'x', label: 'X', href: '' },
 ];
 
-export const countryCodes: CountryCode[] = [
-  { code: '+971', label: 'UAE' },
-  { code: '+966', label: 'KSA' },
-  { code: '+20', label: 'Egypt' },
-  { code: '+974', label: 'Qatar' },
-  { code: '+973', label: 'Bahrain' },
-  { code: '+965', label: 'Kuwait' },
-  { code: '+968', label: 'Oman' },
-  { code: '+962', label: 'Jordan' },
-  { code: '+961', label: 'Lebanon' },
-  { code: '+90', label: 'Turkey' },
-  { code: '+212', label: 'Morocco' },
-  { code: '+216', label: 'Tunisia' },
-  { code: '+218', label: 'Libya' },
-  { code: '+964', label: 'Iraq' },
-  { code: '+970', label: 'Palestine' },
-  { code: '+963', label: 'Syria' },
-  { code: '+967', label: 'Yemen' },
-  { code: '+98', label: 'Iran' },
+/** What a commercial enquiry is about (Enquire page and product pages). */
+export const enquiryTypes: FormOption<EnquiryTypeId>[] = [
+  { id: 'pricing', label: 'Pricing & Quotation' },
+  { id: 'information', label: 'Product Information' },
+  { id: 'demonstration', label: 'Product Demonstration' },
+  { id: 'distribution', label: 'Distribution or Bulk Purchase' },
 ];
 
-export const acquisitionTimelines = [
-  'Immediate (Within 30 Days)',
-  'Next Quarter (1-3 Months)',
-  'Strategic Evaluation (3-6 Months)',
-  'Distributor / Bulk Partnership',
+/** Subjects offered by the general Contact page form. */
+export const contactTopics: FormOption<ContactTopicId>[] = [
+  { id: 'general', label: 'General Question' },
+  { id: 'support', label: 'Support for an Existing Device' },
+  { id: 'partnership', label: 'Partnership or Media' },
+  { id: 'other', label: 'Other' },
+];
+
+/** What a commercial enquiry can return; listed beside the enquiry forms (Home, Enquire page). */
+export const enquiryBenefits = [
+  'Direct OEM Device Pricing & Specification Sheets',
+  'Regional Clinical Certification Demonstrations',
+  'Bespoke Multi-Unit Enterprise Leasing Available',
 ];
