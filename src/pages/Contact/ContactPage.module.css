@@ -621,6 +621,13 @@
     position: static;
   }
 
+  /* Two channels per row at full width, so the form isn't pushed a screen further down. */
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
   .incList,
   .devList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -632,6 +639,20 @@
 
   .devList {
     row-gap: 48px;
+  }
+
+  /* 44px touch targets: tablets are touch devices too. Plain values match, so paired channels align. */
+  .channelValue,
+  .channelLink,
+  .devEnquire {
+    min-height: 44px;
+  }
+
+  .devName {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -10px;
   }
 }
 
@@ -645,13 +666,29 @@
     margin-bottom: 28px;
   }
 
+  .heroGrid,
+  .incHead {
+    gap: 20px;
+  }
+
+  .heroGrid {
+    margin-top: 20px;
+  }
+
+  /* One row per fact, figure and label on a shared baseline, read like a spec sheet (as on About). */
   .facts {
     grid-template-columns: minmax(0, 1fr);
+    margin-top: 36px;
   }
 
   .facts > div,
   .facts > div:nth-child(3) {
-    padding: 18px 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 16px;
+    padding: 14px 0;
     border-left: 0;
   }
 
@@ -661,19 +698,50 @@
     border-left: 0;
   }
 
+  .facts dt {
+    font-size: 20px;
+  }
+
+  .facts dd {
+    margin: 0;
+  }
+
   .main {
-    margin-top: 72px;
+    gap: 56px;
+    margin-top: 56px;
+  }
+
+  .channels {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 20px;
+  }
+
+  .channels > div {
+    padding: 14px 0;
+  }
+
+  .channels dd {
+    margin-top: 2px;
+  }
+
+  .channelValue,
+  .channelLink {
+    font-size: 18px;
+  }
+
+  .map {
+    margin-top: 24px;
   }
 
   .inclusions,
   .devices {
-    margin-top: 96px;
+    margin-top: 80px;
   }
 
-  .incList,
-  .devList {
+  .incList {
     grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
+    gap: 32px;
+    margin-top: 40px;
   }
 
   .devHead,
@@ -686,27 +754,53 @@
     gap: 12px;
   }
 
+  /*
+   * A compact index rather than four screen-wide photos: thumbnail beside the copy, the
+   * highlight and Enquire row across the full width beneath.
+   */
+  .devList {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    margin-top: 28px;
+  }
+
+  .devList li {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: 16px;
+  }
+
+  .devImg {
+    grid-row: 1 / 4;
+    align-self: start;
+    padding: 8px;
+  }
+
+  .devImgPhoto {
+    padding: 0;
+  }
+
+  .devCat {
+    margin-top: 0;
+  }
+
+  .devList p {
+    margin-top: 6px;
+  }
+
+  .devRow {
+    grid-column: 1 / -1;
+  }
+
   .tender {
     gap: 24px;
-    margin: 96px 0;
+    margin: 80px 0 72px;
   }
 
   .outlineBtn {
     justify-content: space-between;
     width: 100%;
-  }
-
-  /* 44px touch targets. */
-  .channelLink,
-  .devEnquire {
-    min-height: 44px;
-  }
-
-  .devName {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    margin-block: -10px;
   }
 }
 
