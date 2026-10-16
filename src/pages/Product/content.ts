@@ -1,5 +1,8 @@
 import type { IconName } from '@/types/product';
 
+/** Assurances listed under every product hero's actions. */
+export const heroAssurances: string[] = ['12-Month Factory Guarantee', 'Global Direct Dispatch'];
+
 /** Commitments shown in every product page's enquiry module. */
 export const consultationCommitments: Array<{ icon: IconName; title: string; body: string }> = [
   {
