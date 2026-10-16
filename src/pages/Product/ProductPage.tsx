@@ -264,7 +264,7 @@ function ProductTemplate({ product }: { product: Product }) {
                 {specifications.rows.map((row) => (
                   <div key={row.label} className={styles.specRow}>
                     <dt className={styles.specLabel}>{row.label}</dt>
-                    <dd className={cx(styles.specValue, row.numeric && styles.specValueNumeric)}>{row.value}</dd>
+                    <dd className={styles.specValue}>{row.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -344,7 +344,7 @@ function ProductTemplate({ product }: { product: Product }) {
       {/* Enquiry */}
       <section id={sectionIds.enquiry} className={styles.enquiry} aria-labelledby="enquiry-title">
         <div className={cx(styles.container, styles.enquiryGrid)}>
-          <div>
+          <div className={styles.enquiryIntro}>
             <p className={styles.eyebrow}>Direct Manufacturer Consultation</p>
             <h2 id="enquiry-title" className={styles.enquiryTitle}>
               Bring {product.name} to Your Practice.
@@ -356,8 +356,13 @@ function ProductTemplate({ product }: { product: Product }) {
             <ul className={styles.benefits}>
               {consultationCommitments.map((item) => (
                 <li key={item.title} className={styles.benefit}>
-                  <h3 className={styles.benefitTitle}>{item.title}</h3>
-                  <p className={styles.benefitText}>{item.body}</p>
+                  <span className={styles.benefitIcon}>
+                    <Icon name={item.icon} size={20} />
+                  </span>
+                  <div>
+                    <h3 className={styles.benefitTitle}>{item.title}</h3>
+                    <p className={styles.benefitText}>{item.body}</p>
+                  </div>
                 </li>
               ))}
             </ul>

@@ -507,6 +507,7 @@
   line-height: 1.1;
   letter-spacing: -0.035em;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .sectionIntro {
@@ -519,7 +520,8 @@
 /* ---- Mechanism stations ---- */
 .stations {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  /* Three across on every desktop width (no 2 + 1 orphan between 1025px and 1160px). */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
   gap: 20px;
   margin-top: 48px;
 }
@@ -680,6 +682,21 @@
   line-height: 1.7;
 }
 
+/* Without a figure the list has the full width, so indications sit side by side, each under its own rule. */
+.gridFull .indicationList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 0 40px;
+  border-top: 0;
+}
+
+.gridFull .indication {
+  align-content: start;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 0;
+}
+
 /* ---- Specifications ---- */
 .specGrid {
   display: grid;
@@ -694,10 +711,12 @@
   border-top: 1px solid var(--ink);
 }
 
+/* A label column sized to the labels keeps each value close to what it describes. */
 .specRow {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: 20px;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 24px;
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -717,14 +736,20 @@
   overflow-wrap: anywhere;
 }
 
-.specValueNumeric {
-  font-variant-numeric: tabular-nums;
-}
-
 .kit {
   padding: 28px;
   background: var(--night);
   color: var(--dark-text);
+}
+
+/* Certification alone: the cyan rule marks the panel's top edge instead of floating inside it. */
+.kit:has(> .certification:first-child) {
+  border-top: 2px solid var(--cyan);
+}
+
+.kit > .certification:first-child {
+  padding-top: 0;
+  border-top: 0;
 }
 
 .kitImage {
@@ -906,17 +931,27 @@
 }
 
 /* ================= Enquiry ================= */
+/*
+ * A wash band sets the enquiry apart as the page's closing module, so the copy and the white form
+ * card read as one composition, and leads into the dark footer.
+ */
 .enquiry {
-  padding: 128px 0 104px;
-  background: #fff;
+  margin-top: 112px;
+  padding: 104px 0;
+  background: var(--wash);
   color: var(--body);
 }
 
 .enquiryGrid {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   align-items: start;
-  gap: 64px;
+  gap: 72px;
+}
+
+.enquiryIntro {
+  min-width: 0;
+  padding-top: 8px;
 }
 
 .enquiryTitle {
@@ -927,21 +962,39 @@
   line-height: 1.1;
   letter-spacing: -0.035em;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .enquiryLead {
+  max-width: 52ch;
   margin-top: 16px;
   font-size: 16px;
   line-height: 1.7;
 }
 
 .benefits {
-  margin-top: 32px;
+  margin-top: 36px;
+  border-top: 1px solid var(--line);
 }
 
 .benefit {
-  padding: 18px 0;
-  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--teal);
 }
 
 .benefitTitle {
@@ -959,16 +1012,16 @@
 
 .formCard {
   min-width: 0;
-  padding: 36px 40px;
+  padding: 36px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0 30px 60px -40px rgb(7 17 31 / 0.6);
+  box-shadow: 0 30px 60px -44px rgb(7 17 31 / 0.45);
   color: var(--body);
 }
 
 .formHeader {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .formCaption {
@@ -1007,8 +1060,16 @@
   --ef-rule: var(--line);
 }
 
+.formCard .form fieldset {
+  margin-bottom: 28px;
+}
+
 .formCard .form legend {
   font-size: 12px;
+}
+
+.formCard .form legend + div {
+  row-gap: 18px;
 }
 
 .formCard .form input,
@@ -1055,33 +1116,64 @@
   }
 }
 
-/* ================= Tablet ================= */
+/* ================= Desktop only ================= */
+/* The shorter column travels with the taller one, on screens tall enough to show it whole. */
+@media (min-width: 1025px) and (min-height: 800px) {
+  .enquiryIntro,
+  .kit {
+    position: sticky;
+    top: calc(var(--nav-offset) + var(--nav-height) + 32px);
+  }
+}
+
+/* ================= Tablet, landscape ================= */
 @media (max-width: 1024px) {
-  .heroGrid,
-  .heroSingle {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+  /* Stage and product info stay side by side; the thumbnail rail runs under the stage. */
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'stage info'
+      'rail info';
+    gap: 16px 40px;
     padding-bottom: 104px;
   }
 
-  .stage {
-    order: -1;
-    height: 480px;
+  .heroSingle {
+    grid-template-areas: 'stage info';
   }
 
   .rail {
+    grid-area: rail;
     flex-direction: row;
     max-height: none;
     overflow-x: auto;
     overflow-y: hidden;
   }
 
-  .thumb {
-    flex: 1 0 120px;
+  .stage {
+    grid-area: stage;
+    height: 460px;
+  }
+
+  /* The half-width stage makes badges wrap, so they are spaced apart rather than dot-separated. */
+  .badges {
+    gap: 4px 20px;
+  }
+
+  .badges li + li::before {
+    display: none;
   }
 
   .info {
-    margin-top: 12px;
+    grid-area: info;
+  }
+
+  .thumb {
+    flex: 1 0 96px;
+  }
+
+  .thumbImage {
+    height: 64px;
   }
 
   .highlights {
@@ -1105,12 +1197,33 @@
     align-items: flex-start;
   }
 
-  .stations,
-  .lineup,
-  .indicationGrid,
-  .specGrid,
-  .enquiryGrid {
+  /* Stations stack, with the number beside the copy so each card stays short and readable. */
+  .stations {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .station {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: 40px;
+  }
+
+  .station > * {
+    grid-column: 2;
+  }
+
+  .stationNumber {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+  }
+
+  .stationPhase {
+    margin-top: 0;
+  }
+
+  .stationText {
+    max-width: 68ch;
   }
 
   .indicationGrid,
@@ -1119,7 +1232,21 @@
   }
 
   .indicationFigure {
-    min-height: 360px;
+    min-height: 460px;
+  }
+
+  .specGrid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  .specRow {
+    grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .lineup {
+    /* Three across from 641px up, so the three related systems never leave a 2 + 1 orphan. */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
   }
 
   .lineup[data-floor='true']::before {
@@ -1128,7 +1255,7 @@
 
   .lineupMedia,
   .lineupCard[data-cutout='false'] .lineupMedia {
-    height: 280px;
+    height: 240px;
     border-radius: 4px;
     background: var(--wash);
   }
@@ -1137,12 +1264,117 @@
     padding-top: 24px;
   }
 
+  .lineupName {
+    font-size: 20px;
+  }
+
   .enquiry {
-    padding: 112px 0 88px;
+    margin-top: 96px;
+    padding: 88px 0;
   }
 
   .enquiryGrid {
+    grid-template-columns: minmax(0, 1fr);
     gap: 48px;
+  }
+
+  .enquiryLead {
+    max-width: 64ch;
+  }
+
+  /* Stacked above the form, the three commitments run as one row. */
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 32px;
+    border-top: 0;
+  }
+
+  .benefit {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 12px;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 0;
+  }
+}
+
+/* ================= Tablet, portrait ================= */
+@media (max-width: 900px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'stage'
+      'rail'
+      'info';
+    gap: 20px;
+  }
+
+  .heroSingle {
+    grid-template-areas:
+      'stage'
+      'info';
+  }
+
+  .stage {
+    height: 480px;
+  }
+
+  .thumb {
+    flex-basis: 120px;
+  }
+
+  .thumbImage {
+    height: 84px;
+  }
+
+  .info {
+    margin-top: 12px;
+  }
+
+  .indicationGrid,
+  .specGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .indicationFigure {
+    min-height: 360px;
+  }
+
+  /* One column again: indications return to a ruled list. */
+  .gridFull .indicationList {
+    display: block;
+    border-top: 1px solid var(--ink);
+  }
+
+  .gridFull .indication {
+    padding: 24px 0;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .specRow {
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+  }
+
+  /* A modules image sits beside the kit list rather than as a full-width crop. */
+  .kit:has(> .kitImage) {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 0 32px;
+  }
+
+  .kit:has(> .kitImage) > * {
+    grid-column: 2;
+  }
+
+  .kit:has(> .kitImage) > .kitImage {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    height: 100%;
+    min-height: 220px;
+    margin: 0;
   }
 }
 
@@ -1201,6 +1433,16 @@
     font-size: 20px;
   }
 
+  /* The section nav scrolls away with the page; anchors only need to clear the fixed header. */
+  .jump {
+    position: static;
+  }
+
+  .section[id],
+  .enquiry[id] {
+    scroll-margin-top: var(--nav-offset);
+  }
+
   .section {
     padding-top: 72px;
   }
@@ -1213,6 +1455,7 @@
   }
 
   .station {
+    display: flex;
     padding: 28px 20px 24px;
   }
 
@@ -1220,21 +1463,112 @@
     font-size: 64px;
   }
 
+  .stationPhase {
+    margin-top: 16px;
+  }
+
+  /* Label above value: a two-column row would squeeze long values into a narrow strip. */
   .specRow {
     grid-template-columns: minmax(0, 1fr);
     gap: 4px;
+    padding: 14px 0;
+  }
+
+  .specLabel {
+    font-size: 13px;
   }
 
   .kit {
     padding: 24px 20px;
   }
 
+  .kit:has(> .kitImage) {
+    display: block;
+  }
+
+  .kit:has(> .kitImage) > .kitImage {
+    height: 180px;
+    min-height: 0;
+    margin-bottom: 24px;
+  }
+
+  /* Related systems as compact rows: thumbnail beside the copy. */
+  .lineup {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lineup > li {
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .lineupCard {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .lineupMedia,
+  .lineupCard[data-cutout='false'] .lineupMedia {
+    flex: none;
+    width: 104px;
+    height: 104px;
+  }
+
+  .lineupBody,
+  .lineup[data-floor='true'] .lineupBody {
+    padding-top: 0;
+  }
+
+  .lineupTag {
+    font-size: 11px;
+  }
+
+  .lineupName {
+    margin-top: 6px;
+    font-size: 18px;
+  }
+
+  .lineupAction {
+    padding-top: 12px;
+  }
+
   .enquiry {
-    padding: 72px 0 64px;
+    margin-top: 72px;
+    padding: 64px 0;
+  }
+
+  .enquiryGrid {
+    gap: 36px;
+  }
+
+  .benefits {
+    display: block;
+    margin-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .benefit {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .benefitIcon {
+    width: 36px;
+    height: 36px;
   }
 
   .formCard {
-    padding: 24px 16px;
+    padding: 24px 20px;
+  }
+
+  .formCard .form fieldset {
+    margin-bottom: 24px;
   }
 
   .formCard .form button[type='submit'] {
