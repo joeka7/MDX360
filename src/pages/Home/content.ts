@@ -102,28 +102,28 @@ export const pillars: Pillar[] = [
 ];
 
 /**
- * Products featured in the home page device catalogue. ORDER MATTERS: the desktop bento assumes six
- * devices in this order (tall, wide, wide, wide, tall, wide). `ghostWord` is the large decorative
- * word behind each device.
+ * Products featured in the home page device catalogue. The desktop bento needs exactly six devices
+ * (tall, wide, wide, wide, tall, wide); any other count uses the two-column grid. `ghostWord` is the
+ * large decorative word behind each device.
  */
 export const catalogueDevices: CatalogueDevice[] = [
-  { slug: 'shape-master', ghostWord: 'SHAPE' },
-  { slug: '7d-hifo', ghostWord: '7D' },
-  { slug: 'ice-gold-rf', ghostWord: 'RF' },
-  { slug: 'quantum-lift', ghostWord: 'LIFT' },
-  { slug: 'hydro-plasma', ghostWord: 'HYDRO' },
-  { slug: 'revita-heal', ghostWord: 'HEAL' },
+  { slug: 'morpheus-8', ghostWord: 'RF' },
+  { slug: 'five-in-one', ghostWord: 'FIVE' },
+  { slug: '9d-hifu', ghostWord: 'HIFU' },
+  { slug: 'vertical-5-in-1-velashape', ghostWord: 'SHAPE' },
+  { slug: '9-in-1-hydro-facial', ghostWord: 'HYDRA' },
+  { slug: '6-in-1-cavitation', ghostWord: 'SLIM' },
 ];
 
 /** Intro line in the device catalogue header, beside the title. */
 export const catalogueIntro =
-  'Six flagship platforms, each engineered for a distinct clinical outcome, from body contouring and HIFU lifting to radiofrequency and bio\u2011stimulation.';
+  'Six flagship platforms, each engineered for a distinct clinical outcome, from RF microneedling and HIFU to body contouring and hydra facial care.';
 
 /** Closing banner of the device catalogue, pointing to the full products page. */
 export const portfolioTeaser = {
-  names: ['Shock Wave X', 'Nova Glow', 'Slim Wave Pro'],
-  title: 'Looking for Shock Wave X, Nova Glow, or Slim Wave Pro?',
-  text: 'Review our full engineering portfolio of 12 non-invasive clinical energy devices.',
+  names: ['Body Contouring', 'HIFU & Microneedle RF', 'Hydra & Oxygen Facial'],
+  title: 'Need the full technical detail?',
+  text: 'Review complete specifications, treatment parameters and components for every device in the portfolio.',
   ctaLabel: 'View Complete Product Portfolio',
 };
 

@@ -26,7 +26,7 @@ export interface KeySpec {
   label: string;
   value: string;
   /** Supporting line below the value. */
-  note: string;
+  note?: string;
   accent?: boolean;
 }
 
@@ -36,16 +36,17 @@ export interface GalleryItem extends ProductImage {
 
 export interface Mechanism {
   icon: IconName;
-  phase: string;
+  /** Small label above the title, e.g. the technology's function. */
+  phase?: string;
   title: string;
   body: string;
-  metric: { label: string; value: string };
+  metric?: { label: string; value: string };
 }
 
 export interface Indication {
   icon: IconName;
   title: string;
-  body: string;
+  body?: string;
   duration?: string;
 }
 
@@ -55,6 +56,8 @@ export interface SpecRow {
   /** Render with tabular/monospace figures. */
   numeric?: boolean;
   accent?: boolean;
+  /** Heading of the group this row belongs to; consecutive rows with the same group are listed together. */
+  group?: string;
 }
 
 /**
@@ -62,7 +65,7 @@ export interface SpecRow {
  * Every section is optional; the template only renders what a product provides.
  */
 export interface ProductDetail {
-  systemRef: string;
+  systemRef?: string;
   deviceClass?: string;
   eyebrow: string;
   tagline: string;
@@ -75,8 +78,10 @@ export interface ProductDetail {
   indications?: SectionIntro & { badge?: string; items: Indication[] };
   specifications?: SectionIntro & {
     rows: SpecRow[];
-    deliveryKit?: string[];
-    training?: { title: string; body: string };
+    /** Side-panel list, e.g. device components or maintenance steps. */
+    kit?: { title: string; items: string[] };
+    /** Side-panel callout, e.g. a safety or care note. */
+    note?: { title: string; body: string };
   };
 }
 
@@ -91,7 +96,8 @@ export interface Product {
   technology: string;
   /** Primary technology line on catalogue cards. */
   technologyDetail: string;
-  model: string;
+  /** Model designation, only where the product's source documents state one. */
+  model?: string;
   modelTag: string;
   /** Short highlight shown in card footers. */
   highlight: string;

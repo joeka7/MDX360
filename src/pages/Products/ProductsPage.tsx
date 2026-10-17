@@ -21,7 +21,7 @@ interface CatalogueDevice {
   id: string;
   name: string;
   categoryLabel: string;
-  model: string;
+  model?: string;
   tag: string;
   description: string;
   feature: string;
@@ -216,7 +216,7 @@ export function ProductsPage() {
                 <div className={styles.plate} data-cutout={device.isCutout}>
                   <div className={styles.plateMeta}>
                     <span className={styles.plateCategory}>{device.categoryLabel}</span>
-                    <span className={styles.plateModel}>{device.model}</span>
+                    {device.model && <span className={styles.plateModel}>{device.model}</span>}
                   </div>
                   <img className={styles.image} src={device.image} alt={device.imageAlt} loading="lazy" decoding="async" />
                 </div>

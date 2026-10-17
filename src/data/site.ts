@@ -60,7 +60,13 @@ export const legalNav: NavLink[] = [
 ];
 
 /** Products listed in the footer "Devices" column. */
-export const footerProductSlugs = ['shape-master', '7d-hifo', 'ice-gold-rf', 'quantum-lift', 'hydro-plasma'];
+export const footerProductSlugs = [
+  'vertical-5-in-1-velashape',
+  'five-in-one',
+  '6-in-1-cavitation',
+  '9-in-1-hydro-facial',
+  '9-in-1-oxygen',
+];
 
 /**
  * Social profiles shown in the footer. Only entries with a URL are rendered: add the client's

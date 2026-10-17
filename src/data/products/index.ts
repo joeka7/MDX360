@@ -1,37 +1,34 @@
 import type { Product, ProductCategoryId } from '@/types/product';
-import { sevenDHifo } from './7d-hifo';
-import { hairRegain3 } from './hair-regain-3';
-import { hydroPlasma } from './hydro-plasma';
-import { iceGoldRf } from './ice-gold-rf';
-import { iceHifo } from './ice-hifo';
-import { novaGlow } from './nova-glow';
-import { oxyMist } from './oxy-mist';
-import { quantumLift } from './quantum-lift';
-import { revitaHeal } from './revita-heal';
-import { shapeMaster } from './shape-master';
-import { shockWaveX } from './shock-wave-x';
-import { slimWavePro } from './slim-wave-pro';
-
-export { productCategories } from './categories';
+import { sixInOneCavitation } from './6-in-1-cavitation';
+import { nineInOneHydroFacial } from './9-in-1-hydro-facial';
+import { nineInOneOxygen } from './9-in-1-oxygen';
+import { nineDHifu } from './9d-hifu';
+import { allProductCategories } from './categories';
+import { fiveInOne } from './five-in-one';
+import { morpheus8 } from './morpheus-8';
+import { vertical5in1Velashape } from './vertical-5-in-1-velashape';
+import { verticalCo2Oxygen } from './vertical-co2-oxygen';
 
 /**
- * The product catalogue, in display order.
+ * The published catalogue, in display order. Each product is written from its Web PDF and pictured
+ * from its Image PDF (see the source note at the top of each data file).
  * To add a product: create a data file in this folder and add it to this list.
  */
 export const products: Product[] = [
-  shapeMaster,
-  sevenDHifo,
-  iceHifo,
-  iceGoldRf,
-  quantumLift,
-  hydroPlasma,
-  novaGlow,
-  slimWavePro,
-  shockWaveX,
-  hairRegain3,
-  revitaHeal,
-  oxyMist,
+  vertical5in1Velashape,
+  fiveInOne,
+  morpheus8,
+  nineDHifu,
+  sixInOneCavitation,
+  nineInOneHydroFacial,
+  verticalCo2Oxygen,
+  nineInOneOxygen,
 ];
+
+/** Categories that have at least one published product, so filters and links never lead to an empty list. */
+export const productCategories = allProductCategories.filter((category) =>
+  products.some((product) => product.category === category.id),
+);
 
 const productsBySlug = new Map(products.map((product) => [product.slug, product]));
 

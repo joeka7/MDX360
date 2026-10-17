@@ -8,9 +8,9 @@ import { ImageSlot } from './ImageSlot';
 import styles from './AboutPage.module.css';
 
 const lineup = [
-  { name: 'Hydro Plasma', image: aboutImages.lineup.hydroPlasma },
-  { name: 'Shape Master', image: aboutImages.lineup.shapeMaster, center: true },
-  { name: 'Shock Wave X', image: aboutImages.lineup.shockWaveX },
+  { name: 'FIVE IN ONE', image: aboutImages.lineup.fiveInOne },
+  { name: 'Vertical 5-in-1 Velashape', image: aboutImages.lineup.velashape, center: true },
+  { name: '6 IN 1 Cavitation', image: aboutImages.lineup.cavitation },
 ];
 
 function ArrowIcon() {
@@ -222,7 +222,7 @@ export function AboutPage() {
                 </h2>
               </div>
               <p className={styles.pillarsNote}>
-                Built into every device line—from Shape Master body contouring to 7D HIFO facial restructuring.
+                Built into every device line—from Velashape body contouring to FIVE IN ONE HIFU.
               </p>
             </div>
             <ol className={styles.pillarList}>

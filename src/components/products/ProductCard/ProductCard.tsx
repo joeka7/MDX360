@@ -120,7 +120,7 @@ export function ProductCard({ product, variant = 'catalog', onEnquire, headingLe
           <div className={styles.catalogBody}>
             <div className={styles.catalogText}>
               <div className={styles.modelRow}>
-                <span>Model: {product.model}</span>
+                {product.model && <span>Model: {product.model}</span>}
                 <span className={styles.modelTag}>{product.modelTag}</span>
               </div>
               <Heading className={styles.titleMd}>{product.name}</Heading>

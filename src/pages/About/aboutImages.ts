@@ -1,10 +1,10 @@
 import midPhoto from '@/assets/images/about-mid.webp';
 import mid2Photo from '@/assets/images/about-mid-2.webp';
 import heroPhoto from '@/assets/images/about-us.webp';
-import sevenDHifoPhoto from '@/assets/images/products/7d-hifo.webp';
-import hydroPlasmaPhoto from '@/assets/images/products/hydro-plasma.webp';
-import shapeMasterPhoto from '@/assets/images/products/shape-master.webp';
-import shockWaveXPhoto from '@/assets/images/products/shock-wave-x.webp';
+import cavitationPhoto from '@/assets/images/products/6-in-1-cavitation.webp';
+import hydroFacialPhoto from '@/assets/images/products/9-in-1-hydro-facial.webp';
+import fiveInOnePhoto from '@/assets/images/products/five-in-one.webp';
+import velashapePhoto from '@/assets/images/products/vertical-5-in-1-velashape.webp';
 
 /**
  * Transparent-background cut-outs, named by product slug: the same folder the Products page and
@@ -30,9 +30,10 @@ export const aboutImages = {
   /** 2400 × 1792 original: a technician's hands calibrating a treatment handpiece. */
   calibrationCloseup: mid2Photo,
   lineup: {
-    hydroPlasma: device('hydro-plasma', hydroPlasmaPhoto),
-    shapeMaster: device('shape-master', shapeMasterPhoto),
-    shockWaveX: device('shock-wave-x', shockWaveXPhoto),
+    fiveInOne: device('five-in-one', fiveInOnePhoto),
+    velashape: device('vertical-5-in-1-velashape', velashapePhoto),
+    cavitation: device('6-in-1-cavitation', cavitationPhoto),
   },
-  ctaDevice: device('7d-hifo', sevenDHifoPhoto),
+  /** Portrait photo: the CTA frames it with `contain`, unlike the square lineup tiles. */
+  ctaDevice: device('9-in-1-hydro-facial', hydroFacialPhoto),
 };

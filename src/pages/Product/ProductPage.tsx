@@ -5,9 +5,9 @@ import { Breadcrumbs, Icon } from '@/components/ui';
 import { getProductBySlug, getRelatedProducts, products } from '@/data/products';
 import { routes } from '@/data/site';
 import { NotFoundPage } from '@/pages/NotFound/NotFoundPage';
-import type { GalleryItem, Product, ProductImage } from '@/types/product';
+import type { GalleryItem, Product, ProductImage, SpecRow } from '@/types/product';
 import { cx } from '@/utils/cx';
-import { consultationCommitments, heroAssurances } from './content';
+import { consultationCommitments } from './content';
 import styles from './ProductPage.module.css';
 
 /** Anchor ids. `tech-specs` and `clinical-enquiry` predate this layout and may be linked from elsewhere. */
@@ -44,11 +44,13 @@ function ProductTemplate({ product }: { product: Product }) {
     findImage(gallery, 'clinical') ?? (gallery[1] && gallery[1] !== modulesImage ? gallery[1] : undefined);
 
   const badges = [detail?.heroBadges?.primary, detail?.heroBadges?.secondary, detail?.consoleNote].filter(isText);
-  const reference = [`SYS-REF: ${detail?.systemRef ?? product.model}`, detail?.deviceClass, detail?.heroBadges?.primary]
+  const systemRef = detail?.systemRef ?? product.model;
+  const reference = [systemRef && `SYS-REF: ${systemRef}`, detail?.deviceClass, detail?.heroBadges?.primary]
     .filter(isText)
     .join(' · ');
 
-  const hasKit = Boolean(modulesImage || specifications?.deliveryKit?.length || specifications?.training);
+  const hasKit = Boolean(modulesImage || specifications?.kit?.items.length || specifications?.note);
+  const specGroups = specifications ? groupRows(specifications.rows) : [];
 
   const jumpLinks: Array<{ id: string; label: string }> = [];
   if (mechanisms?.items.length) jumpLinks.push({ id: sectionIds.mechanism, label: 'Mechanism' });
@@ -114,7 +116,7 @@ function ProductTemplate({ product }: { product: Product }) {
                 <span className={styles.titleDot}>.</span>
               </h1>
               <p className={styles.subtitle}>{detail?.tagline ?? product.technology}</p>
-              <p className={styles.reference}>{reference}</p>
+              {reference && <p className={styles.reference}>{reference}</p>}
               <p className={styles.description}>{detail?.overview ?? product.description}</p>
 
               <div className={styles.actions}>
@@ -129,12 +131,6 @@ function ProductTemplate({ product }: { product: Product }) {
                   </a>
                 )}
               </div>
-
-              <ul className={styles.assurances}>
-                {heroAssurances.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
@@ -148,7 +144,7 @@ function ProductTemplate({ product }: { product: Product }) {
               <div key={spec.label} className={styles.highlight}>
                 <dt className={styles.highlightLabel}>{spec.label}</dt>
                 <dd className={styles.highlightValue}>{spec.value}</dd>
-                <dd className={styles.highlightNote}>{spec.note}</dd>
+                {spec.note && <dd className={styles.highlightNote}>{spec.note}</dd>}
               </div>
             ))}
           </dl>
@@ -188,19 +184,21 @@ function ProductTemplate({ product }: { product: Product }) {
               title={mechanisms.title}
               intro={mechanisms.intro}
             />
-            <ol className={styles.stations}>
+            <ol className={cx(styles.stations, fillsFourColumns(mechanisms.items.length) && styles.stationsFour)}>
               {mechanisms.items.map((item, index) => (
                 <li key={item.title} className={styles.station}>
                   <span className={styles.stationNumber} aria-hidden="true">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <p className={styles.stationPhase}>{item.phase}</p>
+                  {item.phase && <p className={styles.stationPhase}>{item.phase}</p>}
                   <h3 className={styles.stationTitle}>{item.title}</h3>
                   <p className={styles.stationText}>{item.body}</p>
-                  <dl className={styles.stationMetric}>
-                    <dt>{item.metric.label}</dt>
-                    <dd>{item.metric.value}</dd>
-                  </dl>
+                  {item.metric && (
+                    <dl className={styles.stationMetric}>
+                      <dt>{item.metric.label}</dt>
+                      <dd>{item.metric.value}</dd>
+                    </dl>
+                  )}
                 </li>
               ))}
             </ol>
@@ -240,7 +238,7 @@ function ProductTemplate({ product }: { product: Product }) {
                         {item.duration}
                       </p>
                     )}
-                    <p className={styles.indicationText}>{item.body}</p>
+                    {item.body && <p className={styles.indicationText}>{item.body}</p>}
                   </li>
                 ))}
               </ol>
@@ -260,34 +258,41 @@ function ProductTemplate({ product }: { product: Product }) {
               intro={specifications.intro}
             />
             <div className={cx(styles.specGrid, !hasKit && styles.gridFull)}>
-              <dl className={styles.specTable}>
-                {specifications.rows.map((row) => (
-                  <div key={row.label} className={styles.specRow}>
-                    <dt className={styles.specLabel}>{row.label}</dt>
-                    <dd className={styles.specValue}>{row.value}</dd>
+              <div className={styles.specTable}>
+                {specGroups.map((group, index) => (
+                  <div key={group.title ?? index} className={styles.specGroup}>
+                    {group.title && <h3 className={styles.specGroupTitle}>{group.title}</h3>}
+                    <dl className={styles.specList}>
+                      {group.rows.map((row) => (
+                        <div key={row.label} className={styles.specRow}>
+                          <dt className={styles.specLabel}>{row.label}</dt>
+                          <dd className={styles.specValue}>{row.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </div>
                 ))}
-              </dl>
+              </div>
 
               {hasKit && (
                 <aside className={styles.kit}>
                   {modulesImage && (
                     <img src={modulesImage.src} alt={modulesImage.alt} loading="lazy" className={styles.kitImage} />
                   )}
-                  {specifications.deliveryKit && specifications.deliveryKit.length > 0 && (
+                  {specifications.kit && specifications.kit.items.length > 0 && (
                     <>
-                      <h3 className={styles.kitTitle}>Standard Delivery Kit</h3>
+                      <h3 className={styles.kitTitle}>{specifications.kit.title}</h3>
                       <ul className={styles.kitList}>
-                        {specifications.deliveryKit.map((item) => (
+                        {specifications.kit.items.map((item) => (
                           <li key={item}>{item}</li>
                         ))}
                       </ul>
                     </>
                   )}
-                  {specifications.training && (
+                  {specifications.note && (
                     <div className={styles.certification}>
-                      <p className={styles.certificationTitle}>{specifications.training.title}</p>
-                      <p className={styles.certificationText}>{specifications.training.body}</p>
+                      <p className={styles.certificationTitle}>{specifications.note.title}</p>
+                      <p className={styles.certificationText}>{specifications.note.body}</p>
                     </div>
                   )}
                 </aside>
@@ -444,6 +449,22 @@ function useScrollSpy(ids: readonly string[]) {
   }, [key]);
 
   return active;
+}
+
+/** Four columns when they fill rows more evenly than three: 4, 7 (4 + 3), 8, 11 (4 + 4 + 3)… */
+function fillsFourColumns(count: number) {
+  return count % 3 !== 0 && (count % 4 === 0 || count % 4 === 3);
+}
+
+/** Splits spec rows into runs of consecutive rows that share a group heading. */
+function groupRows(rows: SpecRow[]) {
+  const groups: Array<{ title?: string; rows: SpecRow[] }> = [];
+  for (const row of rows) {
+    const last = groups[groups.length - 1];
+    if (last && last.title === row.group) last.rows.push(row);
+    else groups.push({ title: row.group, rows: [row] });
+  }
+  return groups;
 }
 
 /** First gallery image whose label names `kind`, e.g. "Clinical" or "Modules". */
