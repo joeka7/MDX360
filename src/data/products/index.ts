@@ -1,11 +1,16 @@
 import type { Product, ProductCategoryId } from '@/types/product';
+import { twoInOneRfMicroneedle } from './2-in-1-rf-microneedle';
+import { excimer308nm } from './308nm-excimer';
 import { sixInOneCavitation } from './6-in-1-cavitation';
 import { nineInOneHydroFacial } from './9-in-1-hydro-facial';
 import { nineInOneOxygen } from './9-in-1-oxygen';
 import { nineDHifu } from './9d-hifu';
 import { allProductCategories } from './categories';
 import { fiveInOne } from './five-in-one';
+import { laserHairGrowth } from './laser-hair-growth';
 import { morpheus8 } from './morpheus-8';
+import { physioMagneto } from './physio-magneto';
+import { sw25Shockwave } from './sw25-shockwave';
 import { vertical5in1Velashape } from './vertical-5-in-1-velashape';
 import { verticalCo2Oxygen } from './vertical-co2-oxygen';
 
@@ -18,12 +23,20 @@ export const products: Product[] = [
   vertical5in1Velashape,
   fiveInOne,
   morpheus8,
+  twoInOneRfMicroneedle,
   nineDHifu,
   sixInOneCavitation,
   nineInOneHydroFacial,
   verticalCo2Oxygen,
   nineInOneOxygen,
+  sw25Shockwave,
 ];
+
+/**
+ * Written from their Web PDFs but held until an approved product photo is supplied (see each file).
+ * Not part of `products`, so they never appear in listings, filters, links or the enquiry form.
+ */
+export const heldProducts = [excimer308nm, physioMagneto, laserHairGrowth];
 
 /** Categories that have at least one published product, so filters and links never lead to an empty list. */
 export const productCategories = allProductCategories.filter((category) =>

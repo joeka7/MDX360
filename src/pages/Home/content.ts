@@ -121,7 +121,7 @@ export const catalogueIntro =
 
 /** Closing banner of the device catalogue, pointing to the full products page. */
 export const portfolioTeaser = {
-  names: ['Body Contouring', 'HIFU & Microneedle RF', 'Hydra & Oxygen Facial'],
+  names: ['Oxygen Facial', 'RF Microneedling', 'Shockwave Therapy'],
   title: 'Need the full technical detail?',
   text: 'Review complete specifications, treatment parameters and components for every device in the portfolio.',
   ctaLabel: 'View Complete Product Portfolio',

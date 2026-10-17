@@ -24,7 +24,7 @@ export const morpheus8: Product = {
     fit: 'contain',
   },
   enquiryLabel: 'Gold RF Microneedling',
-  relatedSlugs: ['9d-hifu', 'five-in-one', 'vertical-co2-oxygen'],
+  relatedSlugs: ['2-in-1-rf-microneedle', '9d-hifu', 'five-in-one'],
   detail: {
     eyebrow: 'Gold RF Microneedling Depth 8',
     tagline: 'Crystallite Depth 8 Fractional RF Microneedling',

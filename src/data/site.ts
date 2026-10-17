@@ -62,10 +62,10 @@ export const legalNav: NavLink[] = [
 /** Products listed in the footer "Devices" column. */
 export const footerProductSlugs = [
   'vertical-5-in-1-velashape',
-  'five-in-one',
-  '6-in-1-cavitation',
+  'morpheus-8',
+  '9d-hifu',
   '9-in-1-hydro-facial',
-  '9-in-1-oxygen',
+  'sw25-shockwave',
 ];
 
 /**
