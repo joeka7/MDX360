@@ -1,11 +1,11 @@
 import aestheticPrecisionImage from '@/assets/images/Non-Invasive Aesthetic Precision.webp';
 import diagnosticImage from '@/assets/images/Unrivaled Diagnostic Confidence.webp';
 import regenerativeImage from '@/assets/images/Regenerative & Therapeutic Power.webp';
-import excimerImage from '@/assets/images/products/308nm_Excimer.webp';
-import flagshipImage from '@/assets/images/products/five-in-one.webp';
-import magnetoImage from '@/assets/images/products/A0271 Physio Magneto.webp';
-import hifuImage from '@/assets/images/products/MDX 9D Hifu Manual.webp';
-import shockwaveImage from '@/assets/images/products/MDX360 -SW25 Professional Shockwave.webp';
+import flagshipImage from '@/assets/images/carousel-1.webp';
+import excimerImage from '@/assets/images/carousel-2.webp';
+import magnetoImage from '@/assets/images/carousel-3.webp';
+import hifuImage from '@/assets/images/carousel-4.webp';
+import shockwaveImage from '@/assets/images/carousel-5.webp';
 import type { IconName } from '@/types/product';
 import type { Pillar } from './ClinicalArchitectureSection/ClinicalArchitectureSection';
 import type { CatalogueDevice } from './DeviceCatalogueSection/DeviceCatalogueSection';
@@ -23,31 +23,31 @@ export const heroDevices: HeroDevice[] = [
     name: '5-in-1 7D Platform',
     image: flagshipImage,
     alt: '5-in-1 7D platform with microneedle RF, Vmax, vaginal and Liposonix handpieces',
-    crop: { x: 7.4, y: -21.3, width: 84.6, height: 99.6 },
+    crop: { x: 26.4, y: 7.8, width: 47.2, height: 88.1 },
   },
   {
     name: '308nm Excimer',
     image: excimerImage,
     alt: '308nm excimer phototherapy system with a single handpiece',
-    crop: { x: 15.1, y: -5.7, width: 71.7, height: 84.4 },
+    crop: { x: 33.8, y: 14.6, width: 37.5, height: 78.1 },
   },
   {
     name: 'A0271 Physio Magneto',
     image: magnetoImage,
     alt: 'A0271 Physio Magneto therapy system with an articulated treatment head',
-    crop: { x: 24.0, y: 4.9, width: 52.3, height: 88.4 },
+    crop: { x: 28.0, y: 7.4, width: 44.1, height: 87.5 },
   },
   {
     name: 'MDX 9D HIFU',
     image: hifuImage,
     alt: 'MDX 9D HIFU system with a touchscreen console, handpiece and interchangeable cartridges',
-    crop: { x: 15.3, y: 5.2, width: 70.5, height: 82.9 },
+    crop: { x: 28.9, y: 11.9, width: 43.6, height: 84.3 },
   },
   {
     name: 'MDX360 SW25 Shockwave',
     image: shockwaveImage,
     alt: 'MDX360 SW25 professional shockwave system with a touchscreen console and a holstered applicator',
-    crop: { x: 24.5, y: 8.6, width: 47.8, height: 83.2 },
+    crop: { x: 21.4, y: 7.1, width: 55.6, height: 90.1 },
   },
 ];
 
