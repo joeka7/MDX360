@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/6-in-1-cavitation.webp';
+import image from '@/assets/images/products/standardized/6-in-1-cavitation.webp';
 import type { Product } from '@/types/product';
 
 /** Source: "6 IN 1 Body Slimming Cavitation Machine web.pdf". Image: "MDX360 6 in 1 Cavitation New.pdf", page 1. */

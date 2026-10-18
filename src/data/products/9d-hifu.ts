@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/9d-hifu.webp';
+import image from '@/assets/images/products/standardized/9d-hifu.webp';
 import type { Product } from '@/types/product';
 
 /** Source: "MDX 9D HIFU web.pdf" (English part). Image: "MDX 9D Hifu Manual.pdf", page 1. */

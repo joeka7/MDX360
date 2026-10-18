@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/morpheus-8.webp';
+import image from '@/assets/images/products/standardized/morpheus-8.webp';
 import type { Product } from '@/types/product';
 
 /**

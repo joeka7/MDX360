@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/vertical-5-in-1-velashape.webp';
+import image from '@/assets/images/products/standardized/vertical-5-in-1-velashape.webp';
 import type { Product } from '@/types/product';
 
 /** Source: "MDX360 Vertical 5    web.pdf". Image: "MDX360_Vertical 5 in 1 Velashape User Manual.pdf", page 1. */

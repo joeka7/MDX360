@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/sw25-shockwave.webp';
+import image from '@/assets/images/products/standardized/sw25-shockwave.webp';
 import type { Product } from '@/types/product';
 
 /**

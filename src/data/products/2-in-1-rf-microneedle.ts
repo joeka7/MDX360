@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/2-in-1-rf-microneedle.webp';
+import image from '@/assets/images/products/standardized/2-in-1-rf-microneedle.webp';
 import type { Product } from '@/types/product';
 
 /**

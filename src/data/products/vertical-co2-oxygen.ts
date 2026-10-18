@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/vertical-co2-oxygen.webp';
+import image from '@/assets/images/products/standardized/vertical-co2-oxygen.webp';
 import type { Product } from '@/types/product';
 
 /**
