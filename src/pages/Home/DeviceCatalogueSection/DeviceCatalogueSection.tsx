@@ -151,20 +151,22 @@ export function DeviceCatalogueSection() {
                   <p className={styles.description}>{product.description}</p>
                   <div className={styles.footer}>
                     <span className={styles.tech}>{product.highlight}</span>
-                    <span className={styles.go} aria-hidden="true">
-                      <span className={styles.goLabel}>Discover</span>
-                      <svg
-                        className={styles.goIcon}
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        focusable="false"
-                      >
-                        <path d="M17 24h14M26 19l5 5-5 5" />
-                      </svg>
+                    <span className={styles.goSlot} aria-hidden="true">
+                      <span className={styles.go}>
+                        <span className={styles.goLabel}>Discover</span>
+                        <svg
+                          className={styles.goIcon}
+                          width="48"
+                          height="48"
+                          viewBox="0 0 48 48"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          focusable="false"
+                        >
+                          <path d="M17 24h14M26 19l5 5-5 5" />
+                        </svg>
+                      </span>
                     </span>
                   </div>
                 </div>

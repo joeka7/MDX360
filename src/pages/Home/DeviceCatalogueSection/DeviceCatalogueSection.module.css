@@ -229,41 +229,62 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 12px 16px;
   margin-top: 8px;
 }
 
 .tech {
+  flex: none;
   padding: 7px 12px;
   border-radius: 999px;
   background: rgb(255 255 255 / 0.75);
+  white-space: nowrap;
   font-size: 13px;
   font-weight: 600;
 }
 
+/*
+ * The Discover pill takes whatever room the chip leaves on its row, and only opens up to show its
+ * label when that room fits it (a container query on .goSlot). Hovering never changes the footer's
+ * layout: only the ::before background grows from the arrow circle to the full pill.
+ */
+.goSlot {
+  flex: 1 1 48px;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 48px;
+  container-type: inline-size;
+}
+
 .go {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: none;
   height: 48px;
-  min-width: 48px;
-  max-width: 48px;
-  margin-left: auto;
-  border-radius: 999px;
-  background: var(--navy);
   color: #fff;
-  overflow: hidden;
   white-space: nowrap;
   font-size: 14px;
   font-weight: 600;
+}
+
+.go::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--navy);
   transition:
-    max-width 0.55s var(--ease),
+    width 0.55s var(--ease),
     background-color 0.3s;
 }
 
 .goLabel {
+  display: none;
   padding-left: 20px;
   opacity: 0;
   transition: opacity 0.3s;
@@ -273,13 +294,26 @@
   flex: 0 0 48px;
 }
 
-.tile:focus-within .go {
-  max-width: 180px;
+.tile:focus-within .go::before {
   background: var(--accent-ink);
 }
 
-.tile:focus-within .goLabel {
-  opacity: 1;
+@container (min-width: 128px) {
+  .goLabel {
+    display: block;
+  }
+
+  .go::before {
+    width: 48px;
+  }
+
+  .tile:focus-within .go::before {
+    width: 100%;
+  }
+
+  .tile:focus-within .goLabel {
+    opacity: 1;
+  }
 }
 
 /* ===== Media ===== */
@@ -421,23 +455,29 @@
     transform: translateY(-36px);
   }
 
-  .tile:hover .go {
-    max-width: 180px;
+  .tile:hover .go::before {
     background: var(--accent-ink);
   }
 
-  .tile:hover .goLabel {
-    opacity: 1;
+  @container (min-width: 128px) {
+    .tile:hover .go::before {
+      width: 100%;
+    }
+
+    .tile:hover .goLabel {
+      opacity: 1;
+    }
   }
 }
 
+/* Without hover the label would show on some tiles and not others, so touch keeps the arrow circle. */
 @media (hover: none) {
-  .go {
-    max-width: 180px;
+  .go::before {
+    width: 100%;
   }
 
   .goLabel {
-    opacity: 1;
+    display: none;
   }
 }
 
@@ -679,7 +719,7 @@
     aspect-ratio: 1 / 1;
   }
 
-  /* A compact chip and Discover pill, so every tile's footer holds on one line. */
+  /* A compact chip and arrow circle, so every tile's footer holds on one line. */
   .footer {
     gap: 10px 12px;
   }
@@ -691,14 +731,14 @@
 
   .go {
     height: 44px;
-    min-width: 44px;
-    max-width: 180px;
-    font-size: 13px;
+  }
+
+  .go::before {
+    width: 100%;
   }
 
   .goLabel {
-    padding-left: 18px;
-    opacity: 1;
+    display: none;
   }
 
   .goIcon {
@@ -737,7 +777,7 @@
   }
 }
 
-/* Narrow phones: a little less air in the footer keeps the longest chip beside its Discover pill. */
+/* Narrow phones: a little less air in the footer keeps the longest chip beside its arrow circle. */
 @media (max-width: 379px) {
   .footer {
     column-gap: 8px;
@@ -745,10 +785,6 @@
 
   .tech {
     padding-inline: 9px;
-  }
-
-  .goLabel {
-    padding-left: 14px;
   }
 }
 
@@ -771,7 +807,7 @@
   .section .image,
   .section .ghost,
   .section .spot,
-  .section .go,
+  .section .go::before,
   .section .goLabel,
   .section .cta,
   .section .ctaIcon {
