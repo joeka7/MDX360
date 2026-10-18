@@ -1,10 +1,10 @@
 import midPhoto from '@/assets/images/about-mid.webp';
 import mid2Photo from '@/assets/images/about-mid-2.webp';
 import heroPhoto from '@/assets/images/about-us.webp';
-import cavitationPhoto from '@/assets/images/products/6-in-1-cavitation.webp';
-import hydroFacialPhoto from '@/assets/images/products/9-in-1-hydro-facial.webp';
+import cavitationPhoto from '@/assets/images/products/MDX360 6 in 1 Cavitation New.webp';
+import hydroFacialPhoto from '@/assets/images/products/MDX360 9 in 1 Hydra.webp';
 import fiveInOnePhoto from '@/assets/images/products/five-in-one.webp';
-import velashapePhoto from '@/assets/images/products/vertical-5-in-1-velashape.webp';
+import velashapePhoto from '@/assets/images/products/MDX360_Velashape.webp';
 
 /**
  * Transparent-background cut-outs, named by product slug: the same folder the Products page and
