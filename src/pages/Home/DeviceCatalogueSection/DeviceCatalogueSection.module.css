@@ -225,39 +225,44 @@
   color: var(--text-muted);
 }
 
+/* Positioning context for the Discover pill; nothing here is resized by the tile's hover effects. */
 .footer {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 12px 16px;
   margin-top: 8px;
 }
 
 .tech {
-  flex: none;
+  min-width: 0;
   padding: 7px 12px;
   border-radius: 999px;
   background: rgb(255 255 255 / 0.75);
+  overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: 13px;
   font-weight: 600;
 }
 
 /*
- * The Discover pill takes whatever room the chip leaves on its row, and only opens up to show its
- * label when that room fits it (a container query on .goSlot). Hovering never changes the footer's
- * layout: only the ::before background grows from the arrow circle to the full pill.
+ * .goSlot reserves the arrow circle's space at the end of the footer row. The pill itself is
+ * positioned out of flow at the footer's bottom-right, above the device image (z-index 2) and below
+ * the stretched link (z-index 3), so opening it on hover never changes the footer's layout: only its
+ * ::before background grows from the arrow circle to the full pill and the label fades in.
  */
 .goSlot {
-  flex: 1 1 48px;
-  display: flex;
-  justify-content: flex-end;
-  min-width: 48px;
-  container-type: inline-size;
+  flex: 1 0 48px;
+  min-height: 48px;
 }
 
 .go {
-  position: relative;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
   isolation: isolate;
   display: inline-flex;
   align-items: center;
@@ -275,7 +280,7 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-  width: 100%;
+  width: 48px;
   border-radius: 999px;
   background: var(--navy);
   transition:
@@ -284,7 +289,6 @@
 }
 
 .goLabel {
-  display: none;
   padding-left: 20px;
   opacity: 0;
   transition: opacity 0.3s;
@@ -295,25 +299,14 @@
 }
 
 .tile:focus-within .go::before {
+  width: 100%;
   background: var(--accent-ink);
 }
 
-@container (min-width: 128px) {
-  .goLabel {
-    display: block;
-  }
-
-  .go::before {
-    width: 48px;
-  }
-
-  .tile:focus-within .go::before {
-    width: 100%;
-  }
-
-  .tile:focus-within .goLabel {
-    opacity: 1;
-  }
+.tile:focus-within .goLabel {
+  opacity: 1;
+  /* Waits for the background to grow under the label, so it never shows over the chip. */
+  transition-delay: 0.2s;
 }
 
 /* ===== Media ===== */
@@ -456,21 +449,33 @@
   }
 
   .tile:hover .go::before {
+    width: 100%;
     background: var(--accent-ink);
   }
 
-  @container (min-width: 128px) {
-    .tile:hover .go::before {
-      width: 100%;
-    }
-
-    .tile:hover .goLabel {
-      opacity: 1;
-    }
+  .tile:hover .goLabel {
+    opacity: 1;
+    transition-delay: 0.2s;
   }
 }
 
-/* Without hover the label would show on some tiles and not others, so touch keeps the arrow circle. */
+/*
+ * Where the pill opens (hover devices above the mobile layout), the chip gives way in step with it:
+ * both move 80px over the same timing, so a 16px gap always separates the chip from the pill.
+ */
+@media (hover: hover) and (min-width: 641px) {
+  .tech {
+    max-width: calc(100% - 64px);
+    transition: max-width 0.55s var(--ease);
+  }
+
+  .tile:hover .tech,
+  .tile:focus-within .tech {
+    max-width: calc(100% - 144px);
+  }
+}
+
+/* Touch can't hover, so it keeps the arrow circle. */
 @media (hover: none) {
   .go::before {
     width: 100%;
@@ -729,6 +734,11 @@
     font-size: 12px;
   }
 
+  .goSlot {
+    flex-basis: 44px;
+    min-height: 44px;
+  }
+
   .go {
     height: 44px;
   }
@@ -809,6 +819,7 @@
   .section .spot,
   .section .go::before,
   .section .goLabel,
+  .section .tech,
   .section .cta,
   .section .ctaIcon {
     transition: none;
