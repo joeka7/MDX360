@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/standardized/five-in-one.webp';
+import image from '@/assets/images/products/five-in-one.webp';
 import type { Product } from '@/types/product';
 
 /**

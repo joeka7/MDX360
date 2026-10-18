@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/standardized/2-in-1-rf-microneedle.webp';
+import image from '@/assets/images/products/MDX360_2-in-1_Fractional_RF_Microneedle_+_Ice_Hammer.webp';
 import type { Product } from '@/types/product';
 
 /**

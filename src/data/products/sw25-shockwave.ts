@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/standardized/sw25-shockwave.webp';
+import image from '@/assets/images/products/MDX360 -SW25 Professional Shockwave.webp';
 import type { Product } from '@/types/product';
 
 /**

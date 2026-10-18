@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/standardized/vertical-co2-oxygen.webp';
+import image from '@/assets/images/products/MDX360_Vertical_CO2_Oxygen_Machine_.webp';
 import type { Product } from '@/types/product';
 
 /**

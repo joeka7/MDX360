@@ -1,4 +1,4 @@
-import image from '@/assets/images/products/standardized/9-in-1-oxygen.webp';
+import image from '@/assets/images/products/MDX360 9 in 1 Oxygen machine.webp';
 import type { Product } from '@/types/product';
 
 /**
