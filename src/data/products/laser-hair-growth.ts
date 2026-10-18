@@ -1,13 +1,11 @@
+import image from '@/assets/images/products/MDX laser hair growth.webp';
 import type { Product } from '@/types/product';
 
 /**
  * Source: "Multifunctional Laser Hair Growth Machine web.pdf" (English part).
- * NOT PUBLISHED: the only device photo in the Image PDF ("MDX laser hair growth  user manual.pdf")
- * carries the OEM brand "HIO BEAUTY INSTRUMENT", so this product waits for an approved photo. To
- * publish it, import the photo as `image`, type this as `Product`, and add it to the `products` list
- * in `./index.ts`.
+ * Image: supplied product photo "MDX laser hair growth.webp".
  */
-export const laserHairGrowth: Omit<Product, 'image'> = {
+export const laserHairGrowth: Product = {
   slug: 'laser-hair-growth',
   name: 'Multifunctional Laser Hair Growth Machine',
   category: 'skin',
@@ -20,6 +18,11 @@ export const laserHairGrowth: Omit<Product, 'image'> = {
   summary: 'Low-level laser therapy and four scalp handles for non-invasive hair restoration.',
   description:
     'A 650 nm diode laser (low-level laser therapy) system with oxygen jet spray, high-frequency electrotherapy / ozone comb and BIO ionization handles, for accelerating hair growth and thickening.',
+  image: {
+    src: image,
+    alt: 'Multifunctional Laser Hair Growth Machine on its wheeled stand, with the laser canopy on an articulated arm, a display monitor and the touch control panel',
+    fit: 'contain',
+  },
   enquiryLabel: 'Laser Hair Restoration',
   relatedSlugs: [],
   detail: {

@@ -1,12 +1,12 @@
+import image from '@/assets/images/products/308nm_Excimer.webp';
 import type { Product } from '@/types/product';
 
 /**
  * Source: "308nm Excimer Phototherapy Device web.pdf".
- * NOT PUBLISHED: the Image PDF ("308nm_Manual_Enlarged.pdf") is a scanned manual with line drawings
- * only, so this product waits for an approved photo. To publish it, import the photo as `image`,
- * type this as `Product`, and add it to the `products` list in `./index.ts`.
+ * Image: supplied product photo "308nm_Excimer.webp" (the Image PDF, "308nm_Manual_Enlarged.pdf",
+ * has line drawings only).
  */
-export const excimer308nm: Omit<Product, 'image'> = {
+export const excimer308nm: Product = {
   slug: '308nm-excimer',
   name: '308nm Excimer Phototherapy Device',
   category: 'therapy',
@@ -19,6 +19,11 @@ export const excimer308nm: Omit<Product, 'image'> = {
   summary: 'Targeted excimer UVB phototherapy for psoriasis and vitiligo.',
   description:
     'Treats dermatological conditions such as psoriasis and vitiligo through monochromatic UVB emission at 308nm ± 2nm, powered by Xenon Chloride (XeCl) excimer technology with advanced dose control.',
+  image: {
+    src: image,
+    alt: '308nm Excimer Phototherapy Device tabletop console with its touchscreen and docked treatment applicator',
+    fit: 'contain',
+  },
   enquiryLabel: 'Psoriasis & Vitiligo Phototherapy',
   relatedSlugs: [],
   detail: {

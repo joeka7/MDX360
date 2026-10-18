@@ -29,14 +29,11 @@ export const products: Product[] = [
   nineInOneHydroFacial,
   verticalCo2Oxygen,
   nineInOneOxygen,
+  laserHairGrowth,
   sw25Shockwave,
+  physioMagneto,
+  excimer308nm,
 ];
-
-/**
- * Written from their Web PDFs but held until an approved product photo is supplied (see each file).
- * Not part of `products`, so they never appear in listings, filters, links or the enquiry form.
- */
-export const heldProducts = [excimer308nm, physioMagneto, laserHairGrowth];
 
 /** Categories that have at least one published product, so filters and links never lead to an empty list. */
 export const productCategories = allProductCategories.filter((category) =>

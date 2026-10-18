@@ -1,13 +1,12 @@
+import image from '@/assets/images/products/A0271 Physio Magneto.webp';
 import type { Product } from '@/types/product';
 
 /**
  * Source: "Physio Magneto    web.pdf" (contraindications from its Arabic section, which the English
  * section omits).
- * NOT PUBLISHED: the only device photo in the Image PDF ("A0271 Physio Magneto Use manual.pdf")
- * carries the OEM brand "SHEFMON", so this product waits for an approved photo. To publish it, import
- * the photo as `image`, type this as `Product`, and add it to the `products` list in `./index.ts`.
+ * Image: supplied product photo "A0271 Physio Magneto.webp".
  */
-export const physioMagneto: Omit<Product, 'image'> = {
+export const physioMagneto: Product = {
   slug: 'physio-magneto',
   name: 'Physio Magneto',
   category: 'therapy',
@@ -21,6 +20,11 @@ export const physioMagneto: Omit<Product, 'image'> = {
   summary: 'Non-invasive magnetic therapy for pain management, rehabilitation and tissue recovery.',
   description:
     'A non-invasive magnetic therapy device that introduces magnetic field pulses into the body, penetrating 5–18 cm to reach bone, fascia, ligaments and muscles without heat or pain.',
+  image: {
+    src: image,
+    alt: 'Physio Magneto console with its touchscreen, magnetic ring handle and adjustable support arm',
+    fit: 'contain',
+  },
   enquiryLabel: 'Magnetic Therapy & Pain Recovery',
   relatedSlugs: [],
   detail: {
